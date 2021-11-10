@@ -1,13 +1,11 @@
 import React from 'react';
 import './App.css'
-import {Technologies} from './Technologies';
 
 
-export function App() {
+export const App = () => {
     return (
         <div>
-            <h1>hello</h1>
-            <Technologies/>
+            <img src = 'https://static.wirtualnemedia.pl/media/top/volvo-logonowe-655.jpg'/>
         </div>
     )
 }
