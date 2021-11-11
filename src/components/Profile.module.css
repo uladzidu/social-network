@@ -1,0 +1,15 @@
+.content {
+    grid-area: c;
+    background-color: lightcoral;
+}
+
+.content img {
+    width: 900px;
+}
+
+.item {
+    color: greenyellow;
+}
+.posts {
+
+}

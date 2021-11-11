@@ -3,7 +3,7 @@
     width: 1200px;
     grid-template-areas:
     "h h"
-    "na c";
+    "n c";
 
 
     grid-template-rows: 60px 1fr;
@@ -11,25 +11,4 @@
     /*grid-gap: 10px;*/
 }
 
-.header {
-    grid-area: h;
-    background-color: lightgreen;
-}
 
-.header img {
-    width: 50px;
-}
-
-.nav {
-    grid-area: na;
-    background-color: darkseagreen;
-}
-
-.content {
-    grid-area: c;
-    background-color: lightcoral;
-}
-
-.content img {
-    width: 900px;
-}
