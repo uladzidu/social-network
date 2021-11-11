@@ -6,11 +6,19 @@ export const MyPosts = () => {
     return (
         <div>
             My posts
-            <Post/>
-            <Post/>
-            <Post/>
-            <Post/>
-            <Post/>
+            <Post
+                message="Hi, how are you"
+                likes={5}
+            />
+            <Post
+                message="It's my first post"
+                likes={15}
+            />
         </div>
     )
+}
+
+export type PropsType = {
+    message: string
+    likes: number
 }
