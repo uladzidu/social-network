@@ -7,19 +7,24 @@ export const Navbar = () => {
     return (
         <nav className={s.nav}>
             <div className={`${s.item} ${s.active}`}>
-                <NavLink to='/profile' style ={({ isActive}) => ({color: isActive ? 'blue' : 'white'})}> Profile </NavLink>
+                <NavLink to="/profile"
+                         style={({isActive}) => ({color: isActive ? 'gold' : 'white'})}> Profile </NavLink>
             </div>
             <div className={s.item}>
-                <NavLink to="/dialogs">Messages</NavLink>
+                <NavLink to="/dialogs"
+                         style={({isActive}) => ({color: isActive ? 'gold' : 'white'})}>Messages</NavLink>
             </div>
             <div className={s.item}>
-                <NavLink to="/profile">News</NavLink>
+                <NavLink to="/news"
+                         style={({isActive}) => ({color: isActive ? 'gold' : 'white'})}>News</NavLink>
             </div>
             <div className={s.item}>
-                <NavLink to="/profile">Music</NavLink>
+                <NavLink to="/music"
+                         style={({isActive}) => ({color: isActive ? 'gold' : 'white'})}>Music</NavLink>
             </div>
             <div className={s.item}>
-                <NavLink to="/profile">Settings</NavLink>
+                <NavLink to="/settings"
+                         style={({isActive}) => ({color: isActive ? 'gold' : 'white'})}>Settings</NavLink>
             </div>
         </nav>
     )

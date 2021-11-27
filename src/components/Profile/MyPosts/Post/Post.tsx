@@ -11,7 +11,7 @@ export const Post = (pr: PropsType) => {
                 alt="f"/>
             {pr.message}
             <div>
-                <span>{pr.likes}</span>
+                <span>like {pr.likes}</span>
             </div>
         </div>
     )
