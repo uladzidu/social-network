@@ -9,7 +9,7 @@ type propsType = {
 }
 
 type propsMessageType = {
-    message : string
+    message: string
 }
 
 const DialogItem = (props: propsType) => {
@@ -27,20 +27,36 @@ const Message = (props: propsMessageType) => {
     )
 }
 
-export const Dialogs = () => {
+export const Dialogs = (props: propsType) => {
+
+    let dialogsData = [
+        {id: 1, name: 'Vlados'},
+        {id: 2, name: 'Gyn'},
+        {id: 3, name: 'Andr'},
+        {id: 4, name: 'Taras'},
+        {id: 5, name: 'Sanya Big Boss'},
+    ]
+
+    let messagesData = [
+        {id: 1, message: 'Hi'},
+        {id: 2, message:},
+        {id: 3, message: 'Good Job!'},
+    ]
+
+
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>
-                <DialogItem name="Vlados" id ={1}/>
-                <DialogItem name="Gyn" id ={2}/>
-                <DialogItem name="Andr" id ={3}/>
-                <DialogItem name="Taras" id ={4}/>
-                <DialogItem name="Sanya Big Boss" id ={5}/>
+                <DialogItem id ={dialogsData[0].id} name={dialogsData[0].name}  />
+                <DialogItem id ={dialogsData[1].id} name={dialogsData[1].name}  />
+                <DialogItem id ={dialogsData[2].id} name={dialogsData[2].name}  />
+                <DialogItem id ={dialogsData[3].id} name={dialogsData[3].name}  />
+                <DialogItem id ={dialogsData[4].id} name={dialogsData[4].name}  />
             </div>
             <div className={s.messages}>
-                <Message message= 'Hi'/>
-                <Message message= 'How are u? '/>
-                <Message message= 'Good Job!'/>
+                <Message message={messagesData[0].message} />
+                <Message message={messagesData[1].message} />
+                <Message message={messagesData[2].message} />
 
             </div>
         </div>
