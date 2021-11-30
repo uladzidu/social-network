@@ -1,16 +1,12 @@
 import React from 'react';
 import {Post} from './Post/Post';
 import s from './MyPosts.module.css'
+import {postData} from '../Profile';
 
 
 export const MyPosts = () => {
 
-    let postData = [
-        {id: 1, postMessage: 'Hi, how are you', likes: 5},
-        {id: 2, postMessage: 'It\'s my first post', likes: 15}
-    ]
-
-    let mappedPost = postData.map(post => <Post message={post.postMessage} likes={post.likes}/>)
+    let mappedPost = postData.map(post => <Post message={props.postMessage} likes={props.likes}/>)
 
     return (
         <div className={s.postsBlock}>
