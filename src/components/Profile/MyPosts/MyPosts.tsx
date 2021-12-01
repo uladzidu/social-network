@@ -1,12 +1,17 @@
 import React from 'react';
 import {Post} from './Post/Post';
 import s from './MyPosts.module.css'
-import {postData} from '../Profile';
+import {MyPostsType} from '../Profile';
 
 
-export const MyPosts = () => {
+export type PostDataType = {
+    postMessage: string
+    likes: number
+}
 
-    let mappedPost = postData.map(post => <Post message={props.postMessage} likes={props.likes}/>)
+export const MyPosts = (props : MyPostsType) => {
+
+    let mappedPost = props.postData.map(post => <Post postMessage={post.postMessage} likes={post.likes}/>)
 
     return (
         <div className={s.postsBlock}>
@@ -26,7 +31,4 @@ export const MyPosts = () => {
     )
 }
 
-export type PropsType = {
-    message: string
-    likes: number
-}
+
