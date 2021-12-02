@@ -1,10 +1,9 @@
 import React from 'react';
 import s from './Post.module.css';
-import {PostDataType} from '../MyPosts';
+import {AppType, PostDataType} from '../../../../index';
 
 
 export const Post = (props: PostDataType) => {
-
 
     return (
         <div className={s.item}>

@@ -1,15 +1,11 @@
 import React from 'react';
 import {Post} from './Post/Post';
 import s from './MyPosts.module.css'
-import {MyPostsType} from '../Profile';
+import {AppType, PostDataType} from '../../../index';
 
 
-export type PostDataType = {
-    postMessage: string
-    likes: number
-}
 
-export const MyPosts = (props : MyPostsType) => {
+export const MyPosts = (props : AppType) => {
 
     let mappedPost = props.postData.map(post => <Post postMessage={post.postMessage} likes={post.likes}/>)
 
