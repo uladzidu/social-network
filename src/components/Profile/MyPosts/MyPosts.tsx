@@ -5,7 +5,7 @@ import {AppType, PostDataType} from '../../../index';
 
 
 
-export const MyPosts = (props : AppType) => {
+export const MyPosts = (props:AppType) => {
 
     let mappedPost = props.postData.map(post => <Post postMessage={post.postMessage} likes={post.likes}/>)
 
