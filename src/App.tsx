@@ -8,10 +8,12 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {News} from './components/News/News';
 import {Music} from './components/Music/Musics';
 import {Settings} from './components/Settings/Settings';
-import {AppPropsType} from './redux/state';
+import {AppPropsType, StatePropsType} from './redux/state';
 
-
-export function App(props: AppPropsType) {
+type AppPropsTYpe={
+    state:StatePropsType
+}
+export function App(props:AppPropsTYpe ) {
     return (
         <BrowserRouter>
             <div className="app-wrapper">

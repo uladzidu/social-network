@@ -1,5 +1,5 @@
 export type AppPropsType = {
-    state : StatePropsType
+    state: StatePropsType
 }
 
 export type PostDataType = {
@@ -20,25 +20,15 @@ export type MessagesDataType = {
 
 export type StatePropsType = {
     profilePage: {
-        postData: [
-            {
-                id: number
-                postMessage: string
-                likes: number
-            },
-        ]
+        postData: PostDataType[]
     },
     messagesPage: {
-        dialogsData: [
-            { id: number, name: string }
-        ],
-        messagesData: [
-            { id: number, message: string }
-        ]
+        dialogsData: DialogDataType[]
+        messagesData: MessagesDataType[]
     }
 }
 
-let state= {
+let state = {
     profilePage: {
         postData: [
             {id: 1, postMessage: 'Hi, how are you', likes: 5},
