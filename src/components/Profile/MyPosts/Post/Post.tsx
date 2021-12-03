@@ -1,10 +1,9 @@
 import React from 'react';
 import s from './Post.module.css';
-import {AppType, PostDataType} from '../../../../index';
+import {PostDataType,} from '../../../../redux/state';
 
 
 export const Post = (props: PostDataType) => {
-
     return (
         <div className={s.item}>
             <img

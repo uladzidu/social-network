@@ -1,13 +1,12 @@
 import React from 'react';
 import {Post} from './Post/Post';
 import s from './MyPosts.module.css'
-import {AppType, PostDataType} from '../../../index';
+import {AppPropsType, StatePropsType} from '../../../redux/state';
 
 
+export const MyPosts = (props: AppPropsType) => {
 
-export const MyPosts = (props:AppType) => {
-
-    let mappedPost = props.postData.map(post => <Post postMessage={post.postMessage} likes={post.likes}/>)
+    let mappedPost = props.state.profilePage.postData.map(p => <Post postMessage={p.postMessage} likes={p.likes} id={p.id}/>)
 
     return (
         <div className={s.postsBlock}>

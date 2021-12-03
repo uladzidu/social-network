@@ -1,10 +1,10 @@
 import React from 'react';
 import s from './../Dialogs.module.css'
-import {AppType} from '../../../index';
+import {MessagesDataType} from '../../../index';
 
 
-export const Message = (props: AppType) => {
+export const Message = (props: MessagesDataType) => {
     return (
-        <div className={s.messages}>{props.messagesData}</div>
+        <div className={s.messages}>{props.message}</div>
     )
 }
