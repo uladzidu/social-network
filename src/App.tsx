@@ -11,7 +11,7 @@ import {Settings} from './components/Settings/Settings';
 import {AppPropsType, StatePropsType} from './redux/state';
 
 type AppPropsTYpe={
-    state:StatePropsType
+   state:StatePropsType
 }
 export function App(props:AppPropsTYpe ) {
     return (
