@@ -8,14 +8,13 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {News} from './components/News/News';
 import {Music} from './components/Music/Musics';
 import {Settings} from './components/Settings/Settings';
-import {AppPropsType, StatePropsType} from './redux/state';
+import {StatePropsType} from './redux/state';
 
 type AppPropsTYpe={
    state:StatePropsType
 }
 export function App(props:AppPropsTYpe ) {
     return (
-        <BrowserRouter>
             <div className="app-wrapper">
                 <Header/>
                 <Navbar/>
@@ -30,7 +29,6 @@ export function App(props:AppPropsTYpe ) {
                     </Routes>
                 </div>
             </div>
-        </BrowserRouter>
     );
 }
 
