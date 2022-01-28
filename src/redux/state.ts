@@ -1,23 +1,21 @@
+import {rerenderEntireTree} from "../render";
+
 export type AppPropsType = {
     state: StatePropsType
 }
-
 export type PostDataType = {
     id: number
     postMessage: string
     likes: number
 }
-
 export type DialogDataType = {
     name: string
     id: number
 }
-
 export type MessagesDataType = {
     id: number
     message: string
 }
-
 export type StatePropsType = {
     profilePage: {
         postData: PostDataType[]
@@ -28,16 +26,9 @@ export type StatePropsType = {
     }
 }
 
-export let addPost = (postMessage: string) => {
-    let newPost = {
-        id: 5,
-        postMessage: postMessage,
-        likes: 10
-    }
-    state.profilePage.postData.push(newPost)
-}
 
-let state = {
+
+export let state = {
     profilePage: {
         postData: [
             {id: 1, postMessage: 'Hi, how are you', likes: 5},
@@ -60,6 +51,12 @@ let state = {
             {id: 3, message: 'Good Job!'},
         ]
     }
+}
+
+export let addPost = (postMessage : string) => {
+    let newPost : PostDataType = {id : 5, postMessage : postMessage, likes : 0 }
+    state.profilePage.postData.push(newPost)
+    rerenderEntireTree(state)
 }
 
 export default state;

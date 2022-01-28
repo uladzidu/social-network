@@ -6,9 +6,7 @@ import {PostDataType,} from '../../../../redux/state';
 export const Post = (props: PostDataType) => {
     return (
         <div className={s.item}>
-            <img
-                src="https://cdn2.vectorstock.com/i/1000x1000/49/86/man-character-face-avatar-in-glasses-vector-17074986.jpg"
-                alt="f"/>
+            <img src={'https://media.istockphoto.com/vectors/user-sign-icon-person-symbol-human-avatar-vector-id639085642?k=20&m=639085642&s=170667a&w=0&h=Oz2wAbb8r_b8sU8k4yZ3RR4NRbe-s7GF0kxjs1aez9M='} alt={'picture'}/>
             {props.postMessage}
             <div>
                 <span>like {props.likes}</span>
