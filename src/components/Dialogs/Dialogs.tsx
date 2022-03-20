@@ -19,7 +19,13 @@ export const Dialogs = (props: DialogsPropsType) => {
 
     let addMessage = () => {
         let messageAddedText = messageRef.current?.value
-        alert(messageAddedText)
+        props.messagesData.push(messageAddedText)
+
+
+    }
+
+    let OnChangeDialogs = () => {
+
     }
 
     return (
@@ -30,7 +36,10 @@ export const Dialogs = (props: DialogsPropsType) => {
             <div className={s.messages}>
                 {mappedMessagesData}
             </div>
-            <textarea ref={messageRef}/>
+
+            <textarea ref={messageRef}
+                      onChange={OnChangeDialogs}/>
+
             <button onClick={addMessage}>Add Message</button>
         </div>
     )

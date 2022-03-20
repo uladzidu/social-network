@@ -19,13 +19,13 @@ export type MessagesDataType = {
 export type StatePropsType = {
     profilePage: {
         postData: PostDataType[]
+        newPostText: string
     },
     messagesPage: {
         dialogsData: DialogDataType[]
         messagesData: MessagesDataType[]
     }
 }
-
 
 
 export let state = {
@@ -35,7 +35,8 @@ export let state = {
             {id: 2, postMessage: 'It\'s my first post', likes: 15},
             {id: 3, postMessage: 'It\'s my second post', likes: 15},
             {id: 4, postMessage: 'It\'s my third post', likes: 15},
-        ]
+        ],
+        newPostText: 'it'
     },
     messagesPage: {
         dialogsData: [
@@ -53,10 +54,27 @@ export let state = {
     }
 }
 
-export let addPost = (postMessage : string) => {
-    let newPost : PostDataType = {id : 5, postMessage : postMessage, likes : 0 }
+export let addPost = (postMessage: string) => {
+    let newPost: PostDataType = {id: 5, postMessage: state.profilePage.newPostText, likes: 0}
     state.profilePage.postData.push(newPost)
+    state.profilePage.newPostText = ''
     rerenderEntireTree(state)
 }
+
+export let updateNewPostText = (newText: string) => {
+    state.profilePage.newPostText = newText
+    rerenderEntireTree(state)
+}
+
+export let addMessage = (newMessage: string) => {
+    state.messagesPage.messagesData.push({id: 4, message: newMessage})
+    rerenderEntireTree(state)
+}
+
+export let updateMessage = (newMessage: string) => {
+    state.messagesPage.messagesData.push({id: 4, message: newMessage})
+    rerenderEntireTree(state)
+}
+
 
 export default state;
