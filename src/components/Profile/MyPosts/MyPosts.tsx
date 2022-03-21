@@ -7,8 +7,8 @@ import state, {PostDataType} from '../../../redux/state';
 type MyPostPropsType = {
     postData: PostDataType[]
     addPost: (postMessage: string) => void
-    newPostText : string
-    updateNewPostText : (newText : string ) => void
+    newPostText: string
+    updateNewPostText: (newText: string) => void
 }
 
 export const MyPosts = (props: MyPostPropsType) => {
@@ -26,19 +26,19 @@ export const MyPosts = (props: MyPostPropsType) => {
         }
     }
 
-let onPostChange = () => {
-    let text = newPostElement.current?.value as string
-    props.updateNewPostText(text)
-}
+    let onPostChange = () => {
+        let text = newPostElement.current?.value as string
+        props.updateNewPostText(text)
+    }
 
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>
             <div>
                 <div>
-                    <textarea onChange={onPostChange}
-                              ref={newPostElement}
-                              value = {props.newPostText} />
+                    <textarea ref={newPostElement}
+                              value={props.newPostText}
+                              onChange={onPostChange}/>
                 </div>
                 <div>
                     <button onClick={localAddPost}>Add Post</button>

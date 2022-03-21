@@ -8,14 +8,14 @@ import {Route, Routes} from 'react-router-dom';
 import {News} from './components/News/News';
 import {Music} from './components/Music/Musics';
 import {Settings} from './components/Settings/Settings';
-import {addMessage, addPost, StatePropsType, updateMessage, updateNewPostText} from './redux/state';
+import {StatePropsType} from './redux/state';
 
 type AppPropsTYpe = {
     state: StatePropsType
     addPost: (postMessage: string) => void
-    updateNewPostText : (newText : string) => void
-    addMessage : () => void
-    updateMessage : () => void
+    updateNewPostText: (newText: string) => void
+    updateTextMessage: (newMessage: string) => void
+    addMessage: (newMessage: string) => void
 }
 
 export function App(props: AppPropsTYpe) {
@@ -28,11 +28,16 @@ export function App(props: AppPropsTYpe) {
                     <Route path="/profile/*"
                            element={<Profile postData={props.state.profilePage.postData}
                                              addPost={props.addPost}
-                                             newPostText = {props.state.profilePage.newPostText}
-                                             updateNewPostText = {props.updateNewPostText}
+                                             newPostText={props.state.profilePage.newPostText}
+                                             updateNewPostText={props.updateNewPostText}
                            />}/>
                     <Route path="/dialogs/*" element={<Dialogs dialogsData={props.state.messagesPage.dialogsData}
-                                                               messagesData={props.state.messagesPage.messagesData}/>}/>
+                                                               messagesData={props.state.messagesPage.messagesData}
+                                                               addMessage={props.addMessage}
+                                                               newMessageText={props.state.messagesPage.newMessageText}
+                                                               updateTextMessage={props.updateTextMessage}
+
+                    />}/>
                     <Route path="/news/" element={<News/>}/>
                     <Route path="/music/" element={<Music/>}/>
                     <Route path="/settings/" element={<Settings/>}/>
