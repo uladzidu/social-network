@@ -8,15 +8,15 @@ import {Route, Routes} from 'react-router-dom';
 import {News} from './components/News/News';
 import {Music} from './components/Music/Musics';
 import {Settings} from './components/Settings/Settings';
-import {StatePropsType} from './redux/state';
 
 type AppPropsTYpe = {
-    state: StatePropsType
-    addPost: (postMessage: string) => void
-    updateNewPostText: (newText: string) => void
+    state: any
+    addPost: () => void
+    updateNewPostText: (newText : string) => void
+    addMessage: () => void
     updateTextMessage: (newMessage: string) => void
-    addMessage: (newMessage: string) => void
 }
+
 
 export function App(props: AppPropsTYpe) {
     return (

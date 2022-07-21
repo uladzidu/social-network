@@ -1,7 +1,7 @@
 import React from 'react';
 import {Post} from './Post/Post';
 import s from './MyPosts.module.css'
-import state, {PostDataType} from '../../../redux/state';
+import {PostDataType} from '../../../redux/state';
 
 
 type MyPostPropsType = {
@@ -13,10 +13,11 @@ type MyPostPropsType = {
 
 export const MyPosts = (props: MyPostPropsType) => {
 
-    let mappedPost = props.postData.map(p => <Post id={p.id}
+    let mappedPost = props.postData.map(p => <Post key={p.id}
+                                                   id={p.id}
                                                    postMessage={p.postMessage}
                                                    likes={p.likes}
-                                                   key={p.id}/>)
+    />)
 
     let newPostElement = React.createRef<HTMLTextAreaElement>()
 
@@ -24,6 +25,7 @@ export const MyPosts = (props: MyPostPropsType) => {
         if (newPostElement.current?.value) {
             props.addPost(newPostElement.current?.value)
         }
+        console.log(props.postData)
     }
 
     let onPostChange = () => {
