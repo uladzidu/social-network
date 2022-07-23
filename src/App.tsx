@@ -11,10 +11,7 @@ import {Settings} from './components/Settings/Settings';
 
 type AppPropsTYpe = {
     state: any
-    addPost: () => void
-    updateNewPostText: (newText : string) => void
-    addMessage: () => void
-    updateTextMessage: (newMessage: string) => void
+    dispatch : any
 }
 
 
@@ -27,15 +24,13 @@ export function App(props: AppPropsTYpe) {
                 <Routes>
                     <Route path="/profile/*"
                            element={<Profile postData={props.state.profilePage.postData}
-                                             addPost={props.addPost}
+                                             dispatch = {props.dispatch}
                                              newPostText={props.state.profilePage.newPostText}
-                                             updateNewPostText={props.updateNewPostText}
                            />}/>
                     <Route path="/dialogs/*" element={<Dialogs dialogsData={props.state.messagesPage.dialogsData}
                                                                messagesData={props.state.messagesPage.messagesData}
-                                                               addMessage={props.addMessage}
+                                                               dispatch = {props.dispatch}
                                                                newMessageText={props.state.messagesPage.newMessageText}
-                                                               updateTextMessage={props.updateTextMessage}
 
                     />}/>
                     <Route path="/news/" element={<News/>}/>
