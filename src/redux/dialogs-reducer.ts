@@ -3,6 +3,15 @@ import {v1} from "uuid";
 const ADD_MESSAGE = 'ADD-MESSAGE';
 const UPDATE_TEXT_MESSAGE = 'UPDATE-TEXT-MESSAGE';
 
+export type AddMessageReducerType = {
+    type : 'ADD-MESSAGE'
+}
+
+export type UpdateTextMessageReducerType = {
+    type : 'UPDATE-TEXT-MESSAGE'
+    newMessage : string
+}
+
 const dialogsReducer = (state: any, action: any) => {
 
     switch (action.type) {

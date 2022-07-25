@@ -1,11 +1,11 @@
 import React from 'react';
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {MyPosts} from './MyPosts/MyPosts';
-import {PostDataType} from '../../redux/state';
+import {ActionsAllTypes, StatePropsType} from '../../redux/state';
 
 type ProfilePropsType = {
-    state: any
-    dispatch : any
+    state: StatePropsType
+    dispatch : (action: ActionsAllTypes) => void
 }
 
 export const Profile = (props: ProfilePropsType) => {

@@ -8,14 +8,15 @@ import {Route, Routes} from 'react-router-dom';
 import {News} from './components/News/News';
 import {Music} from './components/Music/Musics';
 import {Settings} from './components/Settings/Settings';
+import {ActionsAllTypes, StatePropsType} from "./redux/state";
 
-type AppPropsTYpe = {
-    state: any
-    dispatch : any
+type AppPropsType = {
+    state: StatePropsType
+    dispatch : (action: ActionsAllTypes) => void
 }
 
 
-export function App(props: AppPropsTYpe) {
+export function App(props: AppPropsType) {
     return (
         <div className="app-wrapper">
             <Header/>

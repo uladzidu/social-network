@@ -1,12 +1,8 @@
 import {v1} from "uuid";
-import profileReducer from "./profile-reducer";
-import dialogsReducer from "./dialogs-reducer";
+import profileReducer, {AddPostReducerType, UpdateNewPostReducerType} from "./profile-reducer";
+import dialogsReducer, {AddMessageReducerType, UpdateTextMessageReducerType} from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
 
-
-export type AppPropsType = {
-    state: StatePropsType
-}
 export type PostDataType = {
     id: string
     postMessage: string
@@ -33,11 +29,22 @@ export type StatePropsType = {
     sidebar: {}
 }
 
+export type ActionsAllTypes = AddPostReducerType | UpdateNewPostReducerType |
+    AddMessageReducerType | UpdateTextMessageReducerType
 
-export let store = {
+export type StoreType = {
+    _state : StatePropsType,
+    _callSubscriber : (state : StatePropsType) => void
+    getState : () => StatePropsType
+    subscribe : (observer: any) => void
+    dispatch : (action: ActionsAllTypes) => void
+}
+
+
+export let store : StoreType = {
     _state: <StatePropsType>{
         profilePage: {
-            postData: [
+            postData: <PostDataType[]>[
                 {id: v1(), postMessage: 'Hi, how are you', likes: 5},
                 {id: v1(), postMessage: 'It\'s my first post', likes: 15},
                 {id: v1(), postMessage: 'It\'s my second post', likes: 15},
@@ -46,14 +53,14 @@ export let store = {
             newPostText: 'it'
         },
         messagesPage: {
-            dialogsData: [
+            dialogsData: <DialogDataType[]>[
                 {id: v1(), name: 'Vlados'},
                 {id: v1(), name: 'Gyn'},
                 {id: v1(), name: 'Andr'},
                 {id: v1(), name: 'Taras'},
                 {id: v1(), name: 'Sanya Big Boss'},
             ],
-            messagesData: [
+            messagesData: <MessagesDataType[]> [
                 {id: v1(), message: 'Hi'},
                 {id: v1(), message: 'How are u?'},
                 {id: v1(), message: 'Good Job!'},
@@ -62,7 +69,7 @@ export let store = {
         },
         sidebar: {}
     },
-    _callSubscriber (state : any) {
+    _callSubscriber (state : StatePropsType) {
     },
     getState() {
         return this._state
@@ -70,7 +77,7 @@ export let store = {
     subscribe (observer: any) {
         this._callSubscriber = observer
     },
-    dispatch(action: any) {
+    dispatch(action: ActionsAllTypes) {
 
         this._state.profilePage = profileReducer(this._state.profilePage, action)
         this._state.messagesPage = dialogsReducer(this._state.messagesPage, action)

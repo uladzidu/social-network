@@ -2,11 +2,12 @@ import React from 'react';
 import {Post} from './Post/Post';
 import s from './MyPosts.module.css'
 import {addPostCreator, updateNewPostCreator} from "../../../redux/profile-reducer";
+import {ActionsAllTypes, StatePropsType} from "../../../redux/state";
 
 
 type MyPostPropsType = {
-    dispatch : any
-    state : any
+    dispatch : (action: ActionsAllTypes) => void
+    state : StatePropsType
 }
 
 
@@ -31,7 +32,6 @@ export const MyPosts = (props: MyPostPropsType) => {
         let text = newPostElement.current?.value as string
         let action = updateNewPostCreator(text)
         props.dispatch( action )
-
     }
 
     return (

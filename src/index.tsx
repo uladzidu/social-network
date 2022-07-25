@@ -4,10 +4,10 @@ import {App} from './App';
 import './index.css';
 
 import {BrowserRouter} from 'react-router-dom';
-import {store} from "./redux/state";
+import {StatePropsType, store} from "./redux/state";
 
 
-export const rerenderEntireTree = (state : any) => {
+export const rerenderEntireTree = (state : StatePropsType) => {
     ReactDOM.render(
         <BrowserRouter>
             <App state = {state}
@@ -17,5 +17,6 @@ export const rerenderEntireTree = (state : any) => {
 
 }
 
-rerenderEntireTree(store.getState())
+const stateFromStore = store.getState()
+rerenderEntireTree(stateFromStore)
 store.subscribe(rerenderEntireTree)
