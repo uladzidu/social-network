@@ -4,18 +4,16 @@ import {MyPosts} from './MyPosts/MyPosts';
 import {PostDataType} from '../../redux/state';
 
 type ProfilePropsType = {
-    postData: PostDataType[]
+    state: any
     dispatch : any
-    newPostText : string
 }
 
 export const Profile = (props: ProfilePropsType) => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts postData={props.postData}
-                     dispatch = {props.dispatch}
-                     newPostText={props.newPostText}/>
+            <MyPosts dispatch = {props.dispatch}
+                     state = {props.state}/>
         </div>
     )
 }

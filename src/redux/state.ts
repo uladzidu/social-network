@@ -1,4 +1,7 @@
 import {v1} from "uuid";
+import profileReducer from "./profile-reducer";
+import dialogsReducer from "./dialogs-reducer";
+import sidebarReducer from "./sidebar-reducer";
 
 
 export type AppPropsType = {
@@ -26,14 +29,9 @@ export type StatePropsType = {
         dialogsData: DialogDataType[]
         messagesData: MessagesDataType[]
         newMessageText: string
-    }
+    },
+    sidebar: {}
 }
-
-
-const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST = 'UPDATE-NEW-POST';
-const ADD_MESSAGE = 'ADD-MESSAGE';
-const UPDATE_TEXT_MESSAGE = 'UPDATE-TEXT-MESSAGE';
 
 
 export let store = {
@@ -60,46 +58,26 @@ export let store = {
                 {id: v1(), message: 'How are u?'},
                 {id: v1(), message: 'Good Job!'},
             ],
-            newMessageText: 'hi'
-        }
-    } ,
-    _callSubscriber : function (value : any) {
+            newMessageText: ''
+        },
+        sidebar: {}
     },
-    getState : function () {
+    _callSubscriber (state : any) {
+    },
+    getState() {
         return this._state
     },
-    subscribe : function (observer : any) {
+    subscribe (observer: any) {
         this._callSubscriber = observer
     },
-    dispatch(action : any) {
+    dispatch(action: any) {
 
-        switch (action.type) {
-            case ADD_POST:
-                let newPost: PostDataType = {id: v1(), postMessage: this._state.profilePage.newPostText, likes: 0}
-                this._state.profilePage.postData.push(newPost)
-                this._state.profilePage.newPostText = ''
-                this._callSubscriber(this._state)
-                break;
-            case UPDATE_NEW_POST:
-                this._state.profilePage.newPostText = action.newText
-                this._callSubscriber(this._state)
-                break;
-            case ADD_MESSAGE:
-                let newAddedMessage = {id: v1(), message: this._state.profilePage.newPostText}
-                this._state.messagesPage.messagesData.push(newAddedMessage)
-                this._state.messagesPage.newMessageText = ''
-                this._callSubscriber(this._state)
-                break;
-            case UPDATE_TEXT_MESSAGE:
-                this._state.messagesPage.newMessageText = action.newMessage
-                this._callSubscriber(this._state)
-                break;
-        }
-    },
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.messagesPage = dialogsReducer(this._state.messagesPage, action)
+        this._state.sidebar = sidebarReducer(this._state.sidebar, action)
+
+        this._callSubscriber(this._state)
+    }
 }
 
-export const addPostActionCreator = () => ( {type: ADD_POST} )
-export const updateNewPostActionCreator = (text: string) => ( {type: UPDATE_NEW_POST, newText: text} )
-export const addMessageActionCreator = () => ( {type: ADD_MESSAGE} )
-export const updateTextMessageActionCreator = (newMessage: string) => (
-    {type: UPDATE_TEXT_MESSAGE, newMessage: newMessage} )
+

@@ -23,9 +23,8 @@ export function App(props: AppPropsTYpe) {
             <div className="app-wrapper-content">
                 <Routes>
                     <Route path="/profile/*"
-                           element={<Profile postData={props.state.profilePage.postData}
+                           element={<Profile state={props.state}
                                              dispatch = {props.dispatch}
-                                             newPostText={props.state.profilePage.newPostText}
                            />}/>
                     <Route path="/dialogs/*" element={<Dialogs dialogsData={props.state.messagesPage.dialogsData}
                                                                messagesData={props.state.messagesPage.messagesData}

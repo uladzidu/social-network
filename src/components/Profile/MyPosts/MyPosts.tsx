@@ -1,20 +1,18 @@
 import React from 'react';
 import {Post} from './Post/Post';
 import s from './MyPosts.module.css'
-import {addPostActionCreator, PostDataType, updateNewPostActionCreator} from '../../../redux/state';
+import {addPostCreator, updateNewPostCreator} from "../../../redux/profile-reducer";
 
 
 type MyPostPropsType = {
-    postData: PostDataType[]
     dispatch : any
-    newPostText: string
+    state : any
 }
-
 
 
 export const MyPosts = (props: MyPostPropsType) => {
 
-    let mappedPost = props.postData.map(p =>
+    let mappedPost = props.state.profilePage.postData.map((p : any) =>
         <Post key={p.id}
               id={p.id}
               postMessage={p.postMessage}
@@ -25,14 +23,13 @@ export const MyPosts = (props: MyPostPropsType) => {
 
     let localAddPost = () => {
         if (newPostElement.current?.value) {
-            props.dispatch( addPostActionCreator() )
+            props.dispatch( addPostCreator() )
         }
     }
 
     let onPostChange = () => {
         let text = newPostElement.current?.value as string
-        const action = updateNewPostActionCreator(text)
-
+        let action = updateNewPostCreator(text)
         props.dispatch( action )
 
     }
@@ -43,7 +40,7 @@ export const MyPosts = (props: MyPostPropsType) => {
             <div>
                 <div>
                     <textarea ref={newPostElement}
-                              value={props.newPostText}
+                              value={props.state.profilePage.newPostText}
                               onChange={onPostChange}/>
                 </div>
                 <div>

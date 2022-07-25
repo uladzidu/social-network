@@ -2,18 +2,14 @@ import React from 'react';
 import s from './Dialogs.module.css'
 import {Message} from './Message/Message';
 import {DialogItem} from './DialogItem/DialogItem';
-import {
-    addMessageActionCreator,
-    DialogDataType,
-    MessagesDataType,
-    updateTextMessageActionCreator
-} from '../../redux/state';
+import {DialogDataType, MessagesDataType} from "../../redux/state";
+import {addMessageCreator, updateTextMessageCreator} from "../../redux/dialogs-reducer";
 
 
 type DialogsPropsType = {
     dialogsData: DialogDataType[]
     messagesData: MessagesDataType[]
-    dispatch : any
+    dispatch: any
     newMessageText: string
 }
 
@@ -26,13 +22,13 @@ export const Dialogs = (props: DialogsPropsType) => {
 
     let localAddMessage = () => {
         if (messageRef.current?.value) {
-            props.dispatch( addMessageActionCreator() )
+            props.dispatch(addMessageCreator())
         }
     }
 
     let OnChangeMessage = () => {
         const newMessage = messageRef.current?.value as string
-        props.dispatch( updateTextMessageActionCreator(newMessage) )
+        props.dispatch(updateTextMessageCreator(newMessage))
     }
 
     return (
@@ -41,15 +37,20 @@ export const Dialogs = (props: DialogsPropsType) => {
                 {mappedDialogs}
             </div>
             <div className={s.messages}>
-                {mappedMessagesData}
+                <div>{mappedMessagesData}</div>
+                <div>
+                    <div><textarea ref={messageRef}
+                                   placeholder={'Enter you message'}
+                                   value={props.newMessageText}
+                                   onChange={OnChangeMessage}/>
+                    </div>
+                    <div>
+                        <button onClick={localAddMessage}>Add Message</button>
+                    </div>
+                </div>
             </div>
 
-            <textarea ref={messageRef}
-                      value={props.newMessageText}
-                      onChange={OnChangeMessage}
-            />
 
-            <button onClick={localAddMessage}>Add Message</button>
         </div>
     )
 }
