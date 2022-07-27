@@ -1,19 +1,22 @@
 import {v1} from "uuid";
-import {PostDataType} from "./state";
+import {ActionsAllTypes, PostDataType, ProfilePageType} from "./state";
 
 
-export type AddPostReducerType = ReturnType<typeof addPostCreator>
-export type UpdateNewPostReducerType = ReturnType<typeof updateNewPostCreator>
+export type AddPostReducerType = {
+    type : 'ADD-POST'
+}
+export type UpdateNewPostReducerType = {
+    type : 'UPDATE_NEW_POST',
+    newText : string
+}
 
-const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST = 'UPDATE-NEW-POST';
+export type AllProfileReducersType = AddPostReducerType | UpdateNewPostReducerType
 
 
-const profileReducer = (state: any, action: any) => {
-
+export const profileReducer = (state: ProfilePageType, action: ActionsAllTypes) => {
     switch (action.type) {
 
-        case ADD_POST:
+        case "ADD-POST":
             const newPost: PostDataType = {
                 id: v1(),
                 postMessage: state.newPostText,
@@ -23,7 +26,7 @@ const profileReducer = (state: any, action: any) => {
             state.newPostText = ''
             return state;
 
-        case UPDATE_NEW_POST:
+        case "UPDATE_NEW_POST":
             state.newPostText = action.newText
             return state;
 
@@ -32,7 +35,6 @@ const profileReducer = (state: any, action: any) => {
     }
 }
 
-export const addPostCreator = () => ({type: ADD_POST})
-export const updateNewPostCreator = (text: string) => ({type: UPDATE_NEW_POST, newText : text})
-
-export default profileReducer
+export const addPostCreator = () : AddPostReducerType => ( {type : "ADD-POST"} )
+export const updateNewPostCreator = (text: string) : UpdateNewPostReducerType =>
+    ( {type : "UPDATE_NEW_POST" , newText : text} )

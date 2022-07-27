@@ -1,7 +1,7 @@
 import {v1} from "uuid";
-import profileReducer, {AddPostReducerType, UpdateNewPostReducerType} from "./profile-reducer";
-import dialogsReducer, {AddMessageReducerType, UpdateTextMessageReducerType} from "./dialogs-reducer";
-import sidebarReducer from "./sidebar-reducer";
+import {AllProfileReducersType, profileReducer} from "./profile-reducer";
+import {dialogsReducer, DialogsReducersType} from "./dialogs-reducer";
+import {sidebarReducer} from "./sidebar-reducer";
 
 export type PostDataType = {
     id: string
@@ -28,12 +28,20 @@ export type StatePropsType = {
     },
     sidebar: {}
 }
+export type ProfilePageType = {
+    postData : PostDataType[]
+    newPostText : string
+}
+export type MessagesPageType = {
+    dialogsData : DialogDataType[]
+    messagesData : MessagesDataType[]
+    newMessageText : string
+}
 
-export type ActionsAllTypes = AddPostReducerType | UpdateNewPostReducerType |
-    AddMessageReducerType | UpdateTextMessageReducerType
+export type ActionsAllTypes = AllProfileReducersType | DialogsReducersType
 
 export type StoreType = {
-    _state : StatePropsType,
+    _state : StatePropsType
     _callSubscriber : (state : StatePropsType) => void
     getState : () => StatePropsType
     subscribe : (observer: any) => void
@@ -43,8 +51,8 @@ export type StoreType = {
 
 export let store : StoreType = {
     _state: <StatePropsType>{
-        profilePage: {
-            postData: <PostDataType[]>[
+        profilePage: <ProfilePageType> {
+            postData: <Array<PostDataType>>[
                 {id: v1(), postMessage: 'Hi, how are you', likes: 5},
                 {id: v1(), postMessage: 'It\'s my first post', likes: 15},
                 {id: v1(), postMessage: 'It\'s my second post', likes: 15},
@@ -52,8 +60,8 @@ export let store : StoreType = {
             ],
             newPostText: 'it'
         },
-        messagesPage: {
-            dialogsData: <DialogDataType[]>[
+        messagesPage: <MessagesPageType> {
+            dialogsData: <Array<DialogDataType>>[
                 {id: v1(), name: 'Vlados'},
                 {id: v1(), name: 'Gyn'},
                 {id: v1(), name: 'Andr'},

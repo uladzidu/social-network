@@ -1,19 +1,20 @@
 import React from 'react';
 import {Post} from './Post/Post';
 import s from './MyPosts.module.css'
-import {addPostCreator, updateNewPostCreator} from "../../../redux/profile-reducer";
-import {ActionsAllTypes, StatePropsType} from "../../../redux/state";
+import {PostDataType} from "../../../redux/state";
 
 
 type MyPostPropsType = {
-    dispatch : (action: ActionsAllTypes) => void
-    state : StatePropsType
+    posts: PostDataType[]
+    newPostText: string
+    updateNewPostText: (text: string) => void
+    addPost: () => void
 }
 
 
 export const MyPosts = (props: MyPostPropsType) => {
 
-    let mappedPost = props.state.profilePage.postData.map((p : any) =>
+    let mappedPost = props.posts.map((p: any) =>
         <Post key={p.id}
               id={p.id}
               postMessage={p.postMessage}
@@ -23,15 +24,12 @@ export const MyPosts = (props: MyPostPropsType) => {
     let newPostElement = React.createRef<HTMLTextAreaElement>()
 
     let localAddPost = () => {
-        if (newPostElement.current?.value) {
-            props.dispatch( addPostCreator() )
-        }
+        props.addPost()
     }
 
     let onPostChange = () => {
         let text = newPostElement.current?.value as string
-        let action = updateNewPostCreator(text)
-        props.dispatch( action )
+        props.updateNewPostText(text)
     }
 
     return (
@@ -40,7 +38,7 @@ export const MyPosts = (props: MyPostPropsType) => {
             <div>
                 <div>
                     <textarea ref={newPostElement}
-                              value={props.state.profilePage.newPostText}
+                              value={props.newPostText}
                               onChange={onPostChange}/>
                 </div>
                 <div>

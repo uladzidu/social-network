@@ -1,22 +1,21 @@
 import {v1} from "uuid";
+import {ActionsAllTypes, MessagesPageType} from "./state";
 
-const ADD_MESSAGE = 'ADD-MESSAGE';
-const UPDATE_TEXT_MESSAGE = 'UPDATE-TEXT-MESSAGE';
 
 export type AddMessageReducerType = {
     type : 'ADD-MESSAGE'
 }
-
 export type UpdateTextMessageReducerType = {
     type : 'UPDATE-TEXT-MESSAGE'
     newMessage : string
 }
+export type DialogsReducersType = AddMessageReducerType | UpdateTextMessageReducerType
 
-const dialogsReducer = (state: any, action: any) => {
+export const dialogsReducer = (state: MessagesPageType, action: ActionsAllTypes) => {
 
     switch (action.type) {
 
-        case ADD_MESSAGE:
+        case "ADD-MESSAGE":
             const newAddedMessage = {
                 id: v1(),
                 message: state.newMessageText
@@ -25,7 +24,7 @@ const dialogsReducer = (state: any, action: any) => {
             state.newMessageText = ''
             return state;
 
-        case UPDATE_TEXT_MESSAGE:
+        case "UPDATE-TEXT-MESSAGE":
             state.newMessageText = action.newMessage
             return state;
 
@@ -34,8 +33,6 @@ const dialogsReducer = (state: any, action: any) => {
     }
 }
 
-export const addMessageCreator = () => ({type: ADD_MESSAGE})
-export const updateTextMessageCreator = (newMessage: string) => (
-    {type: UPDATE_TEXT_MESSAGE, newMessage: newMessage})
-
-export default dialogsReducer
+export const addMessageCreator = () : AddMessageReducerType => ({type: 'ADD-MESSAGE'})
+export const updateTextMessageCreator = (newMessage: string) : UpdateTextMessageReducerType => (
+    {type: 'UPDATE-TEXT-MESSAGE', newMessage: newMessage})

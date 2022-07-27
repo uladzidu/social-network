@@ -2,36 +2,40 @@ import React from 'react';
 import s from './Dialogs.module.css'
 import {Message} from './Message/Message';
 import {DialogItem} from './DialogItem/DialogItem';
-import {ActionsAllTypes, DialogDataType, MessagesDataType} from "../../redux/state";
-import {addMessageCreator, updateTextMessageCreator} from "../../redux/dialogs-reducer";
+import {DialogDataType, MessagesDataType} from "../../redux/state";
 
 
 type DialogsPropsType = {
-    dialogsData: DialogDataType[]
-    messagesData: MessagesDataType[]
-    dispatch: (action: ActionsAllTypes) => void
-    newMessageText: string
+    messagesData : MessagesDataType[]
+    dialogsData : DialogDataType[]
+    newMessageText : string
+    addDialogMessage : () => void
+    onChangeMessage : (newText: string) => void
 }
 
 export const Dialogs = (props: DialogsPropsType) => {
 
     let mappedMessagesData = props.messagesData.map((m:MessagesDataType) =>
-        <Message key={m.id} id={m.id} message={m.message} />)
+        <Message key={m.id}
+                 id={m.id}
+                 message={m.message} />)
 
     let mappedDialogs = props.dialogsData.map((d:DialogDataType) =>
-        <DialogItem key={d.id} id={d.id} name={d.name} />)
+        <DialogItem key={d.id}
+                    id={d.id}
+                    name={d.name} />)
 
     let messageRef = React.createRef<HTMLTextAreaElement>()
 
     let localAddMessage = () => {
         if (messageRef.current?.value) {
-            props.dispatch(addMessageCreator())
+            props.addDialogMessage()
         }
     }
 
     let OnChangeMessage = () => {
         const newMessage = messageRef.current?.value as string
-        props.dispatch(updateTextMessageCreator(newMessage))
+        props.onChangeMessage(newMessage)
     }
 
     return (
