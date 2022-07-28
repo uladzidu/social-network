@@ -9,7 +9,6 @@ import {Music} from './components/Music/Musics';
 import {Settings} from './components/Settings/Settings';
 import {DialogsContainer} from "./components/Dialogs/Message/DialogsContainer";
 
-
 export function App() {
 
     return (
@@ -19,11 +18,9 @@ export function App() {
             <div className="app-wrapper-content">
                 <Routes>
                     <Route path="/profile/*"
-                           // element={ <Profile store={props.store} />}
                            element={ <Profile/>}
                     />
                     <Route path="/dialogs/*"
-                           // element={ <DialogsContainer store = {props.store} />}
                            element={ <DialogsContainer/>}
                     />
                     <Route path="/news/" element={<News/>}/>
@@ -34,4 +31,3 @@ export function App() {
         </div>
     );
 }
-

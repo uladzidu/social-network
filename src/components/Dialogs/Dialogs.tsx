@@ -2,38 +2,36 @@ import React from 'react';
 import s from './Dialogs.module.css'
 import {Message} from './Message/Message';
 import {DialogItem} from './DialogItem/DialogItem';
-import {DialogDataType, MessagesDataType} from "../../redux/state";
+import {DialogDataType, MessagesDataType, MessagesPageType} from "../../redux/state";
 
 
 type DialogsPropsType = {
-    messagesData : MessagesDataType[]
-    dialogsData : DialogDataType[]
-    newMessageText : string
-    addDialogMessage : () => void
-    onChangeMessage : (newText: string) => void
+    messagesPage : MessagesPageType
+    addDialogMessage: () => void
+    onChangeMessage: (newText: string) => void
 }
 
 export const Dialogs = (props: DialogsPropsType) => {
 
-    let mappedMessagesData = props.messagesData.map((m:MessagesDataType) =>
+    let state = props.messagesPage
+
+    let mappedMessagesData = state.messagesData.map((m: MessagesDataType) =>
         <Message key={m.id}
                  id={m.id}
-                 message={m.message} />)
+                 message={m.message}/>)
 
-    let mappedDialogs = props.dialogsData.map((d:DialogDataType) =>
+    let mappedDialogs = state.dialogsData.map((d: DialogDataType) =>
         <DialogItem key={d.id}
                     id={d.id}
-                    name={d.name} />)
+                    name={d.name}/>)
 
     let messageRef = React.createRef<HTMLTextAreaElement>()
 
     let localAddMessage = () => {
-        if (messageRef.current?.value) {
-            props.addDialogMessage()
-        }
+        props.addDialogMessage()
     }
 
-    let OnChangeMessage = () => {
+    let onChangeMessage = () => {
         const newMessage = messageRef.current?.value as string
         props.onChangeMessage(newMessage)
     }
@@ -48,8 +46,8 @@ export const Dialogs = (props: DialogsPropsType) => {
                 <div>
                     <div><textarea ref={messageRef}
                                    placeholder={'Enter you message'}
-                                   value={props.newMessageText}
-                                   onChange={OnChangeMessage}/>
+                                   value={state.newMessageText}
+                                   onChange={onChangeMessage}/>
                     </div>
                     <div>
                         <button onClick={localAddMessage}>Add Message</button>

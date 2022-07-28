@@ -10,4 +10,4 @@ export const reducers = combineReducers( {
     sidebar : sidebarReducer
 } )
 
-export const reducersStore = createStore(reducers)
+export let store = createStore(reducers)

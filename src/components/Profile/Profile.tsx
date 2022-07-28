@@ -8,8 +8,6 @@ export const Profile = () => {
         <div>
             <ProfileInfo/>
             <MyPostsContainer/>
-            {/*<MyPostsContainer store = {props.store}/>*/}
         </div>
     )
 }
-

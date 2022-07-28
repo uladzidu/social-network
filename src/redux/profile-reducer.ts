@@ -12,8 +12,18 @@ export type UpdateNewPostReducerType = {
 
 export type AllProfileReducersType = AddPostReducerType | UpdateNewPostReducerType
 
+const ProfileReducerInitState = {
+    postData: <PostDataType[]>[
+        {id: v1(), postMessage: 'Hi, how are you', likes: 5},
+        {id: v1(), postMessage: 'It\'s my first post', likes: 15},
+        {id: v1(), postMessage: 'It\'s my second post', likes: 15},
+        {id: v1(), postMessage: 'It\'s my third post', likes: 15},
+    ],
+    newPostText: 'it'
+}
 
-export const profileReducer = (state: ProfilePageType, action: ActionsAllTypes) => {
+export const profileReducer = (state: ProfilePageType = ProfileReducerInitState, action: ActionsAllTypes) => {
+
     switch (action.type) {
 
         case "ADD-POST":

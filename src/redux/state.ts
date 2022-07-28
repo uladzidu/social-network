@@ -8,14 +8,25 @@ export type PostDataType = {
     postMessage: string
     likes: number
 }
+export type ProfilePageType = {
+    postData : PostDataType[]
+    newPostText : string
+}
+
+export type MessagesPageType = {
+    dialogsData : DialogDataType[]
+    messagesData : MessagesDataType[]
+    newMessageText : string
+}
 export type DialogDataType = {
-    name: string
     id: string
+    name: string
 }
 export type MessagesDataType = {
     id: string
     message: string
 }
+
 export type StatePropsType = {
     profilePage: {
         postData: PostDataType[]
@@ -28,18 +39,6 @@ export type StatePropsType = {
     },
     sidebar: {}
 }
-export type ProfilePageType = {
-    postData : PostDataType[]
-    newPostText : string
-}
-export type MessagesPageType = {
-    dialogsData : DialogDataType[]
-    messagesData : MessagesDataType[]
-    newMessageText : string
-}
-
-export type ActionsAllTypes = AllProfileReducersType | DialogsReducersType
-
 export type StoreType = {
     _state : StatePropsType
     _callSubscriber : (state : StatePropsType) => void
@@ -48,11 +47,14 @@ export type StoreType = {
     dispatch : (action: ActionsAllTypes) => void
 }
 
+export type ActionsAllTypes = AllProfileReducersType | DialogsReducersType
 
-export let store : StoreType = {
+
+
+let store : StoreType = {
     _state: <StatePropsType>{
         profilePage: <ProfilePageType> {
-            postData: <Array<PostDataType>>[
+            postData: <PostDataType[]>[
                 {id: v1(), postMessage: 'Hi, how are you', likes: 5},
                 {id: v1(), postMessage: 'It\'s my first post', likes: 15},
                 {id: v1(), postMessage: 'It\'s my second post', likes: 15},
@@ -61,7 +63,7 @@ export let store : StoreType = {
             newPostText: 'it'
         },
         messagesPage: <MessagesPageType> {
-            dialogsData: <Array<DialogDataType>>[
+            dialogsData: <DialogDataType[]>[
                 {id: v1(), name: 'Vlados'},
                 {id: v1(), name: 'Gyn'},
                 {id: v1(), name: 'Andr'},
@@ -94,5 +96,4 @@ export let store : StoreType = {
         this._callSubscriber(this._state)
     }
 }
-
 
