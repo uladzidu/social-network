@@ -7,6 +7,7 @@ import {DialogDataType, MessagesDataType, MessagesPageType} from "../../redux/st
 
 type DialogsPropsType = {
     messagesPage : MessagesPageType
+    newMessageText : string
     addDialogMessage: () => void
     onChangeMessage: (newText: string) => void
 }
@@ -46,7 +47,7 @@ export const Dialogs = (props: DialogsPropsType) => {
                 <div>
                     <div><textarea ref={messageRef}
                                    placeholder={'Enter you message'}
-                                   value={state.newMessageText}
+                                   value={props.newMessageText}
                                    onChange={onChangeMessage}/>
                     </div>
                     <div>

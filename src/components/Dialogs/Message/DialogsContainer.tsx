@@ -4,9 +4,11 @@ import {addMessageCreator, updateTextMessageCreator} from "../../../redux/dialog
 import {connect} from "react-redux";
 
 
+
 const mapStateToDialogsProps = (state : any) => {
     return {
-        messagesPage: state.messagesPage
+        messagesPage: state.messagesPage,
+        newMessageText : state.messagesPage.newMessageText
     }
 }
 

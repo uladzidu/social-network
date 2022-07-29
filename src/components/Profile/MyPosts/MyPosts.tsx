@@ -25,6 +25,7 @@ export const MyPosts = (props: MyPostPropsType) => {
 
     let localAddPost = () => {
         props.addPost()
+
     }
 
     let onPostChange = () => {
