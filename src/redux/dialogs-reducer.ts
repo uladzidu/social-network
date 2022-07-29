@@ -36,17 +36,18 @@ export const dialogsReducer = (state: MessagesPageType = dialogsReducerInitState
                 id: v1(),
                 message: state.newMessageText
             }
-            let stateCopy = {...state}
-            stateCopy.messagesData = [...state.messagesData]
-            stateCopy.messagesData.push(newAddedMessage)
-            stateCopy.newMessageText = ''
-            return stateCopy;
+            return {
+                ...state,
+                messagesData: [newAddedMessage, ...state.messagesData],
+                newMessageText: ''
+            };
         }
 
         case "UPDATE-TEXT-MESSAGE": {
-            let stateCopy = {...state}
-            stateCopy.newMessageText = action.newMessage
-            return stateCopy;
+            return {
+                ...state,
+                newMessageText: action.newMessage
+            };
         }
 
         default:
