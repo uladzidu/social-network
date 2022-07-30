@@ -8,6 +8,7 @@ import {News} from './components/News/News';
 import {Music} from './components/Music/Musics';
 import {Settings} from './components/Settings/Settings';
 import {DialogsContainer} from "./components/Dialogs/Message/DialogsContainer";
+import {UsersContainer} from "./components/Users/UsersContainer";
 
 export function App() {
 
@@ -22,6 +23,9 @@ export function App() {
                     />
                     <Route path="/dialogs/*"
                            element={ <DialogsContainer/>}
+                    />
+                    <Route path = '/users'
+                           element={ <UsersContainer/> }
                     />
                     <Route path="/news/" element={<News/>}/>
                     <Route path="/music/" element={<Music/>}/>
