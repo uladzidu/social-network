@@ -26,42 +26,42 @@ type setUsersACType = {
 }
 
 
-const userReducerInitState : userReducerInitStateType = {
+ const userReducerInitState : any = {
     users: <userType[]> [
-        {
-            id: v1(),
-            fullName: 'Vlad',
-            status: 'FrontEnd Dev coming soon ... ',
-            location: {city: 'Wroclaw', country: 'Poland'},
-            followed: true,
-            photoUrl : 'https://e7.pngegg.com/pngimages/581/573/png-clipart-ninja-holding-red-ninja-laptop-illustration-ninja-computer-programming-learning-study-skills-avatar-heroes-cartoon.png'
-        },
-        {
-            id: v1(),
-            fullName: 'Gyn',
-            status: 'His wife',
-            location: {city: 'Wroclaw', country: 'Poland'},
-            followed: false,
-            photoUrl : 'https://e7.pngegg.com/pngimages/581/573/png-clipart-ninja-holding-red-ninja-laptop-illustration-ninja-computer-programming-learning-study-skills-avatar-heroes-cartoon.png'
-        },
-        {
-            id: v1(),
-            fullName: 'Andr',
-            status: 'I am a Bro',
-            location: {city: 'Minsk', country: 'Belarus'},
-            followed: true,
-            photoUrl : 'https://e7.pngegg.com/pngimages/581/573/png-clipart-ninja-holding-red-ninja-laptop-illustration-ninja-computer-programming-learning-study-skills-avatar-heroes-cartoon.png'
-        },
-        {
-            id: v1(),
-            fullName: 'Father',
-            status: 'Dzien dobry! ',
-            location: {city: 'Molodechno', country: 'Belarus'},
-            followed: true,
-            photoUrl : 'https://e7.pngegg.com/pngimages/581/573/png-clipart-ninja-holding-red-ninja-laptop-illustration-ninja-computer-programming-learning-study-skills-avatar-heroes-cartoon.png'
-
-},
-    ]
+//         {
+//             id: v1(),
+//             fullName: 'Vlad',
+//             status: 'FrontEnd Dev coming soon ... ',
+//             location: {city: 'Wroclaw', country: 'Poland'},
+//             followed: true,
+//             photoUrl : 'https://e7.pngegg.com/pngimages/581/573/png-clipart-ninja-holding-red-ninja-laptop-illustration-ninja-computer-programming-learning-study-skills-avatar-heroes-cartoon.png'
+//         },
+//         {
+//             id: v1(),
+//             fullName: 'Gyn',
+//             status: 'His wife',
+//             location: {city: 'Wroclaw', country: 'Poland'},
+//             followed: false,
+//             photoUrl : 'https://e7.pngegg.com/pngimages/581/573/png-clipart-ninja-holding-red-ninja-laptop-illustration-ninja-computer-programming-learning-study-skills-avatar-heroes-cartoon.png'
+//         },
+//         {
+//             id: v1(),
+//             fullName: 'Andr',
+//             status: 'I am a Bro',
+//             location: {city: 'Minsk', country: 'Belarus'},
+//             followed: true,
+//             photoUrl : 'https://e7.pngegg.com/pngimages/581/573/png-clipart-ninja-holding-red-ninja-laptop-illustration-ninja-computer-programming-learning-study-skills-avatar-heroes-cartoon.png'
+//         },
+//         {
+//             id: v1(),
+//             fullName: 'Father',
+//             status: 'Dzien dobry! ',
+//             location: {city: 'Molodechno', country: 'Belarus'},
+//             followed: true,
+//             photoUrl : 'https://e7.pngegg.com/pngimages/581/573/png-clipart-ninja-holding-red-ninja-laptop-illustration-ninja-computer-programming-learning-study-skills-avatar-heroes-cartoon.png'
+//
+// },
+  ]
 }
 
 export const usersReducer = (state: userReducerInitStateType = userReducerInitState, action: any) : userReducerInitStateType => {
