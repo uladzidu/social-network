@@ -1,11 +1,11 @@
 import React from 'react';
 import {userType} from "../../redux/users-reducer";
 import styles from './users.module.css'
-import axios, {AxiosResponse} from "axios";
+import axios from "axios";
 import userPhoto from '../../assets/images/60b47e2dfdbe3f0e2adf74129fbea3b0.jpg'
 
 type UsersPropsType = {
-    users: userType[]
+    users: any
     follow: (userId: string) => void
     unfollow: (userId: string) => void
     setUsers: (users: any) => void
@@ -64,7 +64,7 @@ export const Users = (props: UsersPropsType) => {
     return (
         <div>
             <button onClick={getUsers}>Get Users</button>
-            {props.users.map(elem => <div key={elem.id}>
+            {props.users.map((elem : any ) => <div key={elem.id}>
 
                     <div>
                         <img className={styles.userPhoto}

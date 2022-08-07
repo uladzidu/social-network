@@ -25,9 +25,10 @@ type setUsersACType = {
     users : any
 }
 
+type usersReducerActionAllTypes = followACType | unfollowACType | setUsersACType
 
  const userReducerInitState : any = {
-    users: <userType[]> [
+    users: <any> [
 //         {
 //             id: v1(),
 //             fullName: 'Vlad',
@@ -64,7 +65,7 @@ type setUsersACType = {
   ]
 }
 
-export const usersReducer = (state: userReducerInitStateType = userReducerInitState, action: any) : userReducerInitStateType => {
+export const usersReducer = (state: userReducerInitStateType = userReducerInitState, action: usersReducerActionAllTypes) : userReducerInitStateType => {
 
     switch (action.type) {
         case 'FOLLOW' : {
