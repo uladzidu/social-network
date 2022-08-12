@@ -1,15 +1,10 @@
 import React from 'react';
-import {userType} from "../../redux/users-reducer";
 import styles from './users.module.css'
 import axios from "axios";
-import userPhoto from '../../assets/images/60b47e2dfdbe3f0e2adf74129fbea3b0.jpg'
+import {mapUsersDispatchToProps, mapUsersStateToPropsType} from "./UsersContainer";
 
-type UsersPropsType = {
-    users: any
-    follow: (userId: string) => void
-    unfollow: (userId: string) => void
-    setUsers: (users: any) => void
-}
+
+type UsersPropsType = mapUsersDispatchToProps & mapUsersStateToPropsType
 
 export const Users = (props: UsersPropsType) => {
 
@@ -64,17 +59,21 @@ export const Users = (props: UsersPropsType) => {
     return (
         <div>
             <button onClick={getUsers}>Get Users</button>
-            {props.users.map((elem : any ) => <div key={elem.id}>
+            {props.users.map((elem: any) => <div key={elem.id}>
 
                     <div>
                         <img className={styles.userPhoto}
-                             src={elem.photos.small !== null ? elem.photos.small : userPhoto }
+                             src={elem.photos.small !== null ? elem.photos.small : styles.userPhoto}
                              alt="photo"/>
                     </div>
                     <div>
                         {!elem.followed
-                            ? <button onClick={ () => {props.follow(elem.id)}}>Follow</button>
-                            : <button onClick={() => {props.unfollow(elem.id)}}>Unfollow</button>}
+                            ? <button onClick={() => {
+                                props.follow(elem.id)
+                            }}>Follow</button>
+                            : <button onClick={() => {
+                                props.unfollow(elem.id)
+                            }}>Unfollow</button>}
                     </div>
                     <span>
                         <span>

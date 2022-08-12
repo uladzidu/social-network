@@ -6,6 +6,7 @@ import userPhoto from '../../assets/images/60b47e2dfdbe3f0e2adf74129fbea3b0.jpg'
 
 export class UsersClass extends React.Component<{}, any> {
 
+
     componentDidMount() {
         axios.get('https://social-network.samuraijs.com/api/1.0/users')
             .then((response: any) => {

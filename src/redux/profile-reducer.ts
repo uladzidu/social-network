@@ -1,18 +1,19 @@
 import {v1} from "uuid";
-import {ActionsAllTypes, PostDataType, ProfilePageType} from "./state";
 
-
-export type AddPostReducerType = {
-    type : 'ADD-POST'
+type PostDataType = {
+    id: string
+    postMessage: string
+    likes: number
 }
-export type UpdateNewPostReducerType = {
-    type : 'UPDATE_NEW_POST',
-    newText : string
+type ProfilePageType = {
+    postData : PostDataType[]
+    newPostText : string
 }
+type AllProfileReducersActionType =
+    ReturnType<typeof addPostCreator>
+    | ReturnType<typeof updateNewPostCreator>
 
-export type AllProfileReducersType = AddPostReducerType | UpdateNewPostReducerType
-
-const ProfileReducerInitState = {
+const ProfileReducerInitState : ProfilePageType = {
     postData: <PostDataType[]>[
         {id: v1(), postMessage: 'Hi, how are you', likes: 5},
         {id: v1(), postMessage: 'It\'s my first post', likes: 15},
@@ -22,10 +23,9 @@ const ProfileReducerInitState = {
     newPostText: 'it'
 }
 
-export const profileReducer = (state: ProfilePageType = ProfileReducerInitState, action: ActionsAllTypes) => {
+export const profileReducer = (state: ProfilePageType = ProfileReducerInitState, action: AllProfileReducersActionType) : ProfilePageType => {
 
     switch (action.type) {
-
         case "ADD-POST": {
             const newPost: PostDataType = {
                 id: v1(),
@@ -38,7 +38,6 @@ export const profileReducer = (state: ProfilePageType = ProfileReducerInitState,
                 newPostText: ''
             };
         }
-
         case "UPDATE_NEW_POST": {
             return {
                 ...state,
@@ -50,6 +49,6 @@ export const profileReducer = (state: ProfilePageType = ProfileReducerInitState,
     }
 }
 
-export const addPostCreator = () : AddPostReducerType => ( {type : "ADD-POST"} )
-export const updateNewPostCreator = (text: string) : UpdateNewPostReducerType =>
-    ( {type : "UPDATE_NEW_POST" , newText : text} )
+export const addPostCreator = () => ( {type : "ADD-POST"} as const )
+export const updateNewPostCreator = (text: string) =>
+    ( {type : "UPDATE_NEW_POST" , newText : text} as const )

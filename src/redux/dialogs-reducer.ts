@@ -1,17 +1,24 @@
 import {v1} from "uuid";
-import {ActionsAllTypes, MessagesPageType} from "./state";
 
-
-export type AddMessageReducerType = {
-    type : 'ADD-MESSAGE'
+type DialogDataType = {
+    id: string
+    name: string
 }
-export type UpdateTextMessageReducerType = {
-    type : 'UPDATE-TEXT-MESSAGE'
-    newMessage : string
+type MessagesDataType = {
+    id: string
+    message: string
 }
-export type DialogsReducersType = AddMessageReducerType | UpdateTextMessageReducerType
+export type MessagesPageType = {
+    dialogsData : DialogDataType[]
+    messagesData : MessagesDataType[]
+    newMessageText : string
+}
 
-const dialogsReducerInitState = {
+export type DialogsActionType =
+    ReturnType<typeof addMessageCreator>
+    | ReturnType<typeof updateTextMessageCreator>
+
+const dialogsInitState : MessagesPageType = {
     dialogsData: [
         {id: v1(), name: 'Vlados'},
         {id: v1(), name: 'Gyn'},
@@ -27,10 +34,9 @@ const dialogsReducerInitState = {
     newMessageText: 'qq'
 }
 
-export const dialogsReducer = (state: MessagesPageType = dialogsReducerInitState, action: ActionsAllTypes) => {
+export const dialogsReducer = (state: MessagesPageType = dialogsInitState, action: DialogsActionType) : MessagesPageType => {
 
     switch (action.type) {
-
         case "ADD-MESSAGE": {
             const newAddedMessage = {
                 id: v1(),
@@ -42,19 +48,17 @@ export const dialogsReducer = (state: MessagesPageType = dialogsReducerInitState
                 newMessageText: ''
             };
         }
-
         case "UPDATE-TEXT-MESSAGE": {
             return {
                 ...state,
                 newMessageText: action.newMessage
             };
         }
-
         default:
             return state
     }
 }
 
-export const addMessageCreator = () : AddMessageReducerType => ({type: 'ADD-MESSAGE'})
-export const updateTextMessageCreator = (newMessage: string) : UpdateTextMessageReducerType => (
-    {type: 'UPDATE-TEXT-MESSAGE', newMessage: newMessage})
+export const addMessageCreator = () => ({type: 'ADD-MESSAGE'} as const)
+export const updateTextMessageCreator = (newMessage: string) => (
+    {type: 'UPDATE-TEXT-MESSAGE', newMessage: newMessage} as const)

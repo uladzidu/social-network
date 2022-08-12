@@ -3,33 +3,10 @@ import {AllProfileReducersType, profileReducer} from "./profile-reducer";
 import {dialogsReducer, DialogsReducersType} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar-reducer";
 
-export type PostDataType = {
-    id: string
-    postMessage: string
-    likes: number
-}
-export type ProfilePageType = {
-    postData : PostDataType[]
-    newPostText : string
-}
 
-export type MessagesPageType = {
-    dialogsData : DialogDataType[]
-    messagesData : MessagesDataType[]
-    newMessageText : string
-}
-export type DialogDataType = {
-    id: string
-    name: string
-}
-export type MessagesDataType = {
-    id: string
-    message: string
-}
-
-export type StatePropsType = {
+type StatePropsType = {
     profilePage: {
-        postData: PostDataType[]
+        postData: any[]
         newPostText: string
     },
     messagesPage: {
@@ -39,7 +16,7 @@ export type StatePropsType = {
     },
     sidebar: {}
 }
-export type StoreType = {
+type StoreType = {
     _state : StatePropsType
     _callSubscriber : (state : StatePropsType) => void
     getState : () => StatePropsType
@@ -47,7 +24,7 @@ export type StoreType = {
     dispatch : (action: ActionsAllTypes) => void
 }
 
-export type ActionsAllTypes = AllProfileReducersType | DialogsReducersType
+type ActionsAllTypes = AllProfileReducersType | DialogsReducersType
 
 
 
