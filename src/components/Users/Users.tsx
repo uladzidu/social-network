@@ -9,6 +9,7 @@ type UsersPropsType = mapUsersDispatchToProps & mapUsersStateToPropsType
 export const Users = (props: UsersPropsType) => {
 
     const getUsers = () => {
+        // @ts-ignore
         if (props.users.length === 0) {
             axios.get('https://social-network.samuraijs.com/api/1.0/users')
                 .then((response: any) => {
@@ -56,9 +57,11 @@ export const Users = (props: UsersPropsType) => {
     // ])
     // }
 
+
     return (
         <div>
             <button onClick={getUsers}>Get Users</button>
+            // @ts-ignore
             {props.users.map((elem: any) => <div key={elem.id}>
 
                     <div>

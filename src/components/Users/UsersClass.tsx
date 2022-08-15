@@ -10,6 +10,7 @@ export class UsersClass extends React.Component<{}, any> {
     componentDidMount() {
         axios.get('https://social-network.samuraijs.com/api/1.0/users')
             .then((response: any) => {
+                // @ts-ignore
                 this.props.setUsers(response.data.items)
             })
     }
@@ -17,6 +18,7 @@ export class UsersClass extends React.Component<{}, any> {
     render() {
         return (
             <div>
+                //@ts-ignore
                 {this.props.users.map((elem: any) => <div key={elem.id}>
 
                         <div>
@@ -27,9 +29,11 @@ export class UsersClass extends React.Component<{}, any> {
                         <div>
                             {!elem.followed
                                 ? <button onClick={() => {
+                                    // @ts-ignore
                                     this.props.follow(elem.id)
                                 }}>Follow</button>
                                 : <button onClick={() => {
+                                    // @ts-ignore
                                     this.props.unfollow(elem.id)
                                 }}>Unfollow</button>}
                         </div>
