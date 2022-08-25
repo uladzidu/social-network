@@ -16,8 +16,26 @@ export class UsersClass extends React.Component<{}, any> {
     }
 
     render() {
+
+        // @ts-ignore
+        const pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
+
+        const pages = []
+
+        for (let i = 1; i <= pagesCount; i++) {
+            pages.push(i)
+        }
+        
+        
+
         return (
             <div>
+                {pages.map( elem =>
+                    // @ts-ignore
+                    <span className={ this.props.currentPage === elem ? styles.selected : ''}>
+                        {elem}
+                    </span>
+                 )}
                 //@ts-ignore
                 {this.props.users.map((elem: any) => <div key={elem.id}>
 
@@ -27,15 +45,17 @@ export class UsersClass extends React.Component<{}, any> {
                                  alt="photo"/>
                         </div>
                         <div>
-                            {!elem.followed
-                                ? <button onClick={() => {
-                                    // @ts-ignore
-                                    this.props.follow(elem.id)
-                                }}>Follow</button>
-                                : <button onClick={() => {
-                                    // @ts-ignore
-                                    this.props.unfollow(elem.id)
-                                }}>Unfollow</button>}
+                            {
+                                !elem.followed
+                                    ? <button onClick={() => {
+                                        // @ts-ignore
+                                        this.props.follow(elem.id)
+                                    }}>Follow</button>
+                                    : <button onClick={() => {
+                                        // @ts-ignore
+                                        this.props.unfollow(elem.id)
+                                    }}>Unfollow</button>
+                            }
                         </div>
                         <span>
                         <span>

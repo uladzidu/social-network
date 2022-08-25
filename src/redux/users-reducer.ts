@@ -4,12 +4,18 @@ type usersReducerActionAllTypes =
     | ReturnType<typeof unfollowAC>
     | ReturnType<typeof setUsersAC>
 
-
 export type userReducerInitStateType = {
     users : any
+    pageSize : number
+    totalUsersCount : number
+    currentPage : number
 }
+
 const userReducerInitState : userReducerInitStateType  = {
-    users : []
+    users : [],
+    pageSize : 5,
+    totalUsersCount : 21,
+    currentPage : 1
 }
 
 export const usersReducer = (state: userReducerInitStateType = userReducerInitState, action: usersReducerActionAllTypes) : userReducerInitStateType => {
