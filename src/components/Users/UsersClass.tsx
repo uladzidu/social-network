@@ -8,7 +8,8 @@ export class UsersClass extends React.Component<{}, any> {
 
 
     componentDidMount() {
-        axios.get('https://social-network.samuraijs.com/api/1.0/users')
+        // @ts-ignore
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
             .then((response: any) => {
                 // @ts-ignore
                 this.props.setUsers(response.data.items)
@@ -25,17 +26,17 @@ export class UsersClass extends React.Component<{}, any> {
         for (let i = 1; i <= pagesCount; i++) {
             pages.push(i)
         }
-        
-        
 
         return (
             <div>
-                {pages.map( elem =>
-                    // @ts-ignore
-                    <span className={ this.props.currentPage === elem ? styles.selected : ''}>
+                {
+                    pages.map(elem =>
+                            // @ts-ignore
+                            <span onClick={ () => {this.props.change} } className={this.props.currentPage === elem ? styles.selected : ''}>
                         {elem}
                     </span>
-                 )}
+                    )
+                }
                 //@ts-ignore
                 {this.props.users.map((elem: any) => <div key={elem.id}>
 
