@@ -2,7 +2,8 @@ type usersReducerActionAllTypes =
     ReturnType<typeof followAC>
     | ReturnType<typeof unfollowAC>
     | ReturnType<typeof setUsersAC>
-    | ReturnType<typeof changeCurrentPage>
+    | ReturnType<typeof changeCurrentPageAC>
+    | ReturnType<typeof setUsersCountAC>
 
 export type userReducerInitStateType = {
     users: any
@@ -44,16 +45,19 @@ export const usersReducer = (state: userReducerInitStateType = userReducerInitSt
         case 'SET-USERS' : {
             return {
                 ...state,
-                users: [
-                    ...state.users,
-                    ...action.users
-                ]
+                users: action.users
             }
         }
         case "CHANGE-CURRENT-PAGE": {
             return {
                 ...state,
                 currentPage : action.page
+            }
+        }
+        case "SET-COUNT-PAGES": {
+            return {
+                ...state,
+                totalUsersCount : action.usersCount
             }
         }
         default:
@@ -80,10 +84,16 @@ export const setUsersAC = (users: any) => {
         users: users
     } as const
 }
-export const changeCurrentPage = (page: number) => {
+export const changeCurrentPageAC = (page: number) => {
     return {
         type: 'CHANGE-CURRENT-PAGE',
         page
+    } as const
+}
+export const setUsersCountAC = (usersCount : number) => {
+    return {
+        type : 'SET-COUNT-PAGES',
+        usersCount
     } as const
 }
 

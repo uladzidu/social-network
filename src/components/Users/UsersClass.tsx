@@ -13,6 +13,17 @@ export class UsersClass extends React.Component<{}, any> {
             .then((response: any) => {
                 // @ts-ignore
                 this.props.setUsers(response.data.items)
+                // this.props.setUsersCount(response.data.totalCount)
+                this.props.setUsersCount(response.data.totalCount / 200)
+            })
+    }
+
+    onClickHandler = (page : number) => {
+        this.props.setCurrentPage(page)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`)
+            .then((response: any) => {
+                // @ts-ignore
+                this.props.setUsers(response.data.items)
             })
     }
 
@@ -30,11 +41,12 @@ export class UsersClass extends React.Component<{}, any> {
         return (
             <div>
                 {
-                    pages.map(elem =>
+                    pages.map((elem,index) =>
                             // @ts-ignore
-                            <span onClick={ () => {this.props.change} } className={this.props.currentPage === elem ? styles.selected : ''}>
-                        {elem}
-                    </span>
+                            <span key={index}
+                                  onClick={ () => { this.onClickHandler(elem) } }
+                                  className={this.props.currentPage === elem ? styles.selected : ''}>
+                        {elem} </span>
                     )
                 }
                 //@ts-ignore
