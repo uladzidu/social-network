@@ -1,3 +1,5 @@
+import {userType} from "../components/Users/UsersClassAPIComponent";
+
 type usersReducerActionAllTypes =
     ReturnType<typeof followAC>
     | ReturnType<typeof unfollowAC>
@@ -25,7 +27,7 @@ export const usersReducer = (state: userReducerInitStateType = userReducerInitSt
         case 'FOLLOW' : {
             return {
                 ...state,
-                users: state.users.map((elem: any) =>
+                users: state.users.map((elem: userType) =>
                     elem.id === action.userId
                         ? {...elem, followed: true}
                         : elem
@@ -35,7 +37,7 @@ export const usersReducer = (state: userReducerInitStateType = userReducerInitSt
         case 'UNFOLLOW' : {
             return {
                 ...state,
-                users: state.users.map((elem: any) =>
+                users: state.users.map((elem: userType) =>
                     elem.id === action.userId
                         ? {...elem, followed: false}
                         : elem
@@ -78,7 +80,7 @@ export const unfollowAC = (userId: number) => {
         userId: userId
     } as const
 }
-export const setUsersAC = (users: any) => {
+export const setUsersAC = (users: userType[]) => {
     return {
         type: 'SET-USERS',
         users: users

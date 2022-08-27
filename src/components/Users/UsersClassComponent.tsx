@@ -1,0 +1,73 @@
+import React from 'react';
+import styles from "./users.module.css";
+import userPhoto from "../../assets/images/60b47e2dfdbe3f0e2adf74129fbea3b0.jpg";
+import {userType} from "./UsersContainer";
+
+
+export type UsersClassComponentPropsType = {
+    totalUsersCount: number
+    pageSize: number
+    currentPage: number
+    onPageChange: (page: number) => void
+    users: userType[]
+    follow: (userId: number) => void
+    unfollow: (userId: number) => void
+}
+
+export const UsersClassComponent = (props: UsersClassComponentPropsType) => {
+
+    const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
+
+    const pages = []
+
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i)
+    }
+
+    return (
+        <div>
+            {
+                pages.map((elem, index) =>
+                    <span key={index}
+                          onClick={() => {
+                              props.onPageChange(elem)
+                          }}
+                          className={props.currentPage === elem ? styles.selected : ''}>
+                        {elem} </span>
+                )
+            }
+            {props.users.map((elem: userType) =>
+
+                <div key={elem.id}>
+                    <div>
+                        <img className={styles.userPhoto}
+                             src={elem.photos.small !== null ? elem.photos.small : userPhoto}
+                             alt="photo"/>
+                    </div>
+                    <div>
+                        {
+                            !elem.followed
+                                ? <button onClick={() => {
+                                    props.follow(elem.id)
+                                }}>Follow</button>
+                                : <button onClick={() => {
+                                    props.unfollow(elem.id)
+                                }}>Unfollow</button>
+                        }
+                    </div>
+                    <span>
+                        <span>
+                            <div>{elem.name}</div>
+                            <div>{elem.status}</div>
+                        </span>
+                        <span>
+                            <div>{'elem.location.country'}</div>
+                            <div>{'elem.location.city'}</div>
+                        </span>
+                    </span>
+                </div>
+            )
+            }
+        </div>
+    );
+};

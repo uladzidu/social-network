@@ -6,14 +6,14 @@ type PostDataType = {
     likes: number
 }
 type ProfilePageType = {
-    postData : PostDataType[]
-    newPostText : string
+    postData: PostDataType[]
+    newPostText: string
 }
 type AllProfileReducersActionType =
     ReturnType<typeof addPostCreator>
     | ReturnType<typeof updateNewPostCreator>
 
-const ProfileReducerInitState : ProfilePageType = {
+const ProfileReducerInitState: ProfilePageType = {
     postData: <PostDataType[]>[
         {id: v1(), postMessage: 'Hi, how are you', likes: 5},
         {id: v1(), postMessage: 'It\'s my first post', likes: 15},
@@ -23,7 +23,7 @@ const ProfileReducerInitState : ProfilePageType = {
     newPostText: 'it'
 }
 
-export const profileReducer = (state: ProfilePageType = ProfileReducerInitState, action: AllProfileReducersActionType) : ProfilePageType => {
+export const profileReducer = (state: ProfilePageType = ProfileReducerInitState, action: AllProfileReducersActionType): ProfilePageType => {
 
     switch (action.type) {
         case "ADD-POST": {
@@ -49,6 +49,6 @@ export const profileReducer = (state: ProfilePageType = ProfileReducerInitState,
     }
 }
 
-export const addPostCreator = () => ( {type : "ADD-POST"} as const )
+export const addPostCreator = () => ({type: "ADD-POST"} as const)
 export const updateNewPostCreator = (text: string) =>
-    ( {type : "UPDATE_NEW_POST" , newText : text} as const )
+    ({type: "UPDATE_NEW_POST", newText: text} as const)
