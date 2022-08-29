@@ -1,7 +1,8 @@
 import React from 'react';
 import styles from "./users.module.css";
 import userPhoto from "../../assets/images/60b47e2dfdbe3f0e2adf74129fbea3b0.jpg";
-import {userType} from "./UsersContainer";
+import {userType} from "../../redux/users-reducer";
+import {Link} from "react-router-dom";
 
 
 export type UsersClassComponentPropsType = {
@@ -40,9 +41,11 @@ export const UsersClassComponent = (props: UsersClassComponentPropsType) => {
 
                 <div key={elem.id}>
                     <div>
-                        <img className={styles.userPhoto}
-                             src={elem.photos.small !== null ? elem.photos.small : userPhoto}
-                             alt="photo"/>
+                        <Link to={'/profile/' + elem.id} >
+                            <img className={styles.userPhoto}
+                                 src={elem.photos.small !== null ? elem.photos.small : userPhoto}
+                                 alt="photo"/>
+                        </Link>
                     </div>
                     <div>
                         {

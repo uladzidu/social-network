@@ -1,4 +1,3 @@
-import {userType} from "../components/Users/UsersClassAPIComponent";
 
 type usersReducerActionAllTypes =
     ReturnType<typeof followAC>
@@ -6,19 +5,34 @@ type usersReducerActionAllTypes =
     | ReturnType<typeof setUsersAC>
     | ReturnType<typeof changeCurrentPageAC>
     | ReturnType<typeof setUsersCountAC>
+    | ReturnType<typeof setIsFetchingAC>
 
 export type userReducerInitStateType = {
-    users: any
+    users: userType[]
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    isFetching: boolean
+}
+
+export type userType = {
+    "name": string
+    "id": number
+    "uniqueUrlName": null | undefined,
+    "photos": {
+        "small": null | undefined
+        "large": null | undefined
+    },
+    "status": null | undefined,
+    "followed": boolean
 }
 
 const userReducerInitState: userReducerInitStateType = {
     users: [],
     pageSize: 5,
     totalUsersCount: 21,
-    currentPage: 1
+    currentPage: 1,
+    isFetching: false
 }
 
 export const usersReducer = (state: userReducerInitStateType = userReducerInitState, action: usersReducerActionAllTypes): userReducerInitStateType => {
@@ -53,13 +67,19 @@ export const usersReducer = (state: userReducerInitStateType = userReducerInitSt
         case "CHANGE-CURRENT-PAGE": {
             return {
                 ...state,
-                currentPage : action.page
+                currentPage: action.page
             }
         }
         case "SET-COUNT-PAGES": {
             return {
                 ...state,
-                totalUsersCount : action.usersCount
+                totalUsersCount: action.usersCount
+            }
+        }
+        case "TOGGLE-IS-FETCHING": {
+            return {
+                ...state,
+                isFetching : action.value
             }
         }
         default:
@@ -92,10 +112,16 @@ export const changeCurrentPageAC = (page: number) => {
         page
     } as const
 }
-export const setUsersCountAC = (usersCount : number) => {
+export const setUsersCountAC = (usersCount: number) => {
     return {
-        type : 'SET-COUNT-PAGES',
+        type: 'SET-COUNT-PAGES',
         usersCount
+    } as const
+}
+export const setIsFetchingAC = (value: boolean) => {
+    return {
+        type: 'TOGGLE-IS-FETCHING',
+        value
     } as const
 }
 

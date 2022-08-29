@@ -8,10 +8,12 @@ type PostDataType = {
 type ProfilePageType = {
     postData: PostDataType[]
     newPostText: string
+    profile : null | any
 }
 type AllProfileReducersActionType =
-    ReturnType<typeof addPostCreator>
-    | ReturnType<typeof updateNewPostCreator>
+    ReturnType<typeof addPostAC>
+    | ReturnType<typeof updateNewPostAC>
+    | ReturnType<typeof setUserProfileAC>
 
 const ProfileReducerInitState: ProfilePageType = {
     postData: <PostDataType[]>[
@@ -20,18 +22,15 @@ const ProfileReducerInitState: ProfilePageType = {
         {id: v1(), postMessage: 'It\'s my second post', likes: 15},
         {id: v1(), postMessage: 'It\'s my third post', likes: 15},
     ],
-    newPostText: 'it'
+    newPostText: 'it',
+    profile : null
 }
 
 export const profileReducer = (state: ProfilePageType = ProfileReducerInitState, action: AllProfileReducersActionType): ProfilePageType => {
 
     switch (action.type) {
         case "ADD-POST": {
-            const newPost: PostDataType = {
-                id: v1(),
-                postMessage: state.newPostText,
-                likes: 0
-            }
+            const newPost: PostDataType = {id: v1(), postMessage: state.newPostText, likes: 0}
             return {
                 ...state,
                 postData: [newPost, ...state.postData],
@@ -44,11 +43,24 @@ export const profileReducer = (state: ProfilePageType = ProfileReducerInitState,
                 newPostText: action.newText
             }
         }
+        case "SET-USER-PROFILE": {
+            return {
+                ...state,
+                profile : action.profile
+            }
+        }
         default:
             return state
     }
 }
 
-export const addPostCreator = () => ({type: "ADD-POST"} as const)
-export const updateNewPostCreator = (text: string) =>
+export const addPostAC = () => ({type: "ADD-POST"} as const)
+export const updateNewPostAC = (text: string) =>
     ({type: "UPDATE_NEW_POST", newText: text} as const)
+
+export const setUserProfileAC = (profile : any) => {
+    return {
+        type : 'SET-USER-PROFILE',
+        profile
+    } as const
+}

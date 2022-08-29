@@ -18,3 +18,6 @@ export const rootReducer = combineReducers( {
 
 export let store = legacy_createStore(rootReducer)
 
+// @ts-ignore
+window.store = store
+
