@@ -5,6 +5,7 @@ import {Dispatch} from "redux";
 import {connect} from "react-redux";
 import {changeIsFetchingAC, setAuthUserDataAC} from "../../redux/auth-reducer";
 import {AppStateType} from "../../redux/redux-store";
+import {usersApi} from "../../api/api.js";
 
 export type mstpType = {
     isAuth: boolean
@@ -23,13 +24,11 @@ class HeaderContainer extends React.Component<HeaderContainerType> {
 
     componentDidMount() {
         this.props.changeIsFetching(true)
-        axios.get('https://social-network.samuraijs.com/api/1.0/auth/me',
-            {withCredentials: true}
-        )
-            .then((response: any) => {
+        usersApi.authorization()
+            .then((data: any) => {
                 this.props.changeIsFetching(false)
-                    if (response.data.resultCode === 0) {
-                        const {id, email, login} = response.data.data
+                    if (data.resultCode === 0) {
+                        const {id, email, login} = data.data
                         this.props.setUserData(id, email, login)
                     }
                 }

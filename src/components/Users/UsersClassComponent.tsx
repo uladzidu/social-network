@@ -3,6 +3,8 @@ import styles from "./users.module.css";
 import userPhoto from "../../assets/images/60b47e2dfdbe3f0e2adf74129fbea3b0.jpg";
 import {userType} from "../../redux/users-reducer";
 import {Link} from "react-router-dom";
+import axios, {AxiosResponse} from "axios";
+import {usersApi} from "../../api/api.js";
 
 
 export type UsersClassComponentPropsType = {
@@ -41,7 +43,7 @@ export const UsersClassComponent = (props: UsersClassComponentPropsType) => {
 
                 <div key={elem.id}>
                     <div>
-                        <Link to={'/profile/' + elem.id} >
+                        <Link to={'/profile/' + elem.id}>
                             <img className={styles.userPhoto}
                                  src={elem.photos.small !== null ? elem.photos.small : userPhoto}
                                  alt="photo"/>
@@ -51,10 +53,21 @@ export const UsersClassComponent = (props: UsersClassComponentPropsType) => {
                         {
                             !elem.followed
                                 ? <button onClick={() => {
-                                    props.follow(elem.id)
+                                    usersApi.followUser(elem.id)
+                                        .then((data: any) => {
+                                            if (data.resultCode === 0) {
+                                                props.follow(elem.id)
+                                            }
+                                        })
                                 }}>Follow</button>
+
                                 : <button onClick={() => {
-                                    props.unfollow(elem.id)
+                                    usersApi.unfollowUser(elem.id)
+                                        .then((data: any) => {
+                                            if (data.resultCode === 0) {
+                                                props.unfollow(elem.id)
+                                            }
+                                        })
                                 }}>Unfollow</button>
                         }
                     </div>
