@@ -5,20 +5,25 @@ import {setUserProfileAC} from "../../redux/profile-reducer";
 import {Dispatch} from "redux";
 import {AppStateType} from "../../redux/redux-store";
 import {Profile, profileType} from "./Profile";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 
-export type mapStateToProps = {
-    profile : profileType
+export type mapStateToPropsType = {
+    profile: profileType
 }
-export type mapDispatchToProps = {
+export type mapDispatchToPropsType = {
     setUserProfile: (profile: profileType) => void
 }
 
-export type ProfileContainerPropsType = mapStateToProps & mapDispatchToProps
+export type ProfileContainerPropsType = mapStateToPropsType & mapDispatchToPropsType
 
 export class ProfileClassContainer extends React.Component<ProfileContainerPropsType> {
 
     componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/2`)
+        debugger
+        // @ts-ignore
+        let userId : number = this.props.router.params.userId
+        if (!userId) userId = 2
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
             .then((response: any) => {
                 this.props.setUserProfile(response.data)
             })
@@ -32,18 +37,35 @@ export class ProfileClassContainer extends React.Component<ProfileContainerProps
     }
 }
 
-const mapStateToProps = (state: AppStateType): mapStateToProps => {
+const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     return {
         profile: state.profilePage.profile
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToProps => {
+const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
     return {
-        setUserProfile: (profile: any) => {
+        setUserProfile: (profile: profileType) => {
             dispatch(setUserProfileAC(profile))
         }
     }
 }
 
-export const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(ProfileClassContainer)
+const WithUrlDataContainerComponent = withRouter(ProfileClassContainer)
+
+function withRouter(Component: any) {
+    function ComponentWithRouterProp(props: any) {
+        const location = useLocation();
+        const navigate = useNavigate();
+        const params = useParams();
+        return (
+            <Component
+                {...props}
+                router={{ location, navigate, params }}
+            />
+        );
+    }
+    return ComponentWithRouterProp;
+}
+
+export const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(WithUrlDataContainerComponent)

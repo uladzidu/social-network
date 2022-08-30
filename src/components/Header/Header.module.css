@@ -2,6 +2,12 @@
     grid-area: h;
     background-color: lightgreen;
 }
+.loginBlock {
+    float: right;
+}
+.loginText {
+    color: dodgerblue;
+}
 
 .header img {
     width: 50px;
