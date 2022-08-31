@@ -8,10 +8,13 @@ export type ProfileInfoPropsType = {
 }
 
 export const ProfileInfo = (props: ProfileInfoPropsType) => {
-
     if (!props.profile) {
         return <Preloader/>
     }
+
+    const srcImgString = props.profile.photos.large === null
+        ? 'https://www.pngitem.com/pimgs/m/560-5603874_product-image-logo-avatar-minimalist-flat-line-hd.png'
+        : props.profile.photos.large
 
     return (
         <div>
@@ -21,8 +24,8 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
                     alt="hh"/>
             </div>
             <div className={s.description}>
-                <img src={props.profile.photos.large} alt={'profilePhoto'}/>
-                ava + description
+                <img src={srcImgString} alt={'profilePhoto'+[props.profile.userId]}/>
+                <div>ava + description</div>
             </div>
             {props.profile.aboutMe}
         </div>

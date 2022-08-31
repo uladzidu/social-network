@@ -99,7 +99,6 @@ export const usersReducer = (state: userReducerInitStateType = userReducerInitSt
     }
 }
 
-
 export const followAC = (userId: number) => {
     return {
         type: 'FOLLOW',
@@ -148,9 +147,37 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
         dispatch(setIsFetchingAC(true))
         usersApi.getUsers(currentPage, pageSize)
             .then((data: any) => {
+                dispatch(changeCurrentPageAC(currentPage))
                 dispatch(setIsFetchingAC(false))
                 dispatch(setUsersAC(data.items))
                 dispatch(setUsersCountAC(data.totalCount / 200))
+            })
+    }
+}
+
+export const followThunkCreator = (userId: number) => {
+    return (dispatch: any) => {
+        dispatch(changeFollowingProgressAC(true, userId))
+        usersApi.followUser(userId)
+            .then((data: any) => {
+                    if (data.resultCode === 0) {
+                        dispatch(followAC(userId))
+                    }
+                    dispatch(changeFollowingProgressAC(false, userId))
+                }
+            )
+    }
+}
+
+export const unfollowThunkCreator = (userId: number) => {
+    return (dispatch: any) => {
+        dispatch(changeFollowingProgressAC(true, userId))
+        usersApi.unfollowUser(userId)
+            .then((data: any) => {
+                if (data.resultCode === 0) {
+                    dispatch(unfollowAC(userId))
+                }
+                dispatch(changeFollowingProgressAC(false, userId))
             })
     }
 }

@@ -1,3 +1,5 @@
+import {authApi} from "../api/api.js";
+
 export type initStateauthReducerType = {
     id: number | null
     email: string | null
@@ -41,10 +43,25 @@ export const setAuthUserDataAC = (id: number | null, email: string | null, login
         data: {id, email, login}
     } as const
 }
-
 export const changeIsFetchingAC = (value: boolean | null) => {
     return {
         type: 'CHANGE-IS-FETCHING',
         value
     } as const
+}
+
+export const getAuthUserDataThunkCreator = () => {
+    return (dispatch: any) => {
+        dispatch(changeIsFetchingAC(true))
+        authApi.authorization()
+            .then((data: any) => {
+                    dispatch(changeIsFetchingAC(false))
+                    if (data.resultCode === 0) {
+                        const {id, email, login} = data.data
+                        dispatch(setAuthUserDataAC(id, email, login))
+                    }
+                }
+            )
+
+    }
 }

@@ -1,4 +1,5 @@
 import {v1} from "uuid";
+import {usersApi} from "../api/api.js";
 
 type PostDataType = {
     id: string
@@ -8,7 +9,7 @@ type PostDataType = {
 type ProfilePageType = {
     postData: PostDataType[]
     newPostText: string
-    profile : null | any
+    profile: null | any
 }
 type AllProfileReducersActionType =
     ReturnType<typeof addPostAC>
@@ -22,8 +23,8 @@ const ProfileReducerInitState: ProfilePageType = {
         {id: v1(), postMessage: 'It\'s my second post', likes: 15},
         {id: v1(), postMessage: 'It\'s my third post', likes: 15},
     ],
-    newPostText: 'it',
-    profile : null
+    newPostText: '',
+    profile: null
 }
 
 export const profileReducer = (state: ProfilePageType = ProfileReducerInitState, action: AllProfileReducersActionType): ProfilePageType => {
@@ -46,7 +47,7 @@ export const profileReducer = (state: ProfilePageType = ProfileReducerInitState,
         case "SET-USER-PROFILE": {
             return {
                 ...state,
-                profile : action.profile
+                profile: action.profile
             }
         }
         default:
@@ -54,13 +55,29 @@ export const profileReducer = (state: ProfilePageType = ProfileReducerInitState,
     }
 }
 
-export const addPostAC = () => ({type: "ADD-POST"} as const)
-export const updateNewPostAC = (text: string) =>
-    ({type: "UPDATE_NEW_POST", newText: text} as const)
-
-export const setUserProfileAC = (profile : any) => {
+export const addPostAC = () => {
     return {
-        type : 'SET-USER-PROFILE',
+        type: "ADD-POST"
+    } as const
+}
+export const updateNewPostAC = (newText: string) => {
+    return {
+        type: "UPDATE_NEW_POST",
+        newText
+    } as const
+}
+export const setUserProfileAC = (profile: any) => {
+    return {
+        type: 'SET-USER-PROFILE',
         profile
     } as const
+}
+
+export const getUserProfileThunkCreator = (userId : number) => {
+    return (dispatch : any) => {
+        usersApi.getProfile(userId)
+            .then((data: any) => {
+                dispatch(setUserProfileAC(data))
+            })
+    }
 }

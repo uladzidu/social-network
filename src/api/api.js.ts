@@ -5,6 +5,8 @@ export type usersApiType = {
     followUser: any
     unfollowUser: any
     getProfile : any
+}
+export type authApiType = {
     authorization : any
 }
 
@@ -32,7 +34,10 @@ export const usersApi: usersApiType = {
     getProfile(userId : number) {
         return instance.get(`profile/${userId}`)
             .then(response => response.data)
-    },
+    }
+}
+
+export const authApi: authApiType = {
     authorization() {
         return instance.get('auth/me')
             .then(response => response.data)
