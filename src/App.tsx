@@ -9,6 +9,7 @@ import {DialogsContainer} from "./components/Dialogs/Message/DialogsContainer";
 import {UsersContainer} from "./components/Users/UsersContainer";
 import {ProfileContainer} from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import {Login} from "./components/Login/Login";
 
 export function App() {
 
@@ -29,6 +30,9 @@ export function App() {
                     />
                     <Route path='/users'
                            element={<UsersContainer/>}
+                    />
+                    <Route path='/login'
+                           element={<Login/>}
                     />
                     <Route path="/news/" element={<News/>}/>
                     <Route path="/music/" element={<Music/>}/>

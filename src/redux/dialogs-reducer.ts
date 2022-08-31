@@ -1,10 +1,10 @@
 import {v1} from "uuid";
 
-type DialogDataType = {
+export type DialogDataType = {
     id: string
     name: string
 }
-type MessagesDataType = {
+export type MessagesDataType = {
     id: string
     message: string
 }

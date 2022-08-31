@@ -4,10 +4,11 @@ import {getUserProfileThunkCreator} from "../../redux/profile-reducer";
 import {Dispatch} from "redux";
 import {AppStateType} from "../../redux/redux-store";
 import {Profile, profileType} from "./Profile";
-import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {Navigate, useLocation, useNavigate, useParams} from "react-router-dom";
 
 export type mapStateToPropsType = {
     profile: profileType
+    isAuth : boolean
 }
 export type mapDispatchToPropsType = {
     getUserProfileThunk : (userId : number) => void
@@ -25,6 +26,9 @@ export class ProfileClassContainer extends React.Component<ProfileContainerProps
     }
 
     render() {
+
+        if (!this.props.isAuth) return <Navigate to={'/login'}/>
+
         return (
             <Profile {...this.props} />
         )
@@ -33,7 +37,8 @@ export class ProfileClassContainer extends React.Component<ProfileContainerProps
 
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     return {
-        profile: state.profilePage.profile
+        profile: state.profilePage.profile,
+        isAuth : state.auth.isAuth
     }
 }
 
