@@ -1,3 +1,4 @@
+import {usersApi} from "../api/api.js";
 
 type usersReducerActionAllTypes =
     ReturnType<typeof followAC>
@@ -6,6 +7,7 @@ type usersReducerActionAllTypes =
     | ReturnType<typeof changeCurrentPageAC>
     | ReturnType<typeof setUsersCountAC>
     | ReturnType<typeof setIsFetchingAC>
+    | ReturnType<typeof changeFollowingProgressAC>
 
 export type userReducerInitStateType = {
     users: userType[]
@@ -13,6 +15,7 @@ export type userReducerInitStateType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    followingInProgress: Array<number>
 }
 
 export type userType = {
@@ -32,7 +35,8 @@ const userReducerInitState: userReducerInitStateType = {
     pageSize: 5,
     totalUsersCount: 21,
     currentPage: 1,
-    isFetching: false
+    isFetching: false,
+    followingInProgress: []
 }
 
 export const usersReducer = (state: userReducerInitStateType = userReducerInitState, action: usersReducerActionAllTypes): userReducerInitStateType => {
@@ -79,9 +83,17 @@ export const usersReducer = (state: userReducerInitStateType = userReducerInitSt
         case "TOGGLE-IS-FETCHING": {
             return {
                 ...state,
-                isFetching : action.value
+                isFetching: action.value
             }
         }
+        case "CHANGE-FOLLOWING-PROGRESS":
+            return {
+                ...state,
+                followingInProgress:
+                    action.value
+                        ? [...state.followingInProgress, action.userId]
+                        : state.followingInProgress.filter(elem => elem !== action.userId)
+            }
         default:
             return state
     }
@@ -124,4 +136,24 @@ export const setIsFetchingAC = (value: boolean) => {
         value
     } as const
 }
+export const changeFollowingProgressAC = (value: boolean, userId: number) => {
+    return {
+        type: 'CHANGE-FOLLOWING-PROGRESS',
+        value, userId
+    } as const
+}
+
+export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
+    return (dispatch: any) => {
+        dispatch(setIsFetchingAC(true))
+        usersApi.getUsers(currentPage, pageSize)
+            .then((data: any) => {
+                dispatch(setIsFetchingAC(false))
+                dispatch(setUsersAC(data.items))
+                dispatch(setUsersCountAC(data.totalCount / 200))
+            })
+    }
+}
+
+
 
