@@ -3,7 +3,6 @@ import style from './Dialogs.module.css'
 import {Message} from './Message/Message';
 import {DialogItem} from './DialogItem/DialogItem';
 import {DialogDataType, MessagesDataType, MessagesPageType} from "../../redux/dialogs-reducer";
-import {Navigate} from "react-router-dom";
 
 
 type DialogsPropsType = {
@@ -37,10 +36,6 @@ export const Dialogs = (props: DialogsPropsType) => {
     const onChangeMessage = () => {
         const newMessage = messageRef.current?.value as string
         props.onChangeMessage(newMessage)
-    }
-
-    if (!props.isAuth) {
-        return  <Navigate to={'/login'}/>
     }
 
     return (

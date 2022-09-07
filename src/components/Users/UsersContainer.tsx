@@ -10,7 +10,8 @@ import {
 import {AppStateType} from "../../redux/redux-store";
 import {UsersClassComponent} from "./UsersClassComponent";
 import {Preloader} from "../common/preloader/Preloader";
-import {Dispatch} from "redux";
+import {compose, Dispatch} from "redux";
+import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 
 
 export type mapUsersStateToPropsType = {
@@ -80,4 +81,7 @@ const mapUsersDispatchToProps = (dispatch: Dispatch | any): mapUsersDispatchToPr
     }
 }
 
-export const UsersContainer = connect(mapUsersStateToProps, mapUsersDispatchToProps)(UsersClassContainer)
+export default compose<React.ComponentType>(
+    connect(mapUsersStateToProps, mapUsersDispatchToProps),
+    WithAuthRedirect
+)(UsersClassContainer)

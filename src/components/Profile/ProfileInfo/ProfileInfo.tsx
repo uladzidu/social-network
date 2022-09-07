@@ -2,9 +2,10 @@ import React from 'react';
 import s from './ProfileInfo.module.css'
 import {Preloader} from "../../common/preloader/Preloader";
 import {profileType} from "../Profile";
+import {ProfileStatus} from "../ProfileStatus/ProfileStatus";
 
 export type ProfileInfoPropsType = {
-    profile: profileType
+    profile: profileType | null
 }
 
 export const ProfileInfo = (props: ProfileInfoPropsType) => {
@@ -18,14 +19,14 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
 
     return (
         <div>
-            <div>
-                <img
-                    src="https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg"
-                    alt="hh"/>
-            </div>
+            {/*<div>*/}
+            {/*    <img*/}
+            {/*        src="https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg"*/}
+            {/*        alt="hh"/>*/}
+            {/*</div>*/}
             <div className={s.description}>
                 <img src={srcImgString} alt={'profilePhoto'+[props.profile.userId]}/>
-                <div>ava + description</div>
+                <ProfileStatus status={'My status'}/>
             </div>
             {props.profile.aboutMe}
         </div>

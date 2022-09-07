@@ -3,7 +3,7 @@ import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
 
 export type ProfilePropsType = {
-    profile : profileType
+    profile : profileType | null
 }
 export type profileType = {
     "aboutMe": string
