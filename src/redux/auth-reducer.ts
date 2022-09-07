@@ -1,4 +1,5 @@
-import {authApi} from "../api/api.js";
+import {authApi} from "../api/api";
+
 
 export type initStateauthReducerType = {
     id: number | null

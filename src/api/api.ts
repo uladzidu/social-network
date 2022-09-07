@@ -4,10 +4,15 @@ export type usersApiType = {
     getUsers: any
     followUser: any
     unfollowUser: any
-    getProfile : any
+    getProfile: any
+}
+export type profileApiType = {
+    getProfile: any
+    getStatus: any
+    updateStatus : any
 }
 export type authApiType = {
-    authorization : any
+    authorization: any
 }
 
 const instance = axios.create({
@@ -27,12 +32,27 @@ export const usersApi: usersApiType = {
         return instance.post(`follow/${id}`)
             .then(response => response.data)
     },
-    unfollowUser(id : number) {
+    unfollowUser(id: number) {
         return instance.delete(`follow/${id}`)
             .then(response => response.data)
     },
-    getProfile(userId : number) {
+    getProfile(userId: number) {
+        console.warn('redirected to profileApi')
+        return profileApi.getProfile(userId)
+    }
+}
+
+export const profileApi : profileApiType = {
+    getProfile(userId: number) {
         return instance.get(`profile/${userId}`)
+            .then(response => response.data)
+    },
+    getStatus(userId: number) {
+        return instance.get(`/profile/status/${userId}`)
+            .then(response => response.data)
+    },
+    updateStatus(status : string) {
+        return instance.put('/profile/status', {status: status})
             .then(response => response.data)
     }
 }

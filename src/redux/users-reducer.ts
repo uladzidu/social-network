@@ -1,4 +1,5 @@
-import {usersApi} from "../api/api.js";
+import {usersApi} from "../api/api";
+
 
 type usersReducerActionAllTypes =
     ReturnType<typeof followAC>

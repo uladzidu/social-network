@@ -1,40 +1,59 @@
 import React from 'react'
 
 export type ProfileStatusPropsType = {
-    status: string
+    status: string | any
+    updateStatus: any
 }
 type profileStateType = {
     editMode: boolean
+    status: any
 }
 
 export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
 
     state: profileStateType = {
-        editMode: true,
+        editMode: false,
+        status: this.props.status
     }
-    activateEditMode() {
-        this.setState({
-            editMode: false
-        })
-    }
-    deactivateEditMode() {
+    activateEditMode = () => {
         this.setState({
             editMode: true
         })
     }
+    deactivateEditMode = () => {
+        this.setState({
+            editMode: false
+        })
+        this.props.updateStatus(this.state.status)
+    }
+    onStatusChange = (e: any) => {
+        this.setState({
+            status: e.currentTarget.value
+        })
+    }
+
+    componentDidUpdate(prevProps: Readonly<ProfileStatusPropsType>, prevState: Readonly<{}>) {
+        if (prevProps.status !== this.props.status) {
+            this.setState({
+                status: this.props.status
+            })
+        }
+    }
 
     render() {
+        console.log('profile status render')
         return (
             <div>
                 {this.state.editMode
                     ? <div>
-                        <span onDoubleClick={this.activateEditMode.bind(this)}>{this.props.status}</span>
+                        <input autoFocus
+                               onChange={this.onStatusChange}
+                               onBlur={this.deactivateEditMode}
+                               type="text"
+                               value={this.state.status}/>
                     </div>
                     : <div>
-                        <input autoFocus
-                               onBlur={this.deactivateEditMode.bind(this)}
-                               type="text"
-                               value={this.props.status}/>
+                        <span onDoubleClick={this.activateEditMode}>{this.state.status || 'no status'}</span>
                     </div>
                 }
             </div>
