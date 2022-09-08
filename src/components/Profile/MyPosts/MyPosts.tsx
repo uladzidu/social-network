@@ -1,7 +1,8 @@
 import React from 'react';
 import {Post} from './Post/Post';
 import s from './MyPosts.module.css'
-import {PostDataType} from "../../../redux/state";
+import {PostDataType} from "../../../redux/profile-reducer";
+import {AddPostReduxForm} from "../../common/Forms/AddPostForm";
 
 
 type MyPostPropsType = {
@@ -21,30 +22,35 @@ export const MyPosts = (props: MyPostPropsType) => {
               likes={p.likes}
         />)
 
-    let newPostElement = React.createRef<HTMLTextAreaElement>()
+    //let newPostElement = React.createRef<HTMLTextAreaElement>()
 
-    let localAddPost = () => {
+    const localAddPost = () => {
         props.addPost()
 
     }
 
-    let onPostChange = () => {
-        let text = newPostElement.current?.value as string
-        props.updateNewPostText(text)
+    // let onPostChange = () => {
+    //     let text = newPostElement.current?.value as string
+    //     props.updateNewPostText(text)
+    // }
+
+    const onSubmitHandler = (formData : any) => {
+        console.log(formData.post)
     }
 
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>
             <div>
-                <div>
-                    <textarea ref={newPostElement}
-                              value={props.newPostText}
-                              onChange={onPostChange}/>
-                </div>
-                <div>
-                    <button onClick={localAddPost}>Add Post</button>
-                </div>
+                {/*<div>*/}
+                {/*    <textarea ref={newPostElement}*/}
+                {/*              value={props.newPostText}*/}
+                {/*              onChange={onPostChange}/>*/}
+                {/*</div>*/}
+                {/*<div>*/}
+                {/*    <button onClick={localAddPost}>Add Post</button>*/}
+                {/*</div>*/}
+                <AddPostReduxForm onSubmit={onSubmitHandler}/>
             </div>
             <div className={s.posts}>
                 {mappedPost}

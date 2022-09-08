@@ -2,7 +2,7 @@ import {v1} from "uuid";
 import {profileApi, usersApi} from "../api/api";
 
 
-type PostDataType = {
+export type PostDataType = {
     id: string
     postMessage: string
     likes: number

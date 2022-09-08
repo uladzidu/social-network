@@ -21,8 +21,8 @@ const mapStateToDialogsProps = (state: AppStateType): mapStateToDialogsType => {
 }
 const mapDispatchToDialogsProps = (dispatch: Dispatch) => {
     return {
-        addDialogMessage: () => {
-            dispatch(addMessageCreator())
+        addDialogMessage: (value : any) => {
+            dispatch(addMessageCreator(value))
         },
         onChangeMessage: (newText: string) => {
             dispatch(updateTextMessageCreator(newText))

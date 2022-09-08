@@ -3,12 +3,13 @@ import style from './Dialogs.module.css'
 import {Message} from './Message/Message';
 import {DialogItem} from './DialogItem/DialogItem';
 import {DialogDataType, MessagesDataType, MessagesPageType} from "../../redux/dialogs-reducer";
+import {AddMessageReduxForm} from "../common/Forms/AddMessageForm";
 
 
 type DialogsPropsType = {
     messagesPage : MessagesPageType
     newMessageText : string
-    addDialogMessage: () => void
+    addDialogMessage: (value : string) => void
     onChangeMessage: (newText: string) => void
     isAuth : boolean
 }
@@ -27,15 +28,13 @@ export const Dialogs = (props: DialogsPropsType) => {
                     id={d.id}
                     name={d.name}/>)
 
-    const messageRef = React.createRef<HTMLTextAreaElement>()
-
-    const localAddMessage = () => {
-        props.addDialogMessage()
+    const localAddMessage = (value : any) => {
+        props.addDialogMessage(value)
     }
 
-    const onChangeMessage = () => {
-        const newMessage = messageRef.current?.value as string
-        props.onChangeMessage(newMessage)
+    const addMessageHandler = (value : any) => {
+        console.log(value.message)
+        localAddMessage(value.message)
     }
 
     return (
@@ -46,14 +45,7 @@ export const Dialogs = (props: DialogsPropsType) => {
             <div className={style.messages}>
                 <div>{mappedMessagesData}</div>
                 <div>
-                    <div><textarea ref={messageRef}
-                                   placeholder={'Enter you message'}
-                                   value={props.newMessageText}
-                                   onChange={onChangeMessage}/>
-                    </div>
-                    <div>
-                        <button onClick={localAddMessage}>Add Message</button>
-                    </div>
+                    <AddMessageReduxForm onSubmit={addMessageHandler} />
                 </div>
             </div>
         </div>
