@@ -15,7 +15,7 @@ export type MessagesPageType = {
 
 export type DialogsActionType =
     ReturnType<typeof addMessageCreator>
-    | ReturnType<typeof updateTextMessageCreator>
+    // | ReturnType<typeof updateTextMessageCreator>
 
 const dialogsInitState : MessagesPageType = {
     dialogsData: [
@@ -45,17 +45,17 @@ export const dialogsReducer = (state: MessagesPageType = dialogsInitState, actio
                 messagesData: [newAddedMessage, ...state.messagesData]
             };
         }
-        case "UPDATE-TEXT-MESSAGE": {
-            return {
-                ...state,
-                newMessageText: action.newMessage
-            };
-        }
+        // case "UPDATE-TEXT-MESSAGE": {
+        //     return {
+        //         ...state,
+        //         newMessageText: action.newMessage
+        //     };
+        // }
         default:
             return state
     }
 }
 
 export const addMessageCreator = (newMessageText : string) => ({type: 'ADD-MESSAGE',newMessageText} as const)
-export const updateTextMessageCreator = (newMessage: string) => (
-    {type: 'UPDATE-TEXT-MESSAGE', newMessage} as const)
+// export const updateTextMessageCreator = (newMessage: string) => (
+//     {type: 'UPDATE-TEXT-MESSAGE', newMessage} as const)

@@ -21,7 +21,7 @@ export type mapDispatchToPropsType = {
     updateUserStatusThunk : (status : string) => void
 }
 
-export type ProfileContainerPropsType = mapStateToPropsType & mapDispatchToPropsType
+type ProfileContainerPropsType = mapStateToPropsType & mapDispatchToPropsType
 
 class ProfileClassContainer extends React.Component<ProfileContainerPropsType> {
 

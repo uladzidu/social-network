@@ -9,13 +9,12 @@ export type PostDataType = {
 }
 type ProfilePageType = {
     postData: PostDataType[]
-    newPostText: string
     profile: null | any
     status: string
 }
+
 type AllProfileReducersActionType =
     ReturnType<typeof addPostAC>
-    | ReturnType<typeof updateNewPostAC>
     | ReturnType<typeof setUserProfileAC>
     | ReturnType<typeof setUserStatusAC>
 
@@ -26,7 +25,6 @@ const ProfileReducerInitState: ProfilePageType = {
         {id: v1(), postMessage: 'It\'s my second post', likes: 15},
         {id: v1(), postMessage: 'It\'s my third post', likes: 15},
     ],
-    newPostText: '',
     profile: null,
     status: ''
 }
@@ -35,18 +33,11 @@ export const profileReducer = (state: ProfilePageType = ProfileReducerInitState,
 
     switch (action.type) {
         case "ADD-POST": {
-            const newPost: PostDataType = {id: v1(), postMessage: state.newPostText, likes: 0}
+            const newPost: PostDataType = {id: v1(), postMessage: action.newPostText, likes: 0}
             return {
                 ...state,
                 postData: [newPost, ...state.postData],
-                newPostText: ''
             };
-        }
-        case "UPDATE_NEW_POST": {
-            return {
-                ...state,
-                newPostText: action.newText
-            }
         }
         case "SET-USER-PROFILE": {
             return {
@@ -65,15 +56,10 @@ export const profileReducer = (state: ProfilePageType = ProfileReducerInitState,
     }
 }
 // Action Creators
-export const addPostAC = () => {
+export const addPostAC = (newPostText : string) => {
     return {
-        type: "ADD-POST"
-    } as const
-}
-export const updateNewPostAC = (newText: string) => {
-    return {
-        type: "UPDATE_NEW_POST",
-        newText
+        type: "ADD-POST",
+        newPostText
     } as const
 }
 export const setUserProfileAC = (profile: any) => {

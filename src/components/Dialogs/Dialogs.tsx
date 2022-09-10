@@ -32,8 +32,7 @@ export const Dialogs = (props: DialogsPropsType) => {
         props.addDialogMessage(value)
     }
 
-    const addMessageHandler = (value : any) => {
-        console.log(value.message)
+    const addMessageFormHandler = (value : any) => {
         localAddMessage(value.message)
     }
 
@@ -45,7 +44,7 @@ export const Dialogs = (props: DialogsPropsType) => {
             <div className={style.messages}>
                 <div>{mappedMessagesData}</div>
                 <div>
-                    <AddMessageReduxForm onSubmit={addMessageHandler} />
+                    <AddMessageReduxForm onSubmit={addMessageFormHandler} />
                 </div>
             </div>
         </div>

@@ -1,16 +1,23 @@
 import React from 'react';
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import {maxLengthThunk, requiredField} from "../../../utils/validators/validators";
+import {TextArea} from "../FormsControls/FormsControls";
 
-
-export type AddMessageFormPropsType = {
-
+export type FormDataPostType = {
+    post: string
 }
 
-export const AddPostForm = (props : any) => {
+const maxLength30 = maxLengthThunk(30)
+
+const AddPostForm: React.FC<InjectedFormProps<FormDataPostType>> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field placeholder={'New post'} name={'post'} component={'textarea'} />
+                <Field placeholder='New post'
+                       name='post'
+                       component={TextArea}
+                       validate={[requiredField, maxLength30]}
+                />
             </div>
             <div>
                 <button>Add Post</button>
@@ -20,7 +27,7 @@ export const AddPostForm = (props : any) => {
     )
 }
 
-export const AddPostReduxForm = reduxForm({form: 'addPostForm'})(AddPostForm)
+export const AddPostReduxForm = reduxForm<FormDataPostType>({form: 'addPostForm'})(AddPostForm)
 
 
 
