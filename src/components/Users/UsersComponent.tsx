@@ -18,7 +18,7 @@ export type UsersClassComponentPropsType = {
     unfollowThunk: (userId: number) => void
 }
 
-export const UsersClassComponent = (props: UsersClassComponentPropsType) => {
+export const UsersComponent = (props: UsersClassComponentPropsType) => {
 
     const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
 

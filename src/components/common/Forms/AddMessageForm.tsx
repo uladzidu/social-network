@@ -1,10 +1,10 @@
 import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {FormDataType} from "../../Login/Login";
-import {TextArea} from "../FormsControls/FormsControls";
+import {TextAreaComponent} from "../FormsControls/FormElements";
 import {maxLengthThunk, requiredField} from "../../../utils/validators/validators";
 
-const maxLength = maxLengthThunk(30)
+const maxLength = maxLengthThunk(50)
 
 const AddMessageForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (
@@ -13,7 +13,7 @@ const AddMessageForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
                 <Field placeholder={'New message'}
                        name={'message'}
                        validate={[requiredField, maxLength]}
-                       component={TextArea}
+                       component={TextAreaComponent}
                 />
             </div>
             <div>

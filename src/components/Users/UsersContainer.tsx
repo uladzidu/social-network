@@ -8,7 +8,7 @@ import {
     userType
 } from "../../redux/users-reducer";
 import {AppStateType} from "../../redux/redux-store";
-import {UsersClassComponent} from "./UsersClassComponent";
+import {UsersComponent} from "./UsersComponent";
 import {Preloader} from "../common/preloader/Preloader";
 import {compose, Dispatch} from "redux";
 import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
@@ -47,7 +47,7 @@ export class UsersClassContainer extends React.Component<UsersClassContainerProp
         return (
             <>
                 {this.props.isFetching ? <Preloader/> : null}
-                <UsersClassComponent {...this.props} onPageChange={this.onPageChange}/>
+                <UsersComponent {...this.props} onPageChange={this.onPageChange}/>
             </>
         )
     }
