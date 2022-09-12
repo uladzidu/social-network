@@ -14,10 +14,11 @@ import {withRouter} from "../../hoc/WithRouter";
 export type mapStateToPropsType = {
     profile: profileType
     status : string | any
+    userId : number | null
 }
 export type mapDispatchToPropsType = {
-    getUserProfileThunk: (userId: number) => void
-    getUserStatusThunk : (userId: number) => void
+    getUserProfileThunk: (userId: number | null) => void
+    getUserStatusThunk : (userId: number | null) => void
     updateUserStatusThunk : (status : string) => void
 }
 
@@ -27,8 +28,8 @@ class ProfileClassContainer extends React.Component<ProfileContainerPropsType> {
 
     componentDidMount() {
         // @ts-ignore
-        let userId: number = this.props.router.params.userId
-        if (!userId) userId = 25134;
+        let userId: number | null = this.props.router.params.userId
+        if (!userId) userId = this.props.userId
         this.props.getUserProfileThunk(userId)
         this.props.getUserStatusThunk(userId)
 
@@ -47,15 +48,16 @@ class ProfileClassContainer extends React.Component<ProfileContainerPropsType> {
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     return {
         profile: state.profilePage.profile,
-        status : state.profilePage.status
+        status : state.profilePage.status,
+        userId : state.auth.userId
     }
 }
 const mapDispatchToProps = (dispatch: Dispatch | any): mapDispatchToPropsType => {
     return {
-        getUserProfileThunk: (userId: number) => {
+        getUserProfileThunk: (userId: number | null) => {
             dispatch(getUserProfileThunkCreator(userId))
         },
-        getUserStatusThunk: (userId: number) => {
+        getUserStatusThunk: (userId: number | null) => {
             dispatch(getUserStatusThunkCreator(userId))
         },
         updateUserStatusThunk: (status : string) => {

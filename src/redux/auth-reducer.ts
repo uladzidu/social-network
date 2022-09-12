@@ -1,15 +1,16 @@
 import {authApi} from "../api/api";
+import {stopSubmit} from "redux-form";
 
 
 export type initStateauthReducerType = {
-    id: number | null
+    userId: number | null
     email: string | null
     login: string | null
     isFetching: boolean | null
     isAuth: boolean
 }
 const initState: initStateauthReducerType = {
-    id: null,
+    userId: null,
     email: null,
     login: null,
     isAuth: false,
@@ -39,10 +40,10 @@ export const authReducer = (state: initStateauthReducerType = initState, action:
 
 // Action Creators
 
-export const setAuthUserDataAC = (id: number | null, email: string | null, login: string | null, isAuth: boolean) => {
+export const setAuthUserDataAC = (userId: number | null, email: string | null, login: string | null, isAuth: boolean) => {
     return {
         type: 'SET-USER-DATA',
-        payload: {id, email, login, isAuth}
+        payload: {userId, email, login, isAuth}
     } as const
 }
 export const changeIsFetchingAC = (value: boolean | null) => {
@@ -60,8 +61,8 @@ export const getAuthUserDataThunkCreator = () => (dispatch: any) => {
         .then((res: any) => {
             dispatch(changeIsFetchingAC(false))
             if (res.resultCode === 0) {
-                const {id, email, login} = res.data
-                dispatch(setAuthUserDataAC(id, email, login, true))
+                const {userId, email, login} = res.data
+                dispatch(setAuthUserDataAC(userId, email, login, true))
             }
         })
 }
@@ -72,6 +73,9 @@ export const loginThunkCreator = (email: string, password: string, rememberMe: b
             console.log(res.data.messages)
             if (res.data.resultCode === 0) {
                 dispatch(getAuthUserDataThunkCreator())
+            } else {
+                const errorMessage = res.data.messages.length > 0 ? res.data.messages[0] : 'Some error'
+                dispatch(stopSubmit('login', {_error: errorMessage}))
             }
         })
 }

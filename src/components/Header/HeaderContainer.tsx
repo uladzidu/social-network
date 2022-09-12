@@ -11,17 +11,13 @@ export type mstpType = {
     isFetching: boolean | null
 }
 export type mdtpType = {
-    getAuthUserDataThunk: () => void
+    // getAuthUserDataThunk: () => void
     logoutThunk : () => void
 }
 
 export type HeaderContainerType = mdtpType & mstpType
 
 class HeaderContainer extends React.Component<HeaderContainerType> {
-
-    componentDidMount() {
-        this.props.getAuthUserDataThunk()
-    }
 
     render() {
         return <Header {...this.props} />
@@ -37,9 +33,9 @@ export const mstp = (state: AppStateType): mstpType => {
 }
 export const mdtp = (dispatch: Dispatch | any): mdtpType => {
     return {
-        getAuthUserDataThunk: () => {
-            dispatch(getAuthUserDataThunkCreator())
-        },
+        // getAuthUserDataThunk: () => {
+        //     dispatch(getAuthUserDataThunkCreator())
+        // },
         logoutThunk: () => {
             dispatch(logoutThunkCreator())
         }

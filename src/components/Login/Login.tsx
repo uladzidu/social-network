@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {loginThunkCreator} from "../../redux/auth-reducer";
 import {AppStateType} from "../../redux/redux-store";
 import {Navigate} from "react-router-dom";
+import styles from '../common/FormsControls/FormElements.module.css'
 
 
 export type FormDataType = {
@@ -50,6 +51,7 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 
                 /> remember me
             </div>
+            {props.error && <div className={styles.summeryError}>{props.error}</div>}
             <div>
                 <button>Login</button>
             </div>

@@ -76,7 +76,7 @@ export const setUserStatusAC = (status: string) => {
 }
 
 // Thunk Creators
-export const getUserProfileThunkCreator = (userId: number) => {
+export const getUserProfileThunkCreator = (userId: number | null) => {
     return (dispatch: any) => {
         usersApi.getProfile(userId)
             .then((data: any) => {
@@ -85,7 +85,7 @@ export const getUserProfileThunkCreator = (userId: number) => {
             .then()
     }
 }
-export const getUserStatusThunkCreator = (userId: number) => {
+export const getUserStatusThunkCreator = (userId: number | null) => {
     return (dispatch: any) => {
         profileApi.getStatus(userId)
             .then((data: any) => {

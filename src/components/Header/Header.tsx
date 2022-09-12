@@ -7,7 +7,7 @@ type HeaderPropsType = {
     isAuth: boolean
     login: string | null
     isFetching: boolean | null
-    getAuthUserDataThunk: () => void
+    // getAuthUserDataThunk: () => void
     logoutThunk: () => void
 }
 
