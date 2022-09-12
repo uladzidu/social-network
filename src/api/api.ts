@@ -64,8 +64,8 @@ export const authApi: authApiType = {
         return instance.get('/auth/me')
             .then( res => res.data  ) // возвращаем из всего респонса только объект дата
     },
-    login(login: string, password: string, rememberMe: boolean = false) {
-        return instance.post('/auth/login', {login, password, rememberMe})
+    login(email: string, password: string, rememberMe: boolean = false) {
+        return instance.post('/auth/login', {email, password, rememberMe})
     },
     logout() {
         return instance.delete('/auth/login')

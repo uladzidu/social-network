@@ -2,7 +2,7 @@ import React from "react";
 import {Header} from "./Header";
 import {Dispatch} from "redux";
 import {connect} from "react-redux";
-import {getAuthUserDataThunkCreator} from "../../redux/auth-reducer";
+import {getAuthUserDataThunkCreator, logoutThunkCreator} from "../../redux/auth-reducer";
 import {AppStateType} from "../../redux/redux-store";
 
 export type mstpType = {
@@ -12,6 +12,7 @@ export type mstpType = {
 }
 export type mdtpType = {
     getAuthUserDataThunk: () => void
+    logoutThunk : () => void
 }
 
 export type HeaderContainerType = mdtpType & mstpType
@@ -38,6 +39,9 @@ export const mdtp = (dispatch: Dispatch | any): mdtpType => {
     return {
         getAuthUserDataThunk: () => {
             dispatch(getAuthUserDataThunkCreator())
+        },
+        logoutThunk: () => {
+            dispatch(logoutThunkCreator())
         }
     }
 }

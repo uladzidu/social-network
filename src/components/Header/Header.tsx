@@ -7,9 +7,16 @@ type HeaderPropsType = {
     isAuth: boolean
     login: string | null
     isFetching: boolean | null
+    getAuthUserDataThunk: () => void
+    logoutThunk: () => void
 }
 
+
 export const Header = (props: HeaderPropsType) => {
+
+    const logOutHandler = () => {
+        props.logoutThunk()
+    }
     return (
         <>
             <header className={s.header}>
@@ -17,9 +24,10 @@ export const Header = (props: HeaderPropsType) => {
                 <div className={s.loginBlock}>
                     {props.isFetching ? <Preloader/> : null}
                     {props.isAuth
-                            ? props.login
-                            : <Link className={s.loginText} to={'/login'}>Login</Link>}
+                        ? <div>{props.login} <button onClick={logOutHandler} >Logout</button></div>
+                        : <Link className={s.loginText} to={'/login'}>Login</Link>}
                 </div>
+
             </header>
         </>
 

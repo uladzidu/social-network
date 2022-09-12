@@ -4,12 +4,21 @@ import {maxLengthThunk, requiredField} from "../../utils/validators/validators";
 import {InputComponent} from "../common/FormsControls/FormElements";
 import {connect} from "react-redux";
 import {loginThunkCreator} from "../../redux/auth-reducer";
+import {AppStateType} from "../../redux/redux-store";
+import {Navigate} from "react-router-dom";
 
 
 export type FormDataType = {
-    login: string
+    email: string
     password: string
     rememberMe: boolean
+}
+
+type mdtpType = {
+    loginThunk: (email: string, password: string, rememberMe: boolean) => void
+}
+type mstpType = {
+    isAuth: boolean
 }
 
 const loginMaxLength = maxLengthThunk(40)
@@ -20,8 +29,8 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field placeholder={'Login'}
-                       name={'login'}
+                <Field placeholder={'Email'}
+                       name={'email'}
                        component={InputComponent}
                        validate={[requiredField, loginMaxLength]}
                 />
@@ -31,6 +40,7 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
                        name={'password'}
                        component={InputComponent}
                        validate={[requiredField, passwordMaxLength]}
+                       type='password'
                 />
             </div>
             <div>
@@ -50,10 +60,19 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 
 const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginForm)
 
-const Login = (props: any) => {
+type LoginPropsType = {
+    loginThunk: (email: string, password: string, rememberMe: boolean) => void
+    isAuth: boolean
+}
+
+const Login = (props: LoginPropsType) => {
 
     const onSubmit = (formData: FormDataType) => {
-        props.loginThunk(formData.login, formData.password, formData.rememberMe)
+        props.loginThunk(formData.email, formData.password, formData.rememberMe)
+    }
+
+    if (props.isAuth) {
+        return <Navigate to={'/profile'}/>
     }
 
     return (
@@ -64,14 +83,21 @@ const Login = (props: any) => {
     );
 };
 
-const mdtp = (dispatch: any) => {
+const mdtp = (dispatch: any): mdtpType => {
     return {
-        loginThunk: (login: string, password: string, rememberMe: boolean) => {
-            dispatch(loginThunkCreator(login, password, rememberMe))
+        loginThunk: (email: string, password: string, rememberMe: boolean) => {
+            dispatch(loginThunkCreator(email, password, rememberMe))
         }
     }
 }
 
-export default connect(null, mdtp)(Login)
+const mstp = (state: AppStateType): mstpType => {
+    return {
+        isAuth: state.auth.isAuth
+    }
+}
+
+// export default connect(null, mdtp)(Login)
+export default connect(mstp, mdtp)(Login)
 
 
