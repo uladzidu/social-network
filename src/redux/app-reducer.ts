@@ -1,15 +1,20 @@
+import {getAuthUserDataThunkCreator} from "./auth-reducer";
 
+type AppActionType = ReturnType<typeof initializedSuccessAC>
+type AppInitStateType = {
+    initialized: boolean
+}
 
-const initState = {
+const appInitState: AppInitStateType = {
     initialized: false
 }
 
-export const appReducer = (state: any = initState, action: any): any => {
+export const appReducer = (state: AppInitStateType = appInitState, action: AppActionType): AppInitStateType => {
     switch (action.type) {
         case "INITIALIZED-SUCCESS":
             return {
                 ...state,
-                initialized : true
+                initialized: true
             }
         default :
             return state
@@ -18,10 +23,16 @@ export const appReducer = (state: any = initState, action: any): any => {
 
 export const initializedSuccessAC = () => {
     return {
-        type : "INITIALIZED-SUCCESS"
-    }
+        type: "INITIALIZED-SUCCESS"
+    } as const
 }
 
-export const initializeTC = () => (dispatch : any) => {
+export const initializeAppTC = () => (dispatch: any) => {
+    let promise = dispatch(getAuthUserDataThunkCreator())
+
+    promise.then(() => {
+        dispatch(initializedSuccessAC())
+    })
+
 
 }

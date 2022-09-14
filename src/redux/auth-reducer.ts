@@ -57,7 +57,7 @@ export const changeIsFetchingAC = (value: boolean | null) => {
 
 export const getAuthUserDataThunkCreator = () => (dispatch: any) => {
     dispatch(changeIsFetchingAC(true))
-    authApi.authorization()
+   return authApi.authorization()
         .then((res: any) => {
             dispatch(changeIsFetchingAC(false))
             if (res.resultCode === 0) {
@@ -72,7 +72,6 @@ export const loginThunkCreator = (email: string, password: string, rememberMe: b
         .then((res: any) => {
             console.log(res.data.messages)
             if (res.data.resultCode === 0) {
-                dispatch(getAuthUserDataThunkCreator())
             } else {
                 const errorMessage = res.data.messages.length > 0 ? res.data.messages[0] : 'Some error'
                 dispatch(stopSubmit('login', {_error: errorMessage}))

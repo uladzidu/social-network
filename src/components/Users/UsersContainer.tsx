@@ -83,5 +83,5 @@ const mapUsersDispatchToProps = (dispatch: Dispatch | any): mapUsersDispatchToPr
 
 export default compose<React.ComponentType>(
     connect(mapUsersStateToProps, mapUsersDispatchToProps),
-    WithAuthRedirect
+    //WithAuthRedirect
 )(UsersClassContainer)

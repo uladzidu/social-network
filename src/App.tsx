@@ -11,64 +11,79 @@ import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
 import {connect} from "react-redux";
-import {getAuthUserDataThunkCreator} from "./redux/auth-reducer";
 import {compose} from "redux";
 import {withRouter} from "./hoc/WithRouter";
+import {initializeAppTC} from "./redux/app-reducer";
+import {AppStateType} from "./redux/redux-store";
+import {Preloader} from "./components/common/preloader/Preloader";
 
 type mdtpType = {
-    getAuthUserDataThunk : () => void
+    initializedAppThunk: () => void
 }
-type AppPropsType = mdtpType
+type mstpType = {
+    initialized: boolean
+}
+type AppPropsType = mdtpType & mstpType
 
 
 class App extends React.Component<AppPropsType> {
 
     componentDidMount() {
-        this.props.getAuthUserDataThunk()
+        this.props.initializedAppThunk()
     }
 
     render() {
 
-        return (
-            <div className="app-wrapper">
-                <HeaderContainer/>
-                <Navbar/>
-                <div className="app-wrapper-content">
-                    <Routes>
-                        <Route path='/profile/:userId'
-                               element={<ProfileContainer/>}
-                        />
-                        <Route path='/profile/'
-                               element={<ProfileContainer/>}
-                        />
-                        <Route path="/dialogs/*"
-                               element={<DialogsContainer/>}
-                        />
-                        <Route path='/users'
-                               element={<UsersContainer/>}
-                        />
-                        <Route path='/login'
-                               element={<Login/>}
-                        />
-                        <Route path="/news/" element={<News/>}/>
-                        <Route path="/music/" element={<Music/>}/>
-                        <Route path="/settings/" element={<Settings/>}/>
-                    </Routes>
+        if (!this.props.initialized) {
+            return <Preloader/>
+        } else {
+            return (
+                <div className="app-wrapper">
+                    <HeaderContainer/>
+                    <Navbar/>
+                    <div className="app-wrapper-content">
+                        <Routes>
+                            <Route path='/profile/:userId'
+                                   element={<ProfileContainer/>}
+                            />
+                            <Route path='/profile/'
+                                   element={<ProfileContainer/>}
+                            />
+                            <Route path="/dialogs/*"
+                                   element={<DialogsContainer/>}
+                            />
+                            <Route path='/users'
+                                   element={<UsersContainer/>}
+                            />
+                            <Route path='/login'
+                                   element={<Login/>}
+                            />
+                            <Route path="/news/" element={<News/>}/>
+                            <Route path="/music/" element={<Music/>}/>
+                            <Route path="/settings/" element={<Settings/>}/>
+                        </Routes>
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        }
     }
 }
 
-const mdtp = (dispatch : any) : mdtpType => {
+const mstp = (state: AppStateType): mstpType => {
     return {
-        getAuthUserDataThunk: () => {
-            dispatch(getAuthUserDataThunkCreator())
-        },
+        initialized: state.app.initialized
+    }
+}
+
+const mdtp = (dispatch: any): mdtpType => {
+    return {
+        initializedAppThunk: () => {
+            dispatch(initializeAppTC())
+        }
     }
 }
 
 export default compose(
     withRouter,
-    connect(null,mdtp)
+    connect(mstp, mdtp)
 )(App)
