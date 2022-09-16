@@ -11,7 +11,14 @@ import {AppStateType} from "../../redux/redux-store";
 import {UsersComponent} from "./UsersComponent";
 import {Preloader} from "../common/preloader/Preloader";
 import {compose, Dispatch} from "redux";
-import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
+import {
+    getCurrentPage,
+    getFollowingInProgress,
+    getIsFetching,
+    getPageSize,
+    getTotalUsersCount,
+    getUsers
+} from "../../redux/selectors/users-selector";
 
 
 export type mapUsersStateToPropsType = {
@@ -25,8 +32,8 @@ export type mapUsersStateToPropsType = {
 export type mapUsersDispatchToProps = {
     setCurrentPage: (page: number) => void
     getUsersThunk: (currentPage: number, pageSize: number) => void
-    followThunk : (userId: number) => void
-    unfollowThunk : (userId: number) => void
+    followThunk: (userId: number) => void
+    unfollowThunk: (userId: number) => void
 }
 
 export type UsersClassContainerPropsType = mapUsersStateToPropsType & mapUsersDispatchToProps
@@ -55,27 +62,28 @@ export class UsersClassContainer extends React.Component<UsersClassContainerProp
 
 const mapUsersStateToProps = (state: AppStateType): mapUsersStateToPropsType => {
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: getFollowingInProgress(state)
     }
 }
 
 const mapUsersDispatchToProps = (dispatch: Dispatch | any): mapUsersDispatchToProps => {
     return {
         setCurrentPage: (page: number) => {
+            debugger
             dispatch(changeCurrentPageAC(page))
         },
         getUsersThunk: (currentPage: number, pageSize: number) => {
             dispatch(getUsersThunkCreator(currentPage, pageSize))
         },
-        followThunk : (userId: number) => {
+        followThunk: (userId: number) => {
             dispatch(followThunkCreator(userId))
         },
-        unfollowThunk : (userId: number) => {
+        unfollowThunk: (userId: number) => {
             dispatch(unfollowThunkCreator(userId))
         }
     }

@@ -29,7 +29,9 @@ class ProfileClassContainer extends React.Component<ProfileContainerPropsType> {
     componentDidMount() {
         // @ts-ignore
         let userId: number | null = this.props.router.params.userId
-        if (!userId) userId = this.props.userId
+        if (!userId) {
+            userId = this.props.userId
+        }
         this.props.getUserProfileThunk(userId)
         this.props.getUserStatusThunk(userId)
 
