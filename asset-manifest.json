@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/the-way-of-samurai-react-kabzda-kak-prosto/static/css/main.6392bcd7.chunk.css",
+    "main.js": "/the-way-of-samurai-react-kabzda-kak-prosto/static/js/main.11a5c992.chunk.js",
+    "main.js.map": "/the-way-of-samurai-react-kabzda-kak-prosto/static/js/main.11a5c992.chunk.js.map",
+    "runtime-main.js": "/the-way-of-samurai-react-kabzda-kak-prosto/static/js/runtime-main.b147b74c.js",
+    "runtime-main.js.map": "/the-way-of-samurai-react-kabzda-kak-prosto/static/js/runtime-main.b147b74c.js.map",
+    "static/js/2.1578bddb.chunk.js": "/the-way-of-samurai-react-kabzda-kak-prosto/static/js/2.1578bddb.chunk.js",
+    "static/js/2.1578bddb.chunk.js.map": "/the-way-of-samurai-react-kabzda-kak-prosto/static/js/2.1578bddb.chunk.js.map",
+    "index.html": "/the-way-of-samurai-react-kabzda-kak-prosto/index.html",
+    "static/css/main.6392bcd7.chunk.css.map": "/the-way-of-samurai-react-kabzda-kak-prosto/static/css/main.6392bcd7.chunk.css.map",
+    "static/js/2.1578bddb.chunk.js.LICENSE.txt": "/the-way-of-samurai-react-kabzda-kak-prosto/static/js/2.1578bddb.chunk.js.LICENSE.txt",
+    "static/media/Infinity-4.3s-200px (1).3db0f677.svg": "/the-way-of-samurai-react-kabzda-kak-prosto/static/media/Infinity-4.3s-200px (1).3db0f677.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b147b74c.js",
+    "static/js/2.1578bddb.chunk.js",
+    "static/css/main.6392bcd7.chunk.css",
+    "static/js/main.11a5c992.chunk.js"
+  ]
+}
