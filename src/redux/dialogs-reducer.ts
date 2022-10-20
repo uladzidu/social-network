@@ -21,13 +21,13 @@ const dialogsInitState: MessagesPageType = {
         { id: v1(), name: "Gyn" },
         { id: v1(), name: "Andr" },
         { id: v1(), name: "Taras" },
-        { id: v1(), name: "Sanya Big Boss" },
+        { id: v1(), name: "Sanya Big Boss" }
     ],
     messagesData: [
         { id: v1(), message: "Hi" },
         { id: v1(), message: "How are u?" },
-        { id: v1(), message: "Good Job!" },
-    ],
+        { id: v1(), message: "Good Job!" }
+    ]
 };
 
 export const dialogsReducer = (
@@ -38,11 +38,11 @@ export const dialogsReducer = (
         case "ADD-MESSAGE": {
             const newAddedMessage = {
                 id: v1(),
-                message: action.newMessageText,
+                message: action.newMessageText
             };
             return {
                 ...state,
-                messagesData: [newAddedMessage, ...state.messagesData],
+                messagesData: [newAddedMessage, ...state.messagesData]
             };
         }
         default:

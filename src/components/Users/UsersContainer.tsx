@@ -71,7 +71,6 @@ const mapUsersStateToProps = (state: AppStateType): mapUsersStateToPropsType => 
 const mapUsersDispatchToProps = (dispatch: Dispatch | any): mapUsersDispatchToProps => {
     return {
         setCurrentPage: (page: number) => {
-            debugger;
             dispatch(changeCurrentPageAC(page));
         },
         getUsersThunk: (currentPage: number, pageSize: number) => {
