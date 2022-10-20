@@ -1,62 +1,59 @@
 import React from "react";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import {
     changeCurrentPageAC,
     followThunkCreator,
     getUsersThunkCreator,
     unfollowThunkCreator,
-    userType
+    userType,
 } from "../../redux/users-reducer";
-import {AppStateType} from "../../redux/redux-store";
-import {UsersComponent} from "./UsersComponent";
-import {Preloader} from "../common/preloader/Preloader";
-import {compose, Dispatch} from "redux";
+import { AppStateType } from "../../redux/redux-store";
+import { UsersComponent } from "./UsersComponent";
+import { Preloader } from "../common/preloader/Preloader";
+import { compose, Dispatch } from "redux";
 import {
     getCurrentPage,
     getFollowingInProgress,
     getIsFetching,
     getPageSize,
     getTotalUsersCount,
-    getUsers
+    getUsers,
 } from "../../redux/selectors/users-selector";
 
-
 export type mapUsersStateToPropsType = {
-    users: userType[]
-    pageSize: number
-    totalUsersCount: number
-    currentPage: number
-    isFetching: boolean
-    followingInProgress: Array<number>
-}
+    users: userType[];
+    pageSize: number;
+    totalUsersCount: number;
+    currentPage: number;
+    isFetching: boolean;
+    followingInProgress: Array<number>;
+};
 export type mapUsersDispatchToProps = {
-    setCurrentPage: (page: number) => void
-    getUsersThunk: (currentPage: number, pageSize: number) => void
-    followThunk: (userId: number) => void
-    unfollowThunk: (userId: number) => void
-}
+    setCurrentPage: (page: number) => void;
+    getUsersThunk: (currentPage: number, pageSize: number) => void;
+    followThunk: (userId: number) => void;
+    unfollowThunk: (userId: number) => void;
+};
 
-export type UsersClassContainerPropsType = mapUsersStateToPropsType & mapUsersDispatchToProps
+export type UsersClassContainerPropsType = mapUsersStateToPropsType & mapUsersDispatchToProps;
 
 export class UsersClassContainer extends React.Component<UsersClassContainerPropsType> {
-
     componentDidMount() {
-        this.props.getUsersThunk(this.props.currentPage, this.props.pageSize)
+        this.props.getUsersThunk(this.props.currentPage, this.props.pageSize);
     }
 
     onPageChange = (page: number) => {
-        this.props.setCurrentPage(page)
-        this.props.getUsersThunk(page, this.props.pageSize)
-    }
+        this.props.setCurrentPage(page);
+        this.props.getUsersThunk(page, this.props.pageSize);
+    };
 
     render() {
-
         return (
             <>
-                {this.props.isFetching ? <Preloader/> : null}
-                <UsersComponent {...this.props} onPageChange={this.onPageChange}/>
+                {this.props.isFetching ? <Preloader /> : null}
+                <UsersComponent {...this.props} onPageChange={this.onPageChange} />
             </>
-        )
+        );
     }
 }
 
@@ -67,29 +64,29 @@ const mapUsersStateToProps = (state: AppStateType): mapUsersStateToPropsType => 
         totalUsersCount: getTotalUsersCount(state),
         currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
-        followingInProgress: getFollowingInProgress(state)
-    }
-}
+        followingInProgress: getFollowingInProgress(state),
+    };
+};
 
 const mapUsersDispatchToProps = (dispatch: Dispatch | any): mapUsersDispatchToProps => {
     return {
         setCurrentPage: (page: number) => {
-            debugger
-            dispatch(changeCurrentPageAC(page))
+            debugger;
+            dispatch(changeCurrentPageAC(page));
         },
         getUsersThunk: (currentPage: number, pageSize: number) => {
-            dispatch(getUsersThunkCreator(currentPage, pageSize))
+            dispatch(getUsersThunkCreator(currentPage, pageSize));
         },
         followThunk: (userId: number) => {
-            dispatch(followThunkCreator(userId))
+            dispatch(followThunkCreator(userId));
         },
         unfollowThunk: (userId: number) => {
-            dispatch(unfollowThunkCreator(userId))
-        }
-    }
-}
+            dispatch(unfollowThunkCreator(userId));
+        },
+    };
+};
 
 export default compose<React.ComponentType>(
-    connect(mapUsersStateToProps, mapUsersDispatchToProps),
+    connect(mapUsersStateToProps, mapUsersDispatchToProps)
     //WithAuthRedirect
-)(UsersClassContainer)
+)(UsersClassContainer);

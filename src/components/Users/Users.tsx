@@ -1,42 +1,53 @@
-import React from 'react';
-import styles from './users.module.css'
+import React from "react";
+import styles from "./users.module.css";
 import axios from "axios";
-import {mapUsersDispatchToProps, mapUsersStateToPropsType} from "./UsersContainer";
+import { mapUsersDispatchToProps, mapUsersStateToPropsType } from "./UsersContainer";
 
-
-type UsersPropsType = mapUsersDispatchToProps & mapUsersStateToPropsType
+type UsersPropsType = mapUsersDispatchToProps & mapUsersStateToPropsType;
 
 export const Users = (props: UsersPropsType) => {
-
     const getUsers = () => {
         // @ts-ignore
         if (props.users.length === 0) {
-            axios.get('https://social-network.samuraijs.com/api/1.0/users')
+            axios
+                .get("https://social-network.samuraijs.com/api/1.0/users")
                 .then((response: any) => {
-                    props.setUsers(response.data.items)
-                })
+                    props.setUsers(response.data.items);
+                });
         }
-    }
+    };
 
     return (
         <div>
             <button onClick={getUsers}>Get Users</button>
             // @ts-ignore
-            {props.users.map((elem: any) => <div key={elem.id}>
-
+            {props.users.map((elem: any) => (
+                <div key={elem.id}>
                     <div>
-                        <img className={styles.userPhoto}
-                             src={elem.photos.small !== null ? elem.photos.small : styles.userPhoto}
-                             alt="photo"/>
+                        <img
+                            className={styles.userPhoto}
+                            src={elem.photos.small !== null ? elem.photos.small : styles.userPhoto}
+                            alt="photo"
+                        />
                     </div>
                     <div>
-                        {!elem.followed
-                            ? <button onClick={() => {
-                                props.follow(elem.id)
-                            }}>Follow</button>
-                            : <button onClick={() => {
-                                props.unfollow(elem.id)
-                            }}>Unfollow</button>}
+                        {!elem.followed ? (
+                            <button
+                                onClick={() => {
+                                    props.follow(elem.id);
+                                }}
+                            >
+                                Follow
+                            </button>
+                        ) : (
+                            <button
+                                onClick={() => {
+                                    props.unfollow(elem.id);
+                                }}
+                            >
+                                Unfollow
+                            </button>
+                        )}
                     </div>
                     <span>
                         <span>
@@ -44,14 +55,12 @@ export const Users = (props: UsersPropsType) => {
                             <div>{elem.status}</div>
                         </span>
                         <span>
-                            <div>{'elem.location.country'}</div>
-                            <div>{'elem.location.city'}</div>
+                            <div>{"elem.location.country"}</div>
+                            <div>{"elem.location.city"}</div>
                         </span>
                     </span>
                 </div>
-            )
-            }
+            ))}
         </div>
-    )
-}
-
+    );
+};

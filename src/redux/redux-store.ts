@@ -1,15 +1,14 @@
-import {applyMiddleware, combineReducers, legacy_createStore} from "redux";
-import {sidebarReducer} from "./sidebar-reducer";
-import {dialogsReducer} from "./dialogs-reducer";
-import {profileReducer} from "./profile-reducer";
-import {usersReducer} from "./users-reducer";
-import {authReducer} from "./auth-reducer";
-import thunkMiddleware from "redux-thunk"
-import { reducer as formReducer } from 'redux-form';
-import {appReducer} from "./app-reducer";
+import { applyMiddleware, combineReducers, legacy_createStore } from "redux";
+import { sidebarReducer } from "./sidebar-reducer";
+import { dialogsReducer } from "./dialogs-reducer";
+import { profileReducer } from "./profile-reducer";
+import { usersReducer } from "./users-reducer";
+import { authReducer } from "./auth-reducer";
+import thunkMiddleware from "redux-thunk";
+import { reducer as formReducer } from "redux-form";
+import { appReducer } from "./app-reducer";
 
-export type AppStateType = ReturnType<typeof rootReducer>
-
+export type AppStateType = ReturnType<typeof rootReducer>;
 
 export const rootReducer = combineReducers({
     profilePage: profileReducer,
@@ -18,11 +17,10 @@ export const rootReducer = combineReducers({
     sidebar: sidebarReducer,
     auth: authReducer,
     form: formReducer,
-    app : appReducer
-})
+    app: appReducer,
+});
 
-export let store = legacy_createStore(rootReducer, applyMiddleware(thunkMiddleware))
+export let store = legacy_createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
 // @ts-ignore
-window.store = store
-
+window.store = store;

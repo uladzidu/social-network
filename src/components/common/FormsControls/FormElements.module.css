@@ -1,13 +1,11 @@
-
 .formControl.error textarea {
-
 }
 
 .formControl.error span {
     color: red;
 }
 
-.summeryError{
+.summeryError {
     border: 1px solid;
     color: red;
     padding: 5px;
