@@ -7,11 +7,12 @@ type UsersPropsType = mapUsersDispatchToProps & mapUsersStateToPropsType;
 
 export const Users = (props: UsersPropsType) => {
     const getUsers = () => {
-        // @ts-ignore
+
         if (props.users.length === 0) {
             axios
                 .get("https://social-network.samuraijs.com/api/1.0/users")
                 .then((response: any) => {
+                    // @ts-ignore
                     props.setUsers(response.data.items);
                 });
         }
@@ -34,6 +35,7 @@ export const Users = (props: UsersPropsType) => {
                         {!elem.followed ? (
                             <button
                                 onClick={() => {
+                                    // @ts-ignore
                                     props.follow(elem.id);
                                 }}
                             >
@@ -42,6 +44,7 @@ export const Users = (props: UsersPropsType) => {
                         ) : (
                             <button
                                 onClick={() => {
+                                    // @ts-ignore
                                     props.unfollow(elem.id);
                                 }}
                             >
