@@ -1,21 +1,21 @@
 import axios from "axios";
 
-export type usersApiType = {
-    getUsers: any;
-    followUser: any;
-    unfollowUser: any;
-    getProfile: any;
-};
-export type profileApiType = {
-    getProfile: any;
-    getStatus: any;
-    updateStatus: any;
-};
-export type authApiType = {
-    authorization: any;
-    login: any;
-    logout: any;
-};
+// export type GetUsersApiType = {
+//     getUsers: (currentPage: number, pageSize: number) => void
+//     followUser: any;
+//     unfollowUser: any;
+//     getProfile: any;
+// };
+// export type profileApiType = {
+//     getProfile: any;
+//     getStatus: any;
+//     updateStatus: any;
+// };
+// export type authApiType = {
+//     authorization: any;
+//     login: any;
+//     logout: any;
+// };
 
 const instance = axios.create({
     withCredentials: true,
@@ -25,7 +25,7 @@ const instance = axios.create({
     },
 });
 
-export const usersApi: usersApiType = {
+export const usersApi = {
     getUsers(currentPage: number, pageSize: number) {
         return instance
             .get(`/users?page=${currentPage}&count=${pageSize}`)
@@ -43,7 +43,7 @@ export const usersApi: usersApiType = {
     },
 };
 
-export const profileApi: profileApiType = {
+export const profileApi = {
     getProfile(userId: number) {
         return instance.get(`/profile/${userId}`).then((response) => response.data);
     },
@@ -57,14 +57,33 @@ export const profileApi: profileApiType = {
     },
 };
 
-export const authApi: authApiType = {
+export const authApi = {
     authorization() {
         return instance.get("/auth/me").then((res) => res.data); // возвращаем из всего респонса только объект дата
     },
-    login(email: string, password: string, rememberMe: boolean = false) {
-        return instance.post("/auth/login", { email, password, rememberMe });
+    login(email: string, password: string, rememberMe: boolean) {
+        return instance.post<LoginType, LoginResType<{ userId: number }>>("/auth/login", {
+            email,
+            password,
+            rememberMe,
+        });
     },
     logout() {
-        return instance.delete("/auth/login");
+        return instance.delete<LoginResType<{}>>("/auth/login");
     },
+};
+
+// Login Types
+
+export type LoginType = {
+    email: string;
+    password: string;
+    rememberMe: boolean;
+};
+
+export type LoginResType<T> = {
+    data: T;
+    messages: any[];
+    fieldsErrors: any[];
+    resultCode: number;
 };

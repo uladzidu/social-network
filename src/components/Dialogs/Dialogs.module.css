@@ -1,26 +1,26 @@
 .dialogs {
-    display: grid;
-    grid-template-columns: 3fr 10fr;
+  display: grid;
+  grid-template-columns: 3fr 10fr;
 }
 
 .dialogsItems {
-    padding: 20px;
+  padding: 20px;
 }
 
 .dialog {
-    padding: 10px;
+  padding: 10px;
 }
 
 .dialog a {
-    color: black;
-    text-decoration: none;
+  color: black;
+  text-decoration: none;
 }
 
 .active {
-    color: gold;
+  color: gold;
 }
 
 .messages {
-    padding: 20px;
-    color: white;
+  padding: 20px;
+  color: white;
 }

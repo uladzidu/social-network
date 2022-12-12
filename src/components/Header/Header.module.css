@@ -1,14 +1,14 @@
 .header {
-    grid-area: h;
-    background-color: lightgreen;
+  grid-area: h;
+  background-color: lightgreen;
 }
 .loginBlock {
-    float: right;
+  float: right;
 }
 .loginText {
-    color: dodgerblue;
+  color: dodgerblue;
 }
 
 .header img {
-    width: 50px;
+  width: 50px;
 }

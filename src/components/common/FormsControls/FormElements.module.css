@@ -2,11 +2,11 @@
 }
 
 .formControl.error span {
-    color: red;
+  color: red;
 }
 
 .summeryError {
-    border: 1px solid;
-    color: red;
-    padding: 5px;
+  border: 1px solid;
+  color: red;
+  padding: 5px;
 }
