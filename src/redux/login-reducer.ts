@@ -1,5 +1,6 @@
 import { AppThunk } from "./redux-store";
 import { authApi } from "../api/api";
+import { isLoadingAC, setAuthUserDataAC } from "./auth-reducer";
 
 const initState = {
     email: "",
@@ -36,3 +37,19 @@ export const loginTC =
         await authApi.login(email, password, rememberMe);
         dispatch(isLoggedInAC(true));
     };
+
+export const logoutTC = (): AppThunk => {
+    return async (dispatch) => {
+        dispatch(isLoadingAC(true));
+        try {
+            const response = await authApi.logout();
+            if (response.data.resultCode === 0) {
+                dispatch(setAuthUserDataAC(null, null, null, false));
+            }
+        } catch (e) {
+            console.log(e);
+        } finally {
+            dispatch(isLoadingAC(false));
+        }
+    };
+};

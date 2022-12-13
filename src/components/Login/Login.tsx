@@ -3,23 +3,23 @@ import React from "react";
 import { maxLengthThunk, requiredField } from "../../utils/validators/validators";
 import { InputComponent } from "../common/FormsControls/FormElements";
 import { connect } from "react-redux";
-import { loginThunkCreator } from "../../redux/auth-reducer";
+import { loginTC } from "../../redux/auth-reducer";
 import { AppStateType } from "../../redux/redux-store";
 import { Navigate } from "react-router-dom";
 import styles from "../common/FormsControls/FormElements.module.css";
 import { Field } from "formik";
 
 export type FormDataType = {
-  email: string;
-  password: string;
-  rememberMe: boolean;
+    email: string;
+    password: string;
+    rememberMe: boolean;
 };
 
 type mdtpType = {
-  loginThunk: (email: string, password: string, rememberMe: boolean) => void;
+    loginThunk: (email: string, password: string, rememberMe: boolean) => void;
 };
 type mstpType = {
-  isAuth: boolean;
+    isAuth: boolean;
 };
 
 const loginMaxLength = maxLengthThunk(40);
@@ -60,39 +60,39 @@ const passwordMaxLength = maxLengthThunk(40);
 // const LoginReduxForm = reduxForm<FormDataType>({ form: "login" })(LoginForm);
 
 type LoginPropsType = {
-  loginThunk: (email: string, password: string, rememberMe: boolean) => void;
-  isAuth: boolean;
+    loginThunk: (email: string, password: string, rememberMe: boolean) => void;
+    isAuth: boolean;
 };
 
 const Login = (props: LoginPropsType) => {
-  const onSubmit = (formData: FormDataType) => {
-    props.loginThunk(formData.email, formData.password, formData.rememberMe);
-  };
+    const onSubmit = (formData: FormDataType) => {
+        props.loginThunk(formData.email, formData.password, formData.rememberMe);
+    };
 
-  if (props.isAuth) {
-    return <Navigate to={"/profile"} />;
-  }
+    if (props.isAuth) {
+        return <Navigate to={"/profile"} />;
+    }
 
-  return (
-    <div>
-      <h1>Login</h1>
-      {/*<LoginReduxForm onSubmit={onSubmit} />*/}
-    </div>
-  );
+    return (
+        <div>
+            <h1>Login</h1>
+            {/*<LoginReduxForm onSubmit={onSubmit} />*/}
+        </div>
+    );
 };
 
 const mdtp = (dispatch: any): mdtpType => {
-  return {
-    loginThunk: (email: string, password: string, rememberMe: boolean) => {
-      dispatch(loginThunkCreator(email, password, rememberMe));
-    },
-  };
+    return {
+        loginThunk: (email: string, password: string, rememberMe: boolean) => {
+            dispatch(loginTC(email, password, rememberMe));
+        },
+    };
 };
 
 const mstp = (state: AppStateType): mstpType => {
-  return {
-    isAuth: state.auth.isAuth,
-  };
+    return {
+        isAuth: state.auth.isAuth,
+    };
 };
 
 // export default connect(null, mdtp)(Login)

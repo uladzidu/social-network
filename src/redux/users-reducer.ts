@@ -21,12 +21,12 @@ export type userReducerInitStateType = {
 export type userType = {
     name: string;
     id: number;
-    uniqueUrlName: null | undefined;
+    uniqueUrlName: null | string;
     photos: {
-        small: null | undefined;
-        large: null | undefined;
+        small: null | string;
+        large: null | string;
     };
-    status: null | undefined;
+    status: null | string;
     followed: boolean;
 };
 
@@ -141,14 +141,13 @@ export const changeFollowingProgressAC = (value: boolean, userId: number) => {
 };
 
 export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
-    return (dispatch: any) => {
+    return async (dispatch: any) => {
         dispatch(setIsFetchingAC(true));
-        usersApi.getUsers(currentPage, pageSize).then((data: any) => {
-            dispatch(changeCurrentPageAC(currentPage));
-            dispatch(setIsFetchingAC(false));
-            dispatch(setUsersAC(data.items));
-            dispatch(setUsersCountAC(data.totalCount / 200));
-        });
+        const response = await usersApi.getUsers(currentPage, pageSize);
+        dispatch(changeCurrentPageAC(currentPage));
+        dispatch(setIsFetchingAC(false));
+        dispatch(setUsersAC(response.items));
+        dispatch(setUsersCountAC(response.totalCount / 200));
     };
 };
 
