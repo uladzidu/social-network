@@ -48,7 +48,7 @@ export const usersReducer = (
             return {
                 ...state,
                 users: state.users.map((elem: userType) =>
-                    elem.id === action.userId ? { ...elem, followed: true } : elem
+                    elem.id === action.id ? { ...elem, followed: true } : elem
                 ),
             };
         }
@@ -56,7 +56,7 @@ export const usersReducer = (
             return {
                 ...state,
                 users: state.users.map((elem: userType) =>
-                    elem.id === action.userId ? { ...elem, followed: false } : elem
+                    elem.id === action.id ? { ...elem, followed: false } : elem
                 ),
             };
         }
@@ -88,8 +88,8 @@ export const usersReducer = (
             return {
                 ...state,
                 followingInProgress: action.value
-                    ? [...state.followingInProgress, action.userId]
-                    : state.followingInProgress.filter((elem) => elem !== action.userId),
+                    ? [...state.followingInProgress, action.id]
+                    : state.followingInProgress.filter((elem) => elem !== action.id),
             };
         default:
             return state;
@@ -99,13 +99,13 @@ export const usersReducer = (
 export const followAC = (userId: number) => {
     return {
         type: "FOLLOW",
-        userId: userId,
+        id: userId,
     } as const;
 };
 export const unfollowAC = (userId: number) => {
     return {
         type: "UNFOLLOW",
-        userId: userId,
+        id: userId,
     } as const;
 };
 export const setUsersAC = (users: userType[]) => {
@@ -132,15 +132,15 @@ export const setIsFetchingAC = (value: boolean) => {
         value,
     } as const;
 };
-export const changeFollowingProgressAC = (value: boolean, userId: number) => {
+export const changeFollowingProgressAC = (value: boolean, id: number) => {
     return {
         type: "CHANGE-FOLLOWING-PROGRESS",
         value,
-        userId,
+        id,
     } as const;
 };
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
+export const getUsersTC = (currentPage: number, pageSize: number) => {
     return async (dispatch: any) => {
         dispatch(setIsFetchingAC(true));
         const response = await usersApi.getUsers(currentPage, pageSize);

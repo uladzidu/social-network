@@ -2,8 +2,9 @@ import React from "react";
 import { Header } from "./Header";
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
-import { authMeTC, logoutTC } from "../../redux/auth-reducer";
+import { authMeTC } from "../../redux/auth-reducer";
 import { AppStateType } from "../../redux/redux-store";
+import { logoutTC } from "../../redux/login-reducer";
 
 export type mstpType = {
     isAuth: boolean;

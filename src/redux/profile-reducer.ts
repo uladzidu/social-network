@@ -1,36 +1,36 @@
 import { v1 } from "uuid";
 import { profileApi, usersApi } from "../api/api";
+import { AppThunk } from "./redux-store";
 
-export type PostDataType = {
-    id: string;
-    postMessage: string;
-    likes: number;
-};
-type ProfilePageType = {
-    postData: PostDataType[];
-    profile: null | any;
-    status: string;
-};
-
-type AllProfileReducersActionType =
-    | ReturnType<typeof addPostAC>
-    | ReturnType<typeof setUserProfileAC>
-    | ReturnType<typeof setUserStatusAC>;
-
-const ProfileReducerInitState: ProfilePageType = {
+const ProfileReducerInitState = {
     postData: <PostDataType[]>[
         { id: v1(), postMessage: "Hi, how are you", likes: 5 },
         { id: v1(), postMessage: "It's my first post", likes: 15 },
         { id: v1(), postMessage: "It's my second post", likes: 15 },
         { id: v1(), postMessage: "It's my third post", likes: 15 },
     ],
-    profile: null,
     status: "",
+    aboutMe: "",
+    contacts: {
+        facebook: "",
+        website: "",
+        vk: "",
+        twitter: "",
+        instagram: "",
+        youtube: "",
+        github: "",
+        mainLink: "",
+    },
+    lookingForAJob: null as null | boolean,
+    lookingForAJobDescription: "",
+    fullName: "",
+    userId: null as null | number,
+    photos: { small: null as null | string, large: null as null | string },
 };
 
 export const profileReducer = (
     state: ProfilePageType = ProfileReducerInitState,
-    action: AllProfileReducersActionType
+    action: ProfileReducersAT
 ): ProfilePageType => {
     switch (action.type) {
         case "ADD-POST": {
@@ -40,10 +40,15 @@ export const profileReducer = (
                 postData: [newPost, ...state.postData],
             };
         }
-        case "SET-USER-PROFILE": {
+        case "app/SET-USER-ID":
             return {
                 ...state,
-                profile: action.profile,
+                userId: action.userId,
+            };
+        case "SET-PROFILE-DATA": {
+            return {
+                ...state,
+                ...action.profileData,
             };
         }
         case "SET-STATUS": {
@@ -63,8 +68,11 @@ export const addPostAC = (newPostText: string) => {
         newPostText,
     } as const;
 };
-export const setUserProfileAC = (profile: any) => {
-    return { type: "SET-USER-PROFILE", profile } as const;
+
+export const setUserIdAC = (userId: number) => ({ type: "app/SET-USER-ID", userId } as const);
+
+export const setProfileDataAC = (profileData: ProfileType) => {
+    return { type: "SET-PROFILE-DATA", profileData } as const;
 };
 export const setUserStatusAC = (status: string) => {
     return {
@@ -74,27 +82,76 @@ export const setUserStatusAC = (status: string) => {
 };
 
 // Thunk Creators
-export const getUserProfileThunkCreator = (userId: number | null) => {
-    return (dispatch: any) => {
-        profileApi.getProfile(userId!!).then((data: any) => {
-            dispatch(setUserProfileAC(data));
-        });
+// export const getUserProfileTC = (userId: number | null): AppThunk => {
+//     return async (dispatch) => {
+//         const response = await profileApi.getProfile(userId!!);
+//         console.log(response);
+//         // @ts-ignore
+//         dispatch(setProfileDataAC(response));
+//     };
+// };
+
+export const getUserProfileTC = (): AppThunk => {
+    return async (dispatch, getState) => {
+        const userId = getState().profilePage.userId;
+        let response;
+        if (userId) {
+            response = await profileApi.getProfile(userId);
+            dispatch(setProfileDataAC(response));
+            dispatch(getUserStatusTC(userId));
+        }
     };
 };
-export const getUserStatusThunkCreator = (userId: number | null) => {
-    return (dispatch: any) => {
-        if (userId)
-            profileApi.getStatus(userId).then((data: any) => {
-                dispatch(setUserStatusAC(data));
-            });
+
+export const getUserStatusTC =
+    (userId: number | null): AppThunk =>
+    async (dispatch) => {
+        if (userId) {
+            const response = await profileApi.getStatus(userId);
+            dispatch(setUserStatusAC(response));
+        }
     };
-};
-export const updateUserStatusThunkCreator = (status: string) => {
-    return (dispatch: any) => {
-        profileApi.updateStatus(status).then((response: any) => {
-            if (response.data.resultCode === 0) {
-                dispatch(setUserStatusAC(status));
-            }
-        });
+export const updateUserStatusTC =
+    (status: string): AppThunk =>
+    async (dispatch, getState) => {
+        const userId = getState().profilePage.userId;
+        const response = await profileApi.updateStatus(status);
+        console.log(response);
+        if (response.resultCode === 0) {
+            dispatch(setUserStatusAC(status));
+            dispatch(getUserStatusTC(userId));
+        }
     };
+
+export type PostDataType = {
+    id: string;
+    postMessage: string;
+    likes: number;
 };
+
+export type ProfileType = {
+    aboutMe: string;
+    contacts: {
+        facebook: string;
+        website: string;
+        vk: string;
+        twitter: string;
+        instagram: string;
+        youtube: string;
+        github: string;
+        mainLink: string;
+    };
+    lookingForAJob: boolean;
+    lookingForAJobDescription?: string;
+    fullName: string;
+    userId: number;
+    photos: { small: string | null; large: string | null };
+};
+
+type ProfilePageType = typeof ProfileReducerInitState;
+
+type ProfileReducersAT =
+    | ReturnType<typeof addPostAC>
+    | ReturnType<typeof setProfileDataAC>
+    | ReturnType<typeof setUserStatusAC>
+    | ReturnType<typeof setUserIdAC>;

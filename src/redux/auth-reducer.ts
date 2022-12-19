@@ -2,7 +2,7 @@ import { authApi } from "../api/api";
 import { AppThunk } from "./redux-store";
 
 const initState = {
-    userId: null as null | number,
+    id: null as null | number,
     email: null as null | string,
     login: null as null | string,
     isAuth: false,

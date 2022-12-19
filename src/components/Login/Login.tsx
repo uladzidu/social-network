@@ -3,11 +3,11 @@ import React from "react";
 import { maxLengthThunk, requiredField } from "../../utils/validators/validators";
 import { InputComponent } from "../common/FormsControls/FormElements";
 import { connect } from "react-redux";
-import { loginTC } from "../../redux/auth-reducer";
 import { AppStateType } from "../../redux/redux-store";
 import { Navigate } from "react-router-dom";
 import styles from "../common/FormsControls/FormElements.module.css";
 import { Field } from "formik";
+import { loginTC } from "../../redux/login-reducer";
 
 export type FormDataType = {
     email: string;

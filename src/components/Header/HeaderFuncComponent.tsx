@@ -1,31 +1,22 @@
 import React from "react";
 import s from "./Header.module.css";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Preloader } from "../common/preloader/Preloader";
 import { useAppSelector } from "../../redux/redux-store";
-import { logoutTC } from "../../redux/auth-reducer";
 import { useDispatch } from "react-redux";
-
-// type HeaderPropsType = {
-//     isAuth: boolean;
-//     login: string | null;
-//     isFetching: boolean | null;
-//     // getAuthUserDataThunk: () => void
-//     logoutThunk: () => void;
-// };
+import { logoutTC } from "../../redux/login-reducer";
 
 export const HeaderFuncComponent = () => {
     const login = useAppSelector((state) => state.auth.login);
     const isLoading = useAppSelector((state) => state.auth.isLoading);
     const isAuth = useAppSelector((state) => state.auth.isAuth);
     const dispatch = useDispatch();
-    console.log(login);
 
     const logOutHandler = () => {
         // @ts-ignore
         dispatch(logoutTC());
     };
-
+    // console.log(isAuth, "isAuth");
     // if (!login) return <Navigate to={"/login"} />;
 
     return (
@@ -37,11 +28,12 @@ export const HeaderFuncComponent = () => {
                 />
                 <div className={s.loginBlock}>
                     {isLoading ? <Preloader /> : null}
-                    {isAuth ? (
+                    {isAuth && (
                         <div>
                             {login} <button onClick={logOutHandler}>Logout</button>
                         </div>
-                    ) : (
+                    )}
+                    {!isAuth && (
                         <Link className={s.loginText} to={"/login"}>
                             Login
                         </Link>

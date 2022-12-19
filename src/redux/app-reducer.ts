@@ -1,4 +1,5 @@
 import { authMeTC } from "./auth-reducer";
+import { AppThunk } from "./redux-store";
 
 type AppActionType = ReturnType<typeof initializedSuccessAC>;
 type AppInitStateType = {
@@ -14,26 +15,21 @@ export const appReducer = (
     action: AppActionType
 ): AppInitStateType => {
     switch (action.type) {
-        case "INITIALIZED-SUCCESS":
+        case "app/INITIALIZED-SUCCESS":
             return {
                 ...state,
-                initialized: true,
+                initialized: action.value,
             };
         default:
             return state;
     }
 };
 
-export const initializedSuccessAC = () => {
+export const initializedSuccessAC = (value: boolean) => {
     return {
-        type: "INITIALIZED-SUCCESS",
+        type: "app/INITIALIZED-SUCCESS",
+        value,
     } as const;
 };
 
-export const initializeAppTC = () => (dispatch: any) => {
-    let promise = dispatch(authMeTC());
-
-    promise.then(() => {
-        dispatch(initializedSuccessAC());
-    });
-};
+export const initializeAppTC = (): AppThunk => (dispatch) => {};
