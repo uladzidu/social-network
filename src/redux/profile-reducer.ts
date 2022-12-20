@@ -91,9 +91,8 @@ export const setUserStatusAC = (status: string) => {
 //     };
 // };
 
-export const getUserProfileTC = (): AppThunk => {
-    return async (dispatch, getState) => {
-        const userId = getState().profilePage.userId;
+export const getUserProfileTC = (userId: number): AppThunk => {
+    return async (dispatch) => {
         let response;
         if (userId) {
             response = await profileApi.getProfile(userId);
@@ -116,10 +115,10 @@ export const updateUserStatusTC =
     async (dispatch, getState) => {
         const userId = getState().profilePage.userId;
         const response = await profileApi.updateStatus(status);
-        console.log(response);
+        // console.log(response);
         if (response.resultCode === 0) {
             dispatch(setUserStatusAC(status));
-            dispatch(getUserStatusTC(userId));
+            // dispatch(getUserStatusTC(userId));
         }
     };
 

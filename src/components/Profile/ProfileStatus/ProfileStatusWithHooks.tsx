@@ -1,20 +1,22 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { getUserStatusTC, updateUserStatusTC } from "../../../redux/profile-reducer";
-import { useAppDispatch } from "../../../redux/redux-store";
+import { useAppDispatch, useAppSelector } from "../../../redux/redux-store";
+import EditIcon from "@mui/icons-material/Edit";
+import IconButton from "@mui/material/IconButton";
 
 export type ProfileStatusWithHooksPropsType = {
-    userId: any;
-    status: string | any;
+    userId: number;
 };
 
 export const ProfileStatusWithHooks = (props: ProfileStatusWithHooksPropsType) => {
-    const [edit, setEdit] = useState(false);
-    const [status, setStatus] = useState(props.status);
-    const dispatch = useAppDispatch();
+    const reduxStatus = useAppSelector((state) => state.profilePage.status);
 
-    useEffect(() => {
-        setStatus(props.status);
-    }, []);
+    const userReduxId = useAppSelector((state) => state.auth.id);
+    console.log("userReduxId : ", userReduxId);
+
+    const [edit, setEdit] = useState(false);
+    const [status, setStatus] = useState(reduxStatus);
+    const dispatch = useAppDispatch();
 
     const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
         setStatus(e.currentTarget.value);
@@ -27,6 +29,10 @@ export const ProfileStatusWithHooks = (props: ProfileStatusWithHooksPropsType) =
         setEdit(true);
     };
 
+    useEffect(() => {
+        setStatus(reduxStatus);
+    }, [reduxStatus]);
+
     return (
         <div>
             {edit ? (
@@ -35,13 +41,17 @@ export const ProfileStatusWithHooks = (props: ProfileStatusWithHooksPropsType) =
                         autoFocus
                         onChange={onStatusChange}
                         onBlur={deactivateEditMode}
-                        // type={status}
                         value={status}
                     />
                 </div>
             ) : (
                 <div>
-                    <span onDoubleClick={activateEditMode}>Status : {props.status}</span>
+                    <span onDoubleClick={activateEditMode}>Status : {status}</span>
+                    {props.userId === userReduxId && (
+                        <IconButton onClick={activateEditMode}>
+                            <EditIcon />
+                        </IconButton>
+                    )}
                 </div>
             )}
         </div>

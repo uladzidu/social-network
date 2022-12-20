@@ -4,7 +4,7 @@ import { ProfileStatusWithHooks } from "../ProfileStatus/ProfileStatusWithHooks"
 import { useAppDispatch, useAppSelector } from "../../../redux/redux-store";
 import { getUserProfileTC, getUserStatusTC, setUserIdAC } from "../../../redux/profile-reducer";
 
-export const ProfileInfo = (props: { userId: any }) => {
+export const ProfileInfo = (props: { userId: number }) => {
     // const fullName = useAppSelector((state) => state.profilePage.fullName);
     const largePhoto = useAppSelector((state) => state.profilePage.photos.large);
     // const aboutMe = useAppSelector((state) => state.profilePage.aboutMe);
@@ -12,10 +12,10 @@ export const ProfileInfo = (props: { userId: any }) => {
 
     const { fullName, aboutMe, status } = useAppSelector((state) => state.profilePage);
 
-    console.log("fullName : ", fullName);
-    console.log("status : ", status);
-    console.log("-------------------");
-    console.log(props.userId);
+    // console.log("fullName : ", fullName);
+    // console.log("status : ", status);
+    // console.log("-------------------");
+    // console.log(props.userId);
     const dispatch = useAppDispatch();
 
     // if (profile) {
@@ -32,8 +32,8 @@ export const ProfileInfo = (props: { userId: any }) => {
             : largePhoto;
 
     useEffect(() => {
-        dispatch(setUserIdAC(props.userId));
-        dispatch(getUserProfileTC());
+        // dispatch(setUserIdAC(props.userId));
+        dispatch(getUserProfileTC(props.userId));
         // dispatch(getUserStatusTC(props.userId));
     }, [dispatch, props.userId]);
 
@@ -48,7 +48,7 @@ export const ProfileInfo = (props: { userId: any }) => {
             <p>{props.userId}</p>
             <div className={s.description}>
                 <img src={srcImgString} alt={"profilePhoto" + props.userId} />
-                <ProfileStatusWithHooks userId={props.userId} status={status} />
+                <ProfileStatusWithHooks userId={props.userId} />
             </div>
             About me : {aboutMe}
         </div>
