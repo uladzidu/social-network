@@ -18,6 +18,9 @@ import Typography from "@mui/material/Typography";
 import { useAppDispatch, useAppSelector } from "../../redux/redux-store";
 import { loginTC } from "../../redux/login-reducer";
 import { Navigate } from "react-router-dom";
+import { PATH } from "../Navbar/Navbar";
+import { authMeTC } from "../../redux/auth-reducer";
+import { initializeAppTC } from "../../redux/app-reducer";
 
 export type FormikErrorType = {
     email?: string;
@@ -28,8 +31,11 @@ export type FormikErrorType = {
 export const LoginWithFormik = () => {
     const dispatch = useAppDispatch();
     const isLoggedIn = useAppSelector((state) => state.login.isLoggedIn);
-    const email = useAppSelector((state) => state.login.email);
+    const email = useAppSelector((state) => state.auth.email);
+    const userId = useAppSelector((state) => state.auth.id);
     const [showPassword, setShowPassword] = useState(false);
+
+    console.log("email : ", email);
 
     const formik = useFormik({
         initialValues: {
@@ -52,17 +58,16 @@ export const LoginWithFormik = () => {
 
             return errors;
         },
-        onSubmit: (values) => {
-            dispatch(loginTC(values.email, values.password, values.rememberMe));
+        onSubmit: async (values) => {
+            await dispatch(loginTC(values.email, values.password, values.rememberMe));
+            dispatch(initializeAppTC());
             formik.resetForm();
         },
     });
-    console.log(isLoggedIn);
-    console.log("email", email);
 
-    // if (isLoggedIn) {
-    //   return <Navigate to={"/profile"} />;
-    // }
+    if (email) {
+        return <Navigate to={PATH.PROFILE + "/" + userId} />;
+    }
 
     return (
         <Grid container justifyContent={"center"}>

@@ -13,26 +13,26 @@ import { authMeTC } from "./redux/auth-reducer";
 import { HeaderFuncComponent } from "./components/Header/HeaderFuncComponent";
 import { ProfileFuncComponent } from "./components/Profile/ProfileFuncComponent";
 import { Friends } from "./components/Friends/Friends";
+import { Preloader } from "./components/common/preloader/Preloader";
+import { initializeAppTC, initializedSuccessAC } from "./redux/app-reducer";
 
 export const AppFuncComponent = () => {
-    const isInitialized = useAppSelector((state) => state.auth.isAuth);
+    const isInitialized = useAppSelector((state) => state.app.initialized);
     const dispatch = useAppDispatch();
-
+    console.log(isInitialized);
     useEffect(() => {
-        dispatch(authMeTC());
+        dispatch(initializeAppTC());
     }, []);
 
-    // if (!isInitialized) return <Preloader />;
+    if (!isInitialized) return <Preloader />;
 
     return (
         <div className="app-wrapper">
-            {/*<HeaderContainer />*/}
             <HeaderFuncComponent />
             <Navbar />
             <div className="app-wrapper-content">
                 <Routes>
                     <Route path="/profile/:userId" element={<ProfileFuncComponent />} />
-                    {/*<Route path="/profile/" element={<ProfileFuncComponent />} />*/}
                     <Route path="/friends/" element={<Friends />} />
                     <Route path="/dialogs/*" element={<DialogsContainer />} />
                     <Route path="/users" element={<UsersContainer />} />

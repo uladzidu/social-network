@@ -45,6 +45,7 @@ export const logoutTC = (): AppThunk => {
             const response = await authApi.logout();
             if (response.data.resultCode === 0) {
                 dispatch(setAuthUserDataAC(null, null, null, false));
+                dispatch(isLoggedInAC(false));
             }
         } catch (e) {
             console.log(e);

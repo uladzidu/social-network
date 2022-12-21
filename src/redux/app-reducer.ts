@@ -32,4 +32,7 @@ export const initializedSuccessAC = (value: boolean) => {
     } as const;
 };
 
-export const initializeAppTC = (): AppThunk => (dispatch) => {};
+export const initializeAppTC = (): AppThunk => async (dispatch) => {
+    dispatch(initializedSuccessAC(true));
+    dispatch(authMeTC());
+};

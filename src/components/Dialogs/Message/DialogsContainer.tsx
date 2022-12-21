@@ -7,25 +7,25 @@ import { compose, Dispatch } from "redux";
 import { WithAuthRedirect } from "../../../hoc/WithAuthRedirect";
 
 type mapStateToDialogsType = {
-  messagesPage: MessagesPageType;
-  isAuth: boolean;
+    messagesPage: MessagesPageType;
+    isAuth: boolean;
 };
 
 const mapStateToDialogsProps = (state: AppStateType): mapStateToDialogsType => {
-  return {
-    messagesPage: state.messagesPage,
-    isAuth: state.auth.isAuth,
-  };
+    return {
+        messagesPage: state.messagesPage,
+        isAuth: state.auth.isAuth,
+    };
 };
 const mapDispatchToDialogsProps = (dispatch: Dispatch) => {
-  return {
-    addDialogMessage: (value: any) => {
-      dispatch(addMessageCreator(value));
-    },
-  };
+    return {
+        addDialogMessage: (value: any) => {
+            dispatch(addMessageCreator(value));
+        },
+    };
 };
 
 export default compose<React.ComponentType>(
-  connect(mapStateToDialogsProps, mapDispatchToDialogsProps),
-  WithAuthRedirect
+    connect(mapStateToDialogsProps, mapDispatchToDialogsProps),
+    WithAuthRedirect
 )(Dialogs);

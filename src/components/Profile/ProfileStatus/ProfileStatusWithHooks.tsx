@@ -11,8 +11,9 @@ export type ProfileStatusWithHooksPropsType = {
 export const ProfileStatusWithHooks = (props: ProfileStatusWithHooksPropsType) => {
     const reduxStatus = useAppSelector((state) => state.profilePage.status);
 
-    const userReduxId = useAppSelector((state) => state.auth.id);
-    console.log("userReduxId : ", userReduxId);
+    const userAuthId = useAppSelector((state) => state.auth.id);
+    console.log("userAuthId : ", userAuthId);
+    console.log("userId : ", +props.userId);
 
     const [edit, setEdit] = useState(false);
     const [status, setStatus] = useState(reduxStatus);
@@ -47,7 +48,7 @@ export const ProfileStatusWithHooks = (props: ProfileStatusWithHooksPropsType) =
             ) : (
                 <div>
                     <span onDoubleClick={activateEditMode}>Status : {status}</span>
-                    {props.userId === userReduxId && (
+                    {+props.userId === userAuthId && (
                         <IconButton onClick={activateEditMode}>
                             <EditIcon />
                         </IconButton>

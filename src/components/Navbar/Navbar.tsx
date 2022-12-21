@@ -3,6 +3,17 @@ import s from "./Navbar.module.css";
 import { NavLink } from "react-router-dom";
 import { useAppSelector } from "../../redux/redux-store";
 
+export enum PATH {
+    PROFILE = "/profile",
+    LOGIN = "/login",
+    FRIENDS = "/friends",
+    DIALOGS = "/dialogs",
+    USERS = "/users",
+    NEWS = "/news",
+    MUSIC = "/music",
+    SETTINGS = "/settings",
+}
+
 export const Navbar = () => {
     const userId = useAppSelector((state) => state.auth.id);
 
@@ -10,7 +21,7 @@ export const Navbar = () => {
         <nav className={s.nav}>
             <div className={`${s.item} ${s.active}`}>
                 <NavLink
-                    to={"/profile" + "/" + userId}
+                    to={PATH.PROFILE + "/" + userId}
                     style={({ isActive }) => ({ color: isActive ? "gold" : "white" })}
                 >
                     {" "}
@@ -19,7 +30,7 @@ export const Navbar = () => {
             </div>
             <div className={s.item}>
                 <NavLink
-                    to="/friends"
+                    to={PATH.FRIENDS}
                     style={({ isActive }) => ({ color: isActive ? "gold" : "white" })}
                 >
                     Friends
@@ -27,7 +38,7 @@ export const Navbar = () => {
             </div>
             <div className={s.item}>
                 <NavLink
-                    to="/dialogs"
+                    to={PATH.DIALOGS}
                     style={({ isActive }) => ({ color: isActive ? "gold" : "white" })}
                 >
                     Messages
@@ -35,7 +46,7 @@ export const Navbar = () => {
             </div>
             <div className={s.item}>
                 <NavLink
-                    to="/users"
+                    to={PATH.USERS}
                     style={({ isActive }) => ({ color: isActive ? "gold" : "white" })}
                 >
                     Users
@@ -43,7 +54,7 @@ export const Navbar = () => {
             </div>
             <div className={s.item}>
                 <NavLink
-                    to="/news"
+                    to={PATH.NEWS}
                     style={({ isActive }) => ({ color: isActive ? "gold" : "white" })}
                 >
                     News
@@ -51,7 +62,7 @@ export const Navbar = () => {
             </div>
             <div className={s.item}>
                 <NavLink
-                    to="/music"
+                    to={PATH.MUSIC}
                     style={({ isActive }) => ({ color: isActive ? "gold" : "white" })}
                 >
                     Music
@@ -59,7 +70,7 @@ export const Navbar = () => {
             </div>
             <div className={s.item}>
                 <NavLink
-                    to="/settings"
+                    to={PATH.SETTINGS}
                     style={({ isActive }) => ({ color: isActive ? "gold" : "white" })}
                 >
                     Settings
