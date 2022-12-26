@@ -12,8 +12,6 @@ export const ProfileStatusWithHooks = (props: ProfileStatusWithHooksPropsType) =
     const reduxStatus = useAppSelector((state) => state.profilePage.status);
 
     const userAuthId = useAppSelector((state) => state.auth.id);
-    console.log("userAuthId : ", userAuthId);
-    console.log("userId : ", +props.userId);
 
     const [edit, setEdit] = useState(false);
     const [status, setStatus] = useState(reduxStatus);

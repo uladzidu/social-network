@@ -32,6 +32,7 @@ export const AppFuncComponent = () => {
             <Navbar />
             <div className="app-wrapper-content">
                 <Routes>
+                    <Route path="/" element={<News />} />
                     <Route path="/profile/:userId" element={<ProfileFuncComponent />} />
                     <Route path="/friends/" element={<Friends />} />
                     <Route path="/dialogs/*" element={<DialogsContainer />} />

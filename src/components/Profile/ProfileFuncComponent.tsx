@@ -15,9 +15,9 @@ export const ProfileFuncComponent = () => {
     const dispatch = useAppDispatch();
     console.log("email : ", email);
 
-    // useEffect(() => {
-    //     dispatch(authMeTC());
-    // }, []);
+    useEffect(() => {
+        dispatch(authMeTC());
+    }, []);
 
     // if (!email) return <Preloader />;
     // if (!isLoggedIn) return <Navigate to={PATH.LOGIN} />;
