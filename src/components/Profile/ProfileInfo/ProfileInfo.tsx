@@ -3,13 +3,13 @@ import s from "./ProfileInfo.module.css";
 import { ProfileStatusWithHooks } from "../ProfileStatus/ProfileStatusWithHooks";
 import { useAppDispatch, useAppSelector } from "../../../redux/redux-store";
 import { getUserProfileTC } from "../../../redux/profile-reducer";
+import { InputTypeFile } from "../../inputTypeFile/InputTypeFile";
 
 export const ProfileInfo = (props: { userId: number }) => {
     const largePhoto = useAppSelector((state) => state.profilePage.photos.large);
 
-    const { fullName, aboutMe, lookingForAJobDescription, contacts } = useAppSelector(
-        (state) => state.profilePage
-    );
+    const { fullName, aboutMe, lookingForAJob, lookingForAJobDescription, contacts } =
+        useAppSelector((state) => state.profilePage);
     const dispatch = useAppDispatch();
 
     const { facebook, github, vk, twitter, website, youtube, mainLink, instagram } = contacts;
@@ -31,17 +31,23 @@ export const ProfileInfo = (props: { userId: number }) => {
                 <img src={srcImgString} alt={"profilePhoto" + props.userId} />
                 <ProfileStatusWithHooks userId={props.userId} />
                 <div>
-                    <p>{facebook}</p>
-                    <p>{github}</p>
-                    <p>{vk}</p>
-                    <p>{twitter}</p>
-                    <p>{website}</p>
-                    <p>{youtube}</p>
-                    <p>{mainLink}</p>
-                    <p>{instagram}</p>
+                    <p>About me : {aboutMe ? aboutMe : "-"}</p>
+                    <p>Looking For A Job : {lookingForAJob ? "yes" : "no"}</p>
+                    <p>
+                        Looking For A Job Description :{" "}
+                        {lookingForAJobDescription ? lookingForAJobDescription : "-"}
+                    </p>
+                    <p>facebook : {facebook ? facebook : "-"}</p>
+                    <p>github : {github ? github : "-"}</p>
+                    <p>vk : {vk ? vk : "-"}</p>
+                    <p>twitter : {twitter ? twitter : "-"}</p>
+                    <p>website : {website ? website : "-"}</p>
+                    <p>youtube : {youtube ? youtube : "-"}</p>
+                    <p>mainLink : {mainLink ? mainLink : "-"}</p>
+                    <p>instagram : {instagram ? instagram : "-"}</p>
                 </div>
             </div>
-            About me : {aboutMe}
+            <InputTypeFile />
         </div>
     );
 };

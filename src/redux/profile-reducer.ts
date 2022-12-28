@@ -57,6 +57,16 @@ export const profileReducer = (
                 status: action.status,
             };
         }
+        case "app/UPDATE-LARGE-AVATAR": {
+            let copyState = { ...state, ...state.photos };
+            copyState.photos.large = action.avatar;
+            return copyState;
+        }
+        case "app/UPDATE-SMALL-AVATAR": {
+            let copyState = { ...state, ...state.photos };
+            copyState.photos.small = action.avatar;
+            return copyState;
+        }
         default:
             return state;
     }
@@ -80,6 +90,12 @@ export const setUserStatusAC = (status: string) => {
         status,
     } as const;
 };
+
+export const updateLargeAvatarAC = (avatar: string) =>
+    ({ type: "app/UPDATE-LARGE-AVATAR", avatar } as const);
+
+export const updateSmallAvatarAC = (avatar: string) =>
+    ({ type: "app/UPDATE-SMALL-AVATAR", avatar } as const);
 
 // Thunk Creators
 // export const getUserProfileTC = (userId: number | null): AppThunk => {
@@ -122,6 +138,14 @@ export const updateUserStatusTC =
         }
     };
 
+export const updateProfileAvatarTC =
+    (image: string): AppThunk =>
+    async (dispatch) => {
+        const response = await profileApi.updateAvatar(image);
+        console.log(response);
+        // dispatch(updateLargeAvatarAC(response.))
+    };
+
 export type PostDataType = {
     id: string;
     postMessage: string;
@@ -153,4 +177,6 @@ type ProfileReducersAT =
     | ReturnType<typeof addPostAC>
     | ReturnType<typeof setProfileDataAC>
     | ReturnType<typeof setUserStatusAC>
-    | ReturnType<typeof setUserIdAC>;
+    | ReturnType<typeof setUserIdAC>
+    | ReturnType<typeof updateLargeAvatarAC>
+    | ReturnType<typeof updateSmallAvatarAC>;
