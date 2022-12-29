@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+import React, { MouseEventHandler, useEffect } from "react";
 import s from "./ProfileInfo.module.css";
 import { ProfileStatusWithHooks } from "../ProfileStatus/ProfileStatusWithHooks";
 import { useAppDispatch, useAppSelector } from "../../../redux/redux-store";
-import { getUserProfileTC } from "../../../redux/profile-reducer";
+import { getUserProfileTC, updateProfileAvatarTC } from "../../../redux/profile-reducer";
 import { InputTypeFile } from "../../inputTypeFile/InputTypeFile";
 
 export const ProfileInfo = (props: { userId: number }) => {
+    // @ts-ignore
     const largePhoto = useAppSelector((state) => state.profilePage.photos.large);
 
     const { fullName, aboutMe, lookingForAJob, lookingForAJobDescription, contacts } =
@@ -14,10 +15,15 @@ export const ProfileInfo = (props: { userId: number }) => {
 
     const { facebook, github, vk, twitter, website, youtube, mainLink, instagram } = contacts;
 
-    const srcImgString =
-        largePhoto === null
-            ? "https://www.pngitem.com/pimgs/m/560-5603874_product-image-logo-avatar-minimalist-flat-line-hd.png"
-            : largePhoto;
+    const srcImgString = largePhoto
+        ? largePhoto
+        : "https://www.pngitem.com/pimgs/m/560-5603874_product-image-logo-avatar-minimalist-flat-line-hd.png";
+
+    const onclickHandler = (e: any) => {
+        if (e.target.files.length) {
+            dispatch(updateProfileAvatarTC(e.target.files[0]));
+        }
+    };
 
     useEffect(() => {
         dispatch(getUserProfileTC(props.userId));
@@ -48,6 +54,7 @@ export const ProfileInfo = (props: { userId: number }) => {
                 </div>
             </div>
             <InputTypeFile />
+            {/*<input type="file" onClick={onclickHandler} />*/}
         </div>
     );
 };

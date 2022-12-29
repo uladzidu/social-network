@@ -6,6 +6,7 @@ import defaultAva from "./../../assets/images/60b47e2dfdbe3f0e2adf74129fbea3b0.j
 import { updateProfileAvatarTC } from "../../redux/profile-reducer";
 
 export const InputTypeFile = () => {
+    // @ts-ignore
     const avatar = useAppSelector((state) => state.profilePage.photos.large);
     console.log("avatar : ", avatar);
     const dispatch = useAppDispatch();
@@ -17,31 +18,29 @@ export const InputTypeFile = () => {
     const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length) {
             const file = e.target.files[0];
+            console.log("file : ", file);
             const fileSize = file.size;
             const fileSizeInMb = fileSize / 1024 ** 2;
 
             if (fileSizeInMb < 1) {
-                convertFileToBase64(file, (file64: string) => {
-                    setIsAvaBroken(false);
-                    setAva(file64);
-                    // dispatch(updateUserAC({ name, avatar: file64 }));
-                    // dispatch(updateUserAvatarTC(file64));
-                    dispatch(updateProfileAvatarTC(file64));
-                });
+                setIsAvaBroken(false);
+                setAva(file);
+                // @ts-ignore
+                dispatch(updateProfileAvatarTC(file));
             } else {
                 // dispatch(setAppErrorAC("File size should be no more than 200 KB "));
             }
         }
     };
 
-    const convertFileToBase64 = (file: File, callBack: (value: string) => void) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            const file64 = reader.result as string;
-            callBack(file64);
-        };
-        reader.readAsDataURL(file);
-    };
+    // const convertFileToBase64 = (file: File, callBack: (value: string) => void) => {
+    //     const reader = new FileReader();
+    //     reader.onloadend = () => {
+    //         const file64 = reader.result as string;
+    //         callBack(file64);
+    //     };
+    //     reader.readAsDataURL(file);
+    // };
 
     const errorHandler = () => {
         setIsAvaBroken(true);

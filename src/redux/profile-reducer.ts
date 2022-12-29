@@ -25,7 +25,7 @@ const ProfileReducerInitState = {
     lookingForAJobDescription: "",
     fullName: "",
     userId: null as null | number,
-    photos: { small: null as null | string, large: null as null | string },
+    photos: { small: null as null | string, large: null as null | string } as {} | string,
 };
 
 export const profileReducer = (
@@ -57,16 +57,17 @@ export const profileReducer = (
                 status: action.status,
             };
         }
-        case "app/UPDATE-LARGE-AVATAR": {
-            let copyState = { ...state, ...state.photos };
-            copyState.photos.large = action.avatar;
-            return copyState;
+        case "app/UPDATE-AVATAR": {
+            return {
+                ...state,
+                photos: action.avatar,
+            };
         }
-        case "app/UPDATE-SMALL-AVATAR": {
-            let copyState = { ...state, ...state.photos };
-            copyState.photos.small = action.avatar;
-            return copyState;
-        }
+        // case "app/UPDATE-SMALL-AVATAR": {
+        //     let copyState = { ...state, ...state.photos };
+        //     copyState.photos.small = action.avatar;
+        //     return copyState;
+        // }
         default:
             return state;
     }
@@ -91,11 +92,10 @@ export const setUserStatusAC = (status: string) => {
     } as const;
 };
 
-export const updateLargeAvatarAC = (avatar: string) =>
-    ({ type: "app/UPDATE-LARGE-AVATAR", avatar } as const);
+export const updateAvatarAC = (avatar: string) => ({ type: "app/UPDATE-AVATAR", avatar } as const);
 
-export const updateSmallAvatarAC = (avatar: string) =>
-    ({ type: "app/UPDATE-SMALL-AVATAR", avatar } as const);
+// export const updateSmallAvatarAC = (avatar: string) =>
+//     ({ type: "app/UPDATE-SMALL-AVATAR", avatar } as const);
 
 // Thunk Creators
 // export const getUserProfileTC = (userId: number | null): AppThunk => {
@@ -143,7 +143,7 @@ export const updateProfileAvatarTC =
     async (dispatch) => {
         const response = await profileApi.updateAvatar(image);
         console.log(response);
-        // dispatch(updateLargeAvatarAC(response.))
+        dispatch(updateAvatarAC(response.data.photos.large));
     };
 
 export type PostDataType = {
@@ -178,5 +178,5 @@ type ProfileReducersAT =
     | ReturnType<typeof setProfileDataAC>
     | ReturnType<typeof setUserStatusAC>
     | ReturnType<typeof setUserIdAC>
-    | ReturnType<typeof updateLargeAvatarAC>
-    | ReturnType<typeof updateSmallAvatarAC>;
+    | ReturnType<typeof updateAvatarAC>;
+// | ReturnType<typeof updateSmallAvatarAC>;
