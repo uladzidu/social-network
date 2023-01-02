@@ -4,6 +4,7 @@ import { ProfileStatusWithHooks } from "../ProfileStatus/ProfileStatusWithHooks"
 import { useAppDispatch, useAppSelector } from "../../../redux/redux-store";
 import { getUserProfileTC, updateProfileAvatarTC } from "../../../redux/profile-reducer";
 import { InputTypeFile } from "../../inputTypeFile/InputTypeFile";
+import { SpanWithInput } from "../../common/SpanWithButton/SpanWithInput";
 
 export const ProfileInfo = (props: { userId: number }) => {
     // @ts-ignore
@@ -36,21 +37,28 @@ export const ProfileInfo = (props: { userId: number }) => {
             <div className={s.description}>
                 <img src={srcImgString} alt={"profilePhoto" + props.userId} />
                 <ProfileStatusWithHooks userId={props.userId} />
-                <div>
-                    <p>About me : {aboutMe ? aboutMe : "-"}</p>
-                    <p>Looking For A Job : {lookingForAJob ? "yes" : "no"}</p>
-                    <p>
-                        Looking For A Job Description :{" "}
-                        {lookingForAJobDescription ? lookingForAJobDescription : "-"}
-                    </p>
-                    <p>facebook : {facebook ? facebook : "-"}</p>
-                    <p>github : {github ? github : "-"}</p>
-                    <p>vk : {vk ? vk : "-"}</p>
-                    <p>twitter : {twitter ? twitter : "-"}</p>
-                    <p>website : {website ? website : "-"}</p>
-                    <p>youtube : {youtube ? youtube : "-"}</p>
-                    <p>mainLink : {mainLink ? mainLink : "-"}</p>
-                    <p>instagram : {instagram ? instagram : "-"}</p>
+                <div style={{ marginTop: "25px" }}>
+                    {/*<SpanWithInput name={"aboutMe"} />*/}
+                    {/*<SpanWithInput name={"lookingForAJob"} />*/}
+                    <SpanWithInput name={"facebook"} />
+                    <SpanWithInput name={"github"} />
+                    <SpanWithInput name={"vk"} />
+                    <SpanWithInput name={"twitter"} />
+                    <SpanWithInput name={"website"} />
+                    {/*<p>About me : {aboutMe ? aboutMe : "-"}</p>*/}
+                    {/*<p>Looking For A Job : {lookingForAJob ? "yes" : "no"}</p>*/}
+                    {/*<p>*/}
+                    {/*    Looking For A Job Description :{" "}*/}
+                    {/*    {lookingForAJobDescription ? lookingForAJobDescription : "-"}*/}
+                    {/*</p>*/}
+                    {/*<p>facebook : {facebook ? facebook : "-"}</p>*/}
+                    {/*<p>github : {github ? github : "-"}</p>*/}
+                    {/*<p>vk : {vk ? vk : "-"}</p>*/}
+                    {/*<p>twitter : {twitter ? twitter : "-"}</p>*/}
+                    {/*<p>website : {website ? website : "-"}</p>*/}
+                    {/*<p>youtube : {youtube ? youtube : "-"}</p>*/}
+                    {/*<p>mainLink : {mainLink ? mainLink : "-"}</p>*/}
+                    {/*<p>instagram : {instagram ? instagram : "-"}</p>*/}
                 </div>
             </div>
             <InputTypeFile />

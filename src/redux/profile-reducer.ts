@@ -25,7 +25,7 @@ const ProfileReducerInitState = {
     lookingForAJobDescription: "",
     fullName: "",
     userId: null as null | number,
-    photos: { small: null as null | string, large: null as null | string } as {} | string,
+    photos: "",
 };
 
 export const profileReducer = (
@@ -168,7 +168,7 @@ export type ProfileType = {
     lookingForAJobDescription?: string;
     fullName: string;
     userId: number;
-    photos: { small: string | null; large: string | null };
+    photos: string;
 };
 
 type ProfilePageType = typeof ProfileReducerInitState;
