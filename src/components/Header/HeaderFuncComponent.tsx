@@ -24,10 +24,10 @@ export const HeaderFuncComponent = () => {
     return (
         <>
             <header className={s.header}>
-                <img
-                    src="https://static.wirtualnemedia.pl/media/top/volvo-logonowe-655.jpg"
-                    alt={"volvo"}
-                />
+                {/*<img*/}
+                {/*    src="https://static.wirtualnemedia.pl/media/top/volvo-logonowe-655.jpg"*/}
+                {/*    alt={"volvo"}*/}
+                {/*/>*/}
                 <div className={s.loginBlock}>
                     {isLoading ? <Preloader /> : null}
                     {email && (

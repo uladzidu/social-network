@@ -63,11 +63,11 @@ export const profileReducer = (
                 photos: action.avatar,
             };
         }
-        // case "app/UPDATE-SMALL-AVATAR": {
-        //     let copyState = { ...state, ...state.photos };
-        //     copyState.photos.small = action.avatar;
-        //     return copyState;
-        // }
+        case "app/UPDATE-USER-DATA":
+            return {
+                ...state,
+                // contacts: {...state.contacts, action.updatedValue}
+            };
         default:
             return state;
     }
@@ -94,8 +94,8 @@ export const setUserStatusAC = (status: string) => {
 
 export const updateAvatarAC = (avatar: string) => ({ type: "app/UPDATE-AVATAR", avatar } as const);
 
-// export const updateSmallAvatarAC = (avatar: string) =>
-//     ({ type: "app/UPDATE-SMALL-AVATAR", avatar } as const);
+export const updateUseDataAC = (updatedValue: string | boolean) =>
+    ({ type: "app/UPDATE-USER-DATA", updatedValue } as const);
 
 // Thunk Creators
 // export const getUserProfileTC = (userId: number | null): AppThunk => {
@@ -138,13 +138,19 @@ export const updateUserStatusTC =
         }
     };
 
-export const updateProfileAvatarTC =
+export const updateUserAvatarTC =
     (image: string): AppThunk =>
     async (dispatch) => {
         const response = await profileApi.updateAvatar(image);
         console.log(response);
         dispatch(updateAvatarAC(response.data.photos.large));
     };
+
+export const updateUserDataTC = (): AppThunk => (dispatch, getState) => {
+    const { userId, aboutMe, contacts, lookingForAJobDescription, lookingForAJob, fullName } =
+        getState().profilePage;
+    // profileApi.updateUser();
+};
 
 export type PostDataType = {
     id: string;
@@ -178,5 +184,6 @@ type ProfileReducersAT =
     | ReturnType<typeof setProfileDataAC>
     | ReturnType<typeof setUserStatusAC>
     | ReturnType<typeof setUserIdAC>
-    | ReturnType<typeof updateAvatarAC>;
+    | ReturnType<typeof updateAvatarAC>
+    | ReturnType<typeof updateUseDataAC>;
 // | ReturnType<typeof updateSmallAvatarAC>;

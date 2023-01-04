@@ -67,6 +67,9 @@ export const profileApi = {
             },
         });
     },
+    updateUser(updatedUserData: any) {
+        return instance.put<ProfileType, GeneralResponseType<{}>>("/profile", updatedUserData);
+    },
 };
 
 export const authApi = {

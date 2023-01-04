@@ -62,7 +62,7 @@ export const SpanWithInput = (props: SpanWithInputPropsType) => {
                     />
                 </div>
             ) : (
-                <div>
+                <div style={{ display: "flex" }}>
                     <span onDoubleClick={activateEditMode}>{text}</span>
                     {isAuthProfile && (
                         <IconButton onClick={activateEditMode}>

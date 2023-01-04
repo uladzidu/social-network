@@ -3,7 +3,7 @@ import { IconButton } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useAppDispatch, useAppSelector } from "../../redux/redux-store";
 import defaultAva from "./../../assets/images/60b47e2dfdbe3f0e2adf74129fbea3b0.jpg";
-import { updateProfileAvatarTC } from "../../redux/profile-reducer";
+import { updateUserAvatarTC } from "../../redux/profile-reducer";
 
 export const InputTypeFile = () => {
     // @ts-ignore
@@ -26,7 +26,7 @@ export const InputTypeFile = () => {
                 setIsAvaBroken(false);
                 setAva(file);
                 // @ts-ignore
-                dispatch(updateProfileAvatarTC(file));
+                dispatch(updateUserAvatarTC(file));
             } else {
                 // dispatch(setAppErrorAC("File size should be no more than 200 KB "));
             }

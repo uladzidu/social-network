@@ -2,7 +2,7 @@ import React, { MouseEventHandler, useEffect } from "react";
 import s from "./ProfileInfo.module.css";
 import { ProfileStatusWithHooks } from "../ProfileStatus/ProfileStatusWithHooks";
 import { useAppDispatch, useAppSelector } from "../../../redux/redux-store";
-import { getUserProfileTC, updateProfileAvatarTC } from "../../../redux/profile-reducer";
+import { getUserProfileTC, updateUserAvatarTC } from "../../../redux/profile-reducer";
 import { InputTypeFile } from "../../inputTypeFile/InputTypeFile";
 import { SpanWithInput } from "../../common/SpanWithButton/SpanWithInput";
 
@@ -22,7 +22,7 @@ export const ProfileInfo = (props: { userId: number }) => {
 
     const onclickHandler = (e: any) => {
         if (e.target.files.length) {
-            dispatch(updateProfileAvatarTC(e.target.files[0]));
+            dispatch(updateUserAvatarTC(e.target.files[0]));
         }
     };
 
@@ -38,15 +38,15 @@ export const ProfileInfo = (props: { userId: number }) => {
                 <img src={srcImgString} alt={"profilePhoto" + props.userId} />
                 <ProfileStatusWithHooks userId={props.userId} />
                 <div style={{ marginTop: "25px" }}>
-                    {/*<SpanWithInput name={"aboutMe"} />*/}
-                    {/*<SpanWithInput name={"lookingForAJob"} />*/}
+                    <p>About me : {aboutMe ? aboutMe : "-"}</p>
+                    <p>Looking For A Job : {lookingForAJob ? "yes" : "no"}</p>
+                    <strong>Social media : </strong>
                     <SpanWithInput name={"facebook"} />
                     <SpanWithInput name={"github"} />
                     <SpanWithInput name={"vk"} />
                     <SpanWithInput name={"twitter"} />
                     <SpanWithInput name={"website"} />
-                    {/*<p>About me : {aboutMe ? aboutMe : "-"}</p>*/}
-                    {/*<p>Looking For A Job : {lookingForAJob ? "yes" : "no"}</p>*/}
+
                     {/*<p>*/}
                     {/*    Looking For A Job Description :{" "}*/}
                     {/*    {lookingForAJobDescription ? lookingForAJobDescription : "-"}*/}
