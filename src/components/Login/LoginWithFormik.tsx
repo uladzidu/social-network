@@ -52,7 +52,7 @@ export const LoginWithFormik = () => {
             }
             if (!values.password) {
                 errors.password = "Required";
-            } else if (values.password.length < 8) {
+            } else if (values.password.length < 3) {
                 errors.password = "Password must be more symbol";
             }
 
