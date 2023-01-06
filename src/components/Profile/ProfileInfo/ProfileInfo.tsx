@@ -1,8 +1,12 @@
-import React, { MouseEventHandler, useEffect } from "react";
+import React, { MouseEventHandler, useEffect, useState } from "react";
 import s from "./ProfileInfo.module.css";
 import { ProfileStatusWithHooks } from "../ProfileStatus/ProfileStatusWithHooks";
 import { useAppDispatch, useAppSelector } from "../../../redux/redux-store";
-import { getUserProfileTC, updateUserAvatarTC } from "../../../redux/profile-reducer";
+import {
+    getUserProfileTC,
+    updateUserAvatarTC,
+    updateUserDataTC,
+} from "../../../redux/profile-reducer";
 import { InputTypeFile } from "../../inputTypeFile/InputTypeFile";
 import { SpanWithInput } from "../../common/SpanWithButton/SpanWithInput";
 
@@ -14,55 +18,57 @@ export const ProfileInfo = (props: { userId: number }) => {
         useAppSelector((state) => state.profilePage);
     const dispatch = useAppDispatch();
 
-    const { facebook, github, vk, twitter, website, youtube, mainLink, instagram } = contacts;
+    const [edit, setEdit] = useState(false);
+    const onChangeHandler = (e: any) => {};
+
+    const contactsKeys = Object.keys(contacts);
+    const contactsValues = Object.values(contacts);
 
     const srcImgString = largePhoto
         ? largePhoto
         : "https://www.pngitem.com/pimgs/m/560-5603874_product-image-logo-avatar-minimalist-flat-line-hd.png";
 
-    const onclickHandler = (e: any) => {
-        if (e.target.files.length) {
-            dispatch(updateUserAvatarTC(e.target.files[0]));
-        }
-    };
-
     useEffect(() => {
         dispatch(getUserProfileTC(props.userId));
+        // dispatch(updateUserDataTC());
     }, [dispatch, props.userId]);
 
     return (
         <div>
             <h1>{fullName}</h1>
+            <ProfileStatusWithHooks userId={props.userId} />
             <p>{props.userId}</p>
+            <button disabled={edit} onClick={() => setEdit(!edit)}>
+                Edit Profile
+            </button>
+            {edit && <button onClick={() => setEdit(!edit)}>Save</button>}
             <div className={s.description}>
                 <img src={srcImgString} alt={"profilePhoto" + props.userId} />
-                <ProfileStatusWithHooks userId={props.userId} />
-                <div style={{ marginTop: "25px" }}>
-                    <p>About me : {aboutMe ? aboutMe : "-"}</p>
-                    <p>Looking For A Job : {lookingForAJob ? "yes" : "no"}</p>
-                    <strong>Social media : </strong>
-                    <SpanWithInput name={"facebook"} />
-                    <SpanWithInput name={"github"} />
-                    <SpanWithInput name={"vk"} />
-                    <SpanWithInput name={"twitter"} />
-                    <SpanWithInput name={"website"} />
+                <div style={{ marginTop: "25px", marginLeft: "50px" }}>
+                    <div>
+                        <strong>About me :</strong> {aboutMe ? aboutMe : "-"}
+                    </div>
+                    <div>
+                        <strong>Looking For A Job :</strong> {lookingForAJob ? "yes" : "no"}
+                    </div>
+                    <div style={{ marginTop: "25px" }}>
+                        <strong>Social media : </strong>
+                    </div>
+                    {contactsKeys.map((keys, index) => (
+                        <li key={index}>
+                            <strong>{keys} : </strong>
+                            {edit ? (
+                                <input onChange={onChangeHandler} value={contactsValues[index]} />
+                            ) : (
+                                <span> {contactsValues[index]}</span>
+                            )}
+                        </li>
+                    ))}
 
-                    {/*<p>*/}
-                    {/*    Looking For A Job Description :{" "}*/}
-                    {/*    {lookingForAJobDescription ? lookingForAJobDescription : "-"}*/}
-                    {/*</p>*/}
-                    {/*<p>facebook : {facebook ? facebook : "-"}</p>*/}
-                    {/*<p>github : {github ? github : "-"}</p>*/}
-                    {/*<p>vk : {vk ? vk : "-"}</p>*/}
-                    {/*<p>twitter : {twitter ? twitter : "-"}</p>*/}
-                    {/*<p>website : {website ? website : "-"}</p>*/}
-                    {/*<p>youtube : {youtube ? youtube : "-"}</p>*/}
-                    {/*<p>mainLink : {mainLink ? mainLink : "-"}</p>*/}
-                    {/*<p>instagram : {instagram ? instagram : "-"}</p>*/}
+                    {/*<SpanWithInput name={"facebook"} />*/}
                 </div>
             </div>
             <InputTypeFile />
-            {/*<input type="file" onClick={onclickHandler} />*/}
         </div>
     );
 };

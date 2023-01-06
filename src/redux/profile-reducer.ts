@@ -146,10 +146,19 @@ export const updateUserAvatarTC =
         dispatch(updateAvatarAC(response.data.photos.large));
     };
 
-export const updateUserDataTC = (): AppThunk => (dispatch, getState) => {
+export const updateUserDataTC = (): AppThunk => async (dispatch, getState) => {
     const { userId, aboutMe, contacts, lookingForAJobDescription, lookingForAJob, fullName } =
         getState().profilePage;
-    // profileApi.updateUser();
+
+    const payload = {
+        userId,
+        aboutMe,
+        contacts,
+        lookingForAJobDescription,
+        lookingForAJob,
+        fullName,
+    };
+    await profileApi.updateUser(payload);
 };
 
 export type PostDataType = {
@@ -170,11 +179,11 @@ export type ProfileType = {
         github: string;
         mainLink: string;
     };
-    lookingForAJob: boolean;
+    lookingForAJob: boolean | null;
     lookingForAJobDescription?: string;
     fullName: string;
-    userId: number;
-    photos: string;
+    userId: number | null;
+    photos?: string;
 };
 
 type ProfilePageType = typeof ProfileReducerInitState;

@@ -21,6 +21,7 @@ import { Navigate } from "react-router-dom";
 import { PATH } from "../Navbar/Navbar";
 import { authMeTC } from "../../redux/auth-reducer";
 import { initializeAppTC } from "../../redux/app-reducer";
+import { FormLabel } from "@mui/material";
 
 export type FormikErrorType = {
     email?: string;
@@ -74,6 +75,22 @@ export const LoginWithFormik = () => {
             <Paper style={{ padding: "30px" }}>
                 <form onSubmit={formik.handleSubmit}>
                     <FormControl>
+                        <FormLabel>
+                            <p>
+                                To log in get registered
+                                <a href={"https://social-network.samuraijs.com/"} target={"_blank"}>
+                                    {" "}
+                                    here
+                                </a>
+                            </p>
+                            <p>or use common test account credentials:</p>
+                            <p>
+                                <strong>Email:</strong> free@samuraijs.com
+                            </p>
+                            <p>
+                                <strong>Password:</strong> free
+                            </p>
+                        </FormLabel>
                         <Typography variant="h5" component="h3" sx={{ flexGrow: 1 }}>
                             Sign in
                         </Typography>
