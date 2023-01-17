@@ -1,74 +1,91 @@
-import React, { MouseEventHandler, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import s from "./ProfileInfo.module.css";
 import { ProfileStatusWithHooks } from "../ProfileStatus/ProfileStatusWithHooks";
 import { useAppDispatch, useAppSelector } from "../../../redux/redux-store";
-import {
-    getUserProfileTC,
-    updateUserAvatarTC,
-    updateUserDataTC,
-} from "../../../redux/profile-reducer";
-import { InputTypeFile } from "../../inputTypeFile/InputTypeFile";
-import { SpanWithInput } from "../../common/SpanWithButton/SpanWithInput";
+import { getUserProfileTC, ProfileType } from "../../../redux/profile-reducer";
+import { ProfileDataForm } from "../ProfileDataForm";
 
 export const ProfileInfo = (props: { userId: number }) => {
-    // @ts-ignore
-    const largePhoto = useAppSelector((state) => state.profilePage.photos.large);
-
-    const { fullName, aboutMe, lookingForAJob, lookingForAJobDescription, contacts } =
-        useAppSelector((state) => state.profilePage);
+    const profile = useAppSelector((state) => state.profilePage);
+    const authId = useAppSelector((state) => state.auth.id);
     const dispatch = useAppDispatch();
 
-    const [edit, setEdit] = useState(false);
-    const onChangeHandler = (e: any) => {};
+    const isMyProfile = +props.userId === authId;
+    console.log(authId);
+    console.log(props.userId);
+    console.log("isMyProfile", isMyProfile);
 
-    const contactsKeys = Object.keys(contacts);
-    const contactsValues = Object.values(contacts);
-
-    const srcImgString = largePhoto
-        ? largePhoto
-        : "https://www.pngitem.com/pimgs/m/560-5603874_product-image-logo-avatar-minimalist-flat-line-hd.png";
+    const [editMode, setEditMode] = useState(false);
 
     useEffect(() => {
         dispatch(getUserProfileTC(props.userId));
-        // dispatch(updateUserDataTC());
     }, [dispatch, props.userId]);
 
     return (
         <div>
-            <h1>{fullName}</h1>
             <ProfileStatusWithHooks userId={props.userId} />
             <p>{props.userId}</p>
-            <button disabled={edit} onClick={() => setEdit(!edit)}>
-                Edit Profile
-            </button>
-            {edit && <button onClick={() => setEdit(!edit)}>Save</button>}
             <div className={s.description}>
-                <img src={srcImgString} alt={"profilePhoto" + props.userId} />
-                <div style={{ marginTop: "25px", marginLeft: "50px" }}>
-                    <div>
-                        <strong>About me :</strong> {aboutMe ? aboutMe : "-"}
-                    </div>
-                    <div>
-                        <strong>Looking For A Job :</strong> {lookingForAJob ? "yes" : "no"}
-                    </div>
-                    <div style={{ marginTop: "25px" }}>
-                        <strong>Social media : </strong>
-                    </div>
-                    {contactsKeys.map((keys, index) => (
-                        <li key={index}>
-                            <strong>{keys} : </strong>
-                            {edit ? (
-                                <input onChange={onChangeHandler} value={contactsValues[index]} />
-                            ) : (
-                                <span> {contactsValues[index]}</span>
-                            )}
-                        </li>
-                    ))}
-
-                    {/*<SpanWithInput name={"facebook"} />*/}
-                </div>
+                <img src={""} alt={"profilePhoto" + props.userId} />
+                {editMode ? (
+                    <ProfileDataForm profile={profile} />
+                ) : (
+                    <ProfileData
+                        profile={profile}
+                        isOwner={true}
+                        activateEditMode={() => setEditMode(true)}
+                    />
+                )}
             </div>
-            <InputTypeFile />
+        </div>
+    );
+};
+
+const ProfileData = (props: {
+    profile: ProfileType;
+    isOwner: boolean;
+    activateEditMode: () => void;
+}) => {
+    const { fullName, aboutMe, lookingForAJob, contacts } = props.profile;
+
+    return (
+        <div style={{ marginTop: "25px", marginLeft: "50px" }}>
+            {props.isOwner && (
+                <div>
+                    <button onClick={props.activateEditMode}>Edit</button>
+                </div>
+            )}
+            <div>
+                <h1>{fullName}</h1>
+                <strong>About me :</strong> {aboutMe ? aboutMe : "-"}
+            </div>
+            <div>
+                <strong>Looking For A Job :</strong> {lookingForAJob ? "yes" : "no"}
+                {lookingForAJob && <div>lookingForAJobDescription</div>}
+            </div>
+            <div style={{ marginTop: "25px" }}>
+                <strong>Social media : </strong>
+            </div>
+            <div>
+                Contacts :{" "}
+                {Object.keys(contacts).map((key, index) => {
+                    return (
+                        <Contact
+                            key={index}
+                            contactTitle={key}
+                            contactValue={Object.values(contacts)[index]}
+                        />
+                    );
+                })}
+            </div>
+        </div>
+    );
+};
+
+const Contact = (props: { contactTitle: any; contactValue: any }) => {
+    return (
+        <div>
+            <strong>{props.contactTitle}</strong> : {props.contactValue}
         </div>
     );
 };

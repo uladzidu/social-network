@@ -36,8 +36,6 @@ export const LoginWithFormik = () => {
     const userId = useAppSelector((state) => state.auth.id);
     const [showPassword, setShowPassword] = useState(false);
 
-    console.log("email : ", email);
-
     const formik = useFormik({
         initialValues: {
             email: "",
@@ -134,24 +132,10 @@ export const LoginWithFormik = () => {
                                     />
                                 }
                             />
-                            {/*<FormLabel style={{ padding: "10px" }}>*/}
-                            {/*    <NavLink*/}
-                            {/*        to={PATH.RECOVERY_PASSWORD}*/}
-                            {/*        style={{ textDecoration: "none" }}*/}
-                            {/*    >*/}
-                            {/*        Forgot Password?*/}
-                            {/*    </NavLink>*/}
-                            {/*</FormLabel>*/}
                             <Button type={"submit"} variant={"contained"}>
                                 Sign In
                             </Button>
                         </FormGroup>
-                        {/*<FormLabel*/}
-                        {/*    style={{ marginTop: "20px", display: "flex", flexDirection: "column" }}*/}
-                        {/*>*/}
-                        {/*    <span>Don’t have an account?</span>*/}
-                        {/*    <NavLink to={PATH.REGISTRATION}>Sign Up</NavLink>*/}
-                        {/*</FormLabel>*/}
                     </FormControl>
                 </form>
             </Paper>

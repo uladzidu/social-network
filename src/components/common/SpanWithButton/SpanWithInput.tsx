@@ -2,11 +2,16 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../redux/redux-store";
 import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
-import { updateUserStatusTC } from "../../../redux/profile-reducer";
+import {
+    updateUserDataAC,
+    updateUserDataTC,
+    updateUserStatusTC,
+} from "../../../redux/profile-reducer";
 
 export type SpanWithInputPropsType = {
     name: string;
-    callback?: () => void;
+    callback?: any;
+    editProfile: boolean;
 };
 
 export const SpanWithInput = (props: SpanWithInputPropsType) => {
@@ -14,25 +19,22 @@ export const SpanWithInput = (props: SpanWithInputPropsType) => {
     const currentUserId = useAppSelector((state) => state.profilePage.userId);
     const dispatch = useAppDispatch();
 
-    const { aboutMe, lookingForAJob } = useAppSelector((state) => state.profilePage);
-
     // @ts-ignore
     const currentContact = useAppSelector((state) => state.profilePage.contacts[props.name]);
-    console.log("currentContact : ", currentContact);
 
     const isAuthProfile = currentUserId === userAuthId;
 
     const [text, setText] = useState(currentContact);
     const [edit, setEdit] = useState(false);
-    console.log("text : ", text);
     const onClickHandler = () => {};
 
     const onTextChange = (e: ChangeEvent<HTMLInputElement>) => {
         setText(e.currentTarget.value);
     };
 
-    const deactivateEditMode = () => {
+    const deactivateEditMode = async () => {
         setEdit(false);
+        await dispatch(props.callback(text));
     };
     const activateEditMode = () => {
         setEdit(true);
@@ -43,17 +45,10 @@ export const SpanWithInput = (props: SpanWithInputPropsType) => {
     }, [currentContact]);
 
     return (
-        <div>
-            {/*<span>{props.name} : {text}</span>*/}
-            {/*{isAuthProfile && (*/}
-            {/*    <IconButton onClick={onClickHandler}>*/}
-            {/*        <EditIcon />*/}
-            {/*    </IconButton>*/}
-            {/*)}*/}
-
-            {props.name}
-            {edit ? (
-                <div>
+        <div style={{ display: "flex" }}>
+            <strong>{props.name} : </strong>
+            {edit || props.editProfile ? (
+                <div style={{ marginLeft: "10px" }}>
                     <input
                         autoFocus
                         onChange={onTextChange}
@@ -62,13 +57,8 @@ export const SpanWithInput = (props: SpanWithInputPropsType) => {
                     />
                 </div>
             ) : (
-                <div style={{ display: "flex" }}>
+                <div style={{ marginLeft: "10px" }}>
                     <span onDoubleClick={activateEditMode}>{text}</span>
-                    {isAuthProfile && (
-                        <IconButton onClick={activateEditMode}>
-                            <EditIcon />
-                        </IconButton>
-                    )}
                 </div>
             )}
         </div>

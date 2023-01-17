@@ -63,10 +63,10 @@ export const profileReducer = (
                 photos: action.avatar,
             };
         }
-        case "app/UPDATE-USER-DATA":
+        case "app/UPDATE-FACEBOOK":
             return {
                 ...state,
-                // contacts: {...state.contacts, action.updatedValue}
+                contacts: { ...state.contacts, facebook: action.facebookValue },
             };
         default:
             return state;
@@ -94,18 +94,11 @@ export const setUserStatusAC = (status: string) => {
 
 export const updateAvatarAC = (avatar: string) => ({ type: "app/UPDATE-AVATAR", avatar } as const);
 
-export const updateUseDataAC = (updatedValue: string | boolean) =>
+export const updateUserDataAC = (updatedValue: string | boolean) =>
     ({ type: "app/UPDATE-USER-DATA", updatedValue } as const);
 
-// Thunk Creators
-// export const getUserProfileTC = (userId: number | null): AppThunk => {
-//     return async (dispatch) => {
-//         const response = await profileApi.getProfile(userId!!);
-//         console.log(response);
-//         // @ts-ignore
-//         dispatch(setProfileDataAC(response));
-//     };
-// };
+export const updateFacebookAC = (facebookValue: string) =>
+    ({ type: "app/UPDATE-FACEBOOK", facebookValue } as const);
 
 export const getUserProfileTC = (userId: number): AppThunk => {
     return async (dispatch) => {
@@ -143,23 +136,23 @@ export const updateUserAvatarTC =
     async (dispatch) => {
         const response = await profileApi.updateAvatar(image);
         console.log(response);
-        dispatch(updateAvatarAC(response.data.photos.large));
+        // @ts-ignore
+        dispatch(updateAvatarAC(response.data.data.photos.large));
     };
 
-export const updateUserDataTC = (): AppThunk => async (dispatch, getState) => {
-    const { userId, aboutMe, contacts, lookingForAJobDescription, lookingForAJob, fullName } =
-        getState().profilePage;
-
-    const payload = {
-        userId,
-        aboutMe,
-        contacts,
-        lookingForAJobDescription,
-        lookingForAJob,
-        fullName,
+export const updateUserDataTC =
+    (profileData: ProfileType): AppThunk =>
+    async (dispatch) => {
+        const payload = {
+            userId: profileData.userId,
+            aboutMe: profileData.aboutMe,
+            contacts: profileData.contacts,
+            lookingForAJobDescription: profileData.lookingForAJobDescription,
+            lookingForAJob: profileData.lookingForAJob,
+            fullName: profileData.fullName,
+        };
+        await profileApi.updateUser(payload);
     };
-    await profileApi.updateUser(payload);
-};
 
 export type PostDataType = {
     id: string;
@@ -186,7 +179,7 @@ export type ProfileType = {
     photos?: string;
 };
 
-type ProfilePageType = typeof ProfileReducerInitState;
+export type ProfilePageType = typeof ProfileReducerInitState;
 
 type ProfileReducersAT =
     | ReturnType<typeof addPostAC>
@@ -194,5 +187,5 @@ type ProfileReducersAT =
     | ReturnType<typeof setUserStatusAC>
     | ReturnType<typeof setUserIdAC>
     | ReturnType<typeof updateAvatarAC>
-    | ReturnType<typeof updateUseDataAC>;
-// | ReturnType<typeof updateSmallAvatarAC>;
+    | ReturnType<typeof updateUserDataAC>
+    | ReturnType<typeof updateFacebookAC>;

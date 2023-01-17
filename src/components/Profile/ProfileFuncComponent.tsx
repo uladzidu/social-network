@@ -9,11 +9,10 @@ import { Preloader } from "../common/preloader/Preloader";
 
 export const ProfileFuncComponent = () => {
     const { userId } = useParams<{ userId: any }>();
-    const isLoggedIn = useAppSelector((state) => state.login.isLoggedIn);
-    const isAuth = useAppSelector((state) => state.auth.isAuth);
-    const email = useAppSelector((state) => state.auth.email);
+    // const isLoggedIn = useAppSelector((state) => state.login.isLoggedIn);
+    // const isAuth = useAppSelector((state) => state.auth.isAuth);
+    // const email = useAppSelector((state) => state.auth.email);
     const dispatch = useAppDispatch();
-    console.log("email : ", email);
 
     useEffect(() => {
         dispatch(authMeTC());

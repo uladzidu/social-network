@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { IconButton } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useAppDispatch, useAppSelector } from "../../redux/redux-store";
@@ -8,17 +8,13 @@ import { updateUserAvatarTC } from "../../redux/profile-reducer";
 export const InputTypeFile = () => {
     // @ts-ignore
     const avatar = useAppSelector((state) => state.profilePage.photos.large);
-    console.log("avatar : ", avatar);
     const dispatch = useAppDispatch();
-    // const name = useAppSelector((state) => state.profile.name);
-    // const isLoading = useAppSelector((state) => state.app.isLoading);
     const [ava, setAva] = useState(avatar);
     const [isAvaBroken, setIsAvaBroken] = useState(false);
 
     const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length) {
             const file = e.target.files[0];
-            console.log("file : ", file);
             const fileSize = file.size;
             const fileSizeInMb = fileSize / 1024 ** 2;
 
@@ -47,14 +43,18 @@ export const InputTypeFile = () => {
         alert("Broken img. Default Img has set");
     };
 
+    useEffect(() => {
+        setAva(avatar);
+    }, []);
+
     return (
         <div>
-            <img
-                src={isAvaBroken ? defaultAva : ava!!}
-                style={{ width: "180px", height: "180px", borderRadius: "50%" }}
-                onError={errorHandler}
-                alt="ava"
-            />
+            {/*<img*/}
+            {/*    src={ava}*/}
+            {/*    style={{ width: "180px", height: "180px", borderRadius: "50%" }}*/}
+            {/*    onError={errorHandler}*/}
+            {/*    alt="ava"*/}
+            {/*/>*/}
             <label>
                 <input
                     type="file"

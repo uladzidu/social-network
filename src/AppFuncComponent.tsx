@@ -19,7 +19,6 @@ import { initializeAppTC, initializedSuccessAC } from "./redux/app-reducer";
 export const AppFuncComponent = () => {
     const isInitialized = useAppSelector((state) => state.app.initialized);
     const dispatch = useAppDispatch();
-    console.log(isInitialized);
     useEffect(() => {
         dispatch(initializeAppTC());
     }, []);

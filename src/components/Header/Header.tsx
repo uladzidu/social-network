@@ -14,7 +14,6 @@ type HeaderPropsType = {
 
 export const Header = (props: HeaderPropsType) => {
     const login = useAppSelector((state) => state.auth.login);
-    console.log(login);
 
     const logOutHandler = () => {
         props.logoutThunk();
